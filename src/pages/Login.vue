@@ -30,8 +30,9 @@
     
 </template>
 <script>
-// import API from '../api'
+import API from '../api'
 const axios = require('axios').default;
+window.axios = axios
 export default {
     name: "Login",
     data()
@@ -44,7 +45,7 @@ export default {
         },
     mounted()
         {
-            console.log(axios)
+            console.log(this)
         },
     methods:
         {
@@ -52,11 +53,13 @@ export default {
             {
                 console.log(this)
                 try{
-                    let {token, username} = await this.$store.dispatch('user/login', {
+                    let token = await API.User.login({username: this.username, password: this.password})
+                    let {username} = await this.$store.dispatch('user/login', {
                         username: this.username,
-                        password: this.password
+                        token
                     })
-                    localStorage.setItem('vpmc-token',token)
+                    this.$cookies.set('vpmc-token', token)
+                    this.$cookies.set('vpmc-username', username)
                     this.$router.push(`./${username}/map`)
                 }
                 catch(err)

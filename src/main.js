@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import {cookies} from './cookies'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -11,6 +12,7 @@ new Vue({
   el: '#app',
   store,
   router,
+  cookies,
   components: { App },
   template: '<App/>'
 })
