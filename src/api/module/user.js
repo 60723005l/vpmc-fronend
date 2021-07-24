@@ -11,7 +11,7 @@ export const login = async ( payload ) =>
     let url = process.env.BASE_API_URL+'JwtAuth/authenticate'
     try
     {
-        let resp = await axios.post(url, payload)
+        let resp = await axios.post(url, payload, { withCredentials: true }) //cookies will be written when withCredentials true
         console.log(resp)
         return resp.data
     }

@@ -17,6 +17,9 @@
             <GeolocationButton class="item"/>
             <LayerButton class="item"/>
             <MeasureButton class="item"/>
+            <InfoButton class="item"/>
+            <PrintButton class="item"/>
+            <FullScreenButton class="item"/>
         </div>
 
 
@@ -26,6 +29,9 @@
 import LayerButton from './SubBanner/LayerButton'
 import MeasureButton from './SubBanner/MeasureButton'
 import GeolocationButton from './SubBanner/GeolocationButton'
+import PrintButton from './SubBanner/PrintButton'
+import InfoButton from './SubBanner/InfoButton'
+import FullScreenButton from './SubBanner/FullScreenButton'
 
 export default {
     name: "SubBanner",
@@ -33,7 +39,10 @@ export default {
         {
             LayerButton,
             MeasureButton,
-            GeolocationButton
+            GeolocationButton,
+            PrintButton,
+            InfoButton,
+            FullScreenButton
         }
 }
 </script>
@@ -45,6 +54,7 @@ export default {
     box-shadow: 0px 5px 2px 0 #0000008c;
     z-index: 500;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .sub-baner .group{
     display: flex;

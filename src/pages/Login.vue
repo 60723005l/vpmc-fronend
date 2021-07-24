@@ -38,16 +38,18 @@ export default {
     data()
         {
             return{
-                username:'jimmg35',
-                password:'Jim60308#',
-                // username:'Bryant',
-                // password:'HEpHED#d5b',
+                // username:'jimmg35',
+                // password:'Jim60308#',
+                username:'Bryant',
+                password:'HEpHED#d5b',
                 logoImg:require('@/assets/logo.png')
             }
         },
     mounted()
         {
             console.log(this)
+            console.log(process.env)
+
         },
     methods:
         {
