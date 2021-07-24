@@ -40,6 +40,8 @@ export default {
             return{
                 username:'jimmg35',
                 password:'Jim60308#',
+                // username:'Bryant',
+                // password:'HEpHED#d5b',
                 logoImg:require('@/assets/logo.png')
             }
         },

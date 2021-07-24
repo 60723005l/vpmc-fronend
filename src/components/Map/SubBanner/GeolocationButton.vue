@@ -1,13 +1,13 @@
 <template>
     <div>
-        <IconButton :src="'/static/icon/layer.png'"/>
+        <IconButton :src="'/static/icon/locate.png'"/>
     </div>
 </template>
 <script>
 import IconButton from "@/components/basicUI/IconButton"
 
 export default {
-    name: "LayerButton",
+    name: "GeolocationButton",
     components:
         {
             IconButton
