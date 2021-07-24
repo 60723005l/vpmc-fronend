@@ -20,8 +20,8 @@
                     <p><input type="submit" value="登入"></p>
                 </div>
                 <div>
-                    <router-link to="/register">註冊</router-link>
-                    <router-link to="/lostpassword">忘記密碼</router-link>
+                    <a href="https://localhost:44367/Identity/Account/Register">註冊</a>
+                    <a href="https://localhost:44367/Identity/Account/ForgotPassword">忘記密碼</a>
                 </div>
                 
             </div>
