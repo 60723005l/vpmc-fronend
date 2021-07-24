@@ -14,6 +14,7 @@ const actions = {
   {
     try
     {
+
       let token = await API.User.login(payload)
       commit('setUsername', payload.username)
       commit('setToken', token)

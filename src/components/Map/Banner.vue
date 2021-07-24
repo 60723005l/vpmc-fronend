@@ -16,7 +16,9 @@
             <img :src="require('@/assets/img/unknown-user.jpg')">
             <span>{{userState.username}}</span>
             <router-link style="color:#44b2ff;" v-if="!userState.isLogin" to="/">登入</router-link>
+            <a href="https://localhost:44367/Identity/Account/Manage">asdadsdsad</a>
         </div>
+        
     </div>
 </template>
 <script>

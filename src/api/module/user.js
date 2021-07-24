@@ -15,8 +15,10 @@ export const login = ( payload ) =>
         method: 'POST',
         headers: myHeaders,
         body: raw,
-        redirect: 'follow'
+        redirect: 'follow',
+        credentials: 'include'
     };
+
     return new Promise( ( res, rej ) =>
     {
         fetch(process.env.BASE_API_URL+'JwtAuth/authenticate', requestOptions)
@@ -45,7 +47,8 @@ export const login = ( payload ) =>
          method: 'POST',
          headers: myHeaders,
          body: raw,
-         redirect: 'follow'
+         redirect: 'follow',
+         credentials: 'include'
      };
      return new Promise( ( res, rej ) =>
     {
