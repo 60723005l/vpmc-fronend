@@ -1,0 +1,17 @@
+.geolocation-sidebar-container{
+    // background: aqua;
+    .body{
+        .form{
+            .item{
+                padding: 5px;
+            }
+            .submit{
+                display: flex;
+                justify-content: flex-end;
+                button{
+                    background-color: var(--darkblue);
+                }
+            }
+        }
+    }
+}

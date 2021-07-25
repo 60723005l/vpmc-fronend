@@ -1,13 +1,13 @@
 <template>
     <div>
-        <IconButton :src="'/static/icon/measure.png'"/>
+        <IconButton :src="'/static/icon/print.png'"/>
     </div>
 </template>
 <script>
 import IconButton from "@/components/basicUI/IconButton"
 
 export default {
-    name: "MeasureButton",
+    name: "PrintButton",
     components:
         {
             IconButton
