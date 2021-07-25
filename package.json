@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@innologica/vue-dropdown-menu": "^0.1.4",
+    "@turf/turf": "^6.5.0",
     "axios": "^0.21.1",
     "leaflet": "^1.7.1",
     "vue": "^2.5.2",
