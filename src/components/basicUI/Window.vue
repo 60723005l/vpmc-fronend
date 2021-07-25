@@ -120,7 +120,7 @@ export default {
             },
             dragMouseDown (event)
             {
-                if ( !this.isResize ) return
+                // if ( !this.isResize ) return
                 // console.log('MouseDown')
                 // event.preventDefault()
                 // get the mouse cursor position at startup:

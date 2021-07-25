@@ -45,8 +45,8 @@ export default {
                 
                 if( this.userState.isLogin )
                 {
-                    window.location.href = `${process.env.BASE_BACKEND_URL}}Identity/Account/Manage`
-                    // this.$router.push("/userinfo")
+                    let url = `${process.env.BASE_BACKEND_URL}Identity/Account/Manage`
+                    window.open(url, '_blank').focus();
                 }
             }
         }
