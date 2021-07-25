@@ -3,8 +3,13 @@
         <Banner/>
         <SubBanner/>
         <div class="body">
-            
             <LeafletViewer/>
+            <Sidebar :side="'right'" :open="$store.state.subbanner.open" @collapse="handleCollaps">
+                <template v-slot:body>
+                    <div>{{$store.state.subbanner.current.value}}</div>
+                    <component :is="$store.state.subbanner.current.value"></component>
+                </template>
+            </Sidebar>
         </div>
         
         
@@ -14,6 +19,11 @@
 import LeafletViewer from "@/components/LeafletViewer"
 import Banner from "@/components/Map/Banner"
 import SubBanner from "@/components/Map/SubBanner"
+import Sidebar from "@/components/basicUI/Sidebar"
+
+import Layer from "@/components/Map/Sidebar/Layer"
+import Info from "@/components/Map/Sidebar/Info"
+import Geolocation from "@/components/Map/Sidebar/Geolocation"
 
 export default {
     name: "Map",
@@ -29,13 +39,22 @@ export default {
         },
     methods:
         {
-            
+            handleCollaps()
+            {
+                this.$store.commit('subbanner/open', false)
+            }
         },
     components:
         {
             LeafletViewer,
             Banner,
-            SubBanner
+            SubBanner,
+            Sidebar,
+            //----------------
+            Layer,
+            Info,
+            Geolocation,
+
         }            
 }
 </script>
@@ -47,6 +66,7 @@ export default {
     width: 100vw;
     height: 100vh;
     background: antiquewhite;
+    overflow: hidden;
 }
 .header{
     background:#1e1e23;

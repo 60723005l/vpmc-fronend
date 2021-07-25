@@ -35,6 +35,28 @@ import FullScreenButton from './SubBanner/FullScreenButton'
 
 export default {
     name: "SubBanner",
+    mounted()
+        {
+            this.setSubBannerSideBarVuex()
+        },
+    methods:
+        {
+            setSubBannerSideBarVuex()
+            {
+                //value will be component name that used in sidebar slot
+                let map_list = [
+                    {key: 'Layer', value: 'Layer'},
+                    {key: 'Geolocation', value: 'Geolocation'},
+                    {key: 'Info', value: 'Info'},
+                ]
+                map_list.forEach( item =>
+                {
+                    let {key, value} = item
+                    this.$store.commit('subbanner/addComponent', {key, value})
+                })
+                
+            }
+        },
     components:
         {
             LayerButton,
