@@ -6,7 +6,9 @@
             {{placeholder}}
         </button>
         <div slot="dropdown" class="dropdown-content">
-            <div class="option" v-for="(item, index) in options" :key="index">{{item.name}}</div>
+            <div class="option" 
+                v-for="(item, index) in options" :key="index"
+                @click="handleSelect(item)">{{item.name}}</div>
         </div>
     </dropdown-menu>
 </div>
@@ -36,9 +38,16 @@ export default {
         },
     methods:
         {
-            handleSelect(payload)
+            handleSelect(option)
             {
-                this.selected = payload
+                this.selected = option
+                switch(option.name)
+                {
+                    case '帳號管理':
+                        
+                        window.location.href = `${process.env.BASE_BACKEND_URL}}Identity/Account/Manage`
+                        break
+                }
             }
         },
     components:
