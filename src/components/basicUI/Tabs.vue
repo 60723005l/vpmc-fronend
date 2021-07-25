@@ -1,8 +1,8 @@
 <template>
     <div class="basic-tags-holder row">
         <div class="tags" 
-            v-for="tab in _tabs" :key="tab.index" 
-            :class="{'active': activeTab.index === tab.index}" 
+            v-for="(tab, index) in tabs" :key="index" 
+            :class="{'active': activeTab === tab.name}" 
             @click=" onTabClick( tab ) ">
             <span>{{tab.name}}</span>
         </div>
@@ -24,10 +24,7 @@ export default {
     data() 
         {
             return {
-                activeTab:
-                {
-                    index:undefined
-                }
+                activeTab: ""
             }
         },
     props: 
@@ -40,23 +37,12 @@ export default {
         },
     mounted()
         {},
-    computed:
-        {
-            _tabs()
-            {
-                return this.tabs.map( ( tab, index ) =>
-                {
-                    tab.index = index
-                    return tab
-                })
-            }
-        },
     methods:
         {
             onTabClick( tab )
             {
                 this.ActiveTab( tab )
-                this.$emit('onClick', tab)
+                this.$emit('Click', tab)
             },
             ActiveTab( tab )
             {

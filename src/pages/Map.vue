@@ -6,7 +6,6 @@
             <LeafletViewer/>
             <Sidebar :side="'right'" :open="$store.state.subbanner.open" @collapse="handleCollaps">
                 <template v-slot:body>
-                    <div>{{$store.state.subbanner.current.value}}</div>
                     <component :is="$store.state.subbanner.current.value"></component>
                 </template>
             </Sidebar>
