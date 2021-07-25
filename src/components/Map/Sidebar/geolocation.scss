@@ -2,6 +2,7 @@
     // background: aqua;
     .body{
         .form{
+            overflow: hidden;
             .item{
                 padding: 5px;
             }
@@ -10,6 +11,11 @@
                 justify-content: flex-end;
                 button{
                     background-color: var(--darkblue);
+                    color: white;
+                    border: 0px;
+                    border-radius: 3px;
+                    padding: 3px 7px;
+                    
                 }
             }
         }

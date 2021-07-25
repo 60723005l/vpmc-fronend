@@ -1,17 +1,17 @@
 <template>
     <div class="sub-baner">
         <div class="group">
-            <select class="item"><option value="測試">測試</option></select>
-            <select class="item"><option value="測試">測試</option></select>
-            <button class="item">測試</button>
+            <SystemManage  class="item"/>
+            <DataMaintain  class="item"/>
+            <AppraisalAnalysis  class="item"/>
         </div>
         <div class="group">
-            <select class="item">
-                <option value="估價分析">估價分析</option>
-            </select>
-            <select class="item">
-                <option value="估價分析">內勤作業</option>
-            </select>
+            <YuantaModule  class="item"/>
+            <TaishinModule  class="item"/>
+        </div>
+        <div class="group">
+            <OnlineSupport  class="item"/>
+            <StatsAndQuote  class="item"/>
         </div>
         <div class="group">
             <GeolocationButton class="item"/>
@@ -26,6 +26,17 @@
     </div>
 </template>
 <script>
+import SystemManage from './SubBanner/SystemManage'
+import DataMaintain from './SubBanner/DataMaintain'
+import AppraisalAnalysis from './SubBanner/AppraisalAnalysis'
+//---------------
+import YuantaModule from './SubBanner/YuantaModule'
+import TaishinModule from './SubBanner/TaishinModule'
+//---------------
+import OnlineSupport from './SubBanner/OnlineSupport'
+import StatsAndQuote from './SubBanner/StatsAndQuote'
+
+//---------------
 import LayerButton from './SubBanner/LayerButton'
 import MeasureButton from './SubBanner/MeasureButton'
 import GeolocationButton from './SubBanner/GeolocationButton'
@@ -59,6 +70,16 @@ export default {
         },
     components:
         {
+            SystemManage,
+            DataMaintain,
+            AppraisalAnalysis,
+            //-----------------
+            YuantaModule,
+            TaishinModule,
+            //------------------
+            OnlineSupport,
+            StatsAndQuote,
+            //-------------------
             LayerButton,
             MeasureButton,
             GeolocationButton,
@@ -68,31 +89,6 @@ export default {
         }
 }
 </script>
-<style scoped>
-.sub-baner{
-    display: flex;
-    justify-content: center;
-    background: #dcdcdc;
-    box-shadow: 0px 5px 2px 0 #0000008c;
-    z-index: 500;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-.sub-baner .group{
-    display: flex;
-    align-items: center;
-}
-.sub-baner .item{
-    /* background: #ffffff6b; */
-    border: none;
-    margin: 0px 5px;
-    padding: 5px 10px;
-    border-radius: 0px;
-    cursor: pointer;
-    -webkit-transition: 0.5s all;
-    transition: 0.2s all;
-}
-.sub-baner .item:hover{
-    background: #2280fb69;
-}
+<style lang="sass">
+    @import "./subbanner.scss"
 </style>

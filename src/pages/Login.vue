@@ -16,12 +16,15 @@
                     <p>密碼:</p>
                     <p><input type="password" name="password" v-model="password"></p>
                 </div>
+                <div class="errmsg">
+                    <span>{{errmsg}}</span>
+                </div>
                 <div>
                     <p><input type="submit" value="登入"></p>
                 </div>
                 <div>
-                    <a href="https://localhost:44367/Identity/Account/Register">註冊</a>
-                    <a href="https://localhost:44367/Identity/Account/ForgotPassword">忘記密碼</a>
+                    <a :href="href.register">註冊</a>
+                    <a :href="href.forgotPassword">忘記密碼</a>
                 </div>
                 
             </div>
@@ -42,7 +45,13 @@ export default {
                 // password:'Jim60308#',
                 username:'Bryant',
                 password:'HEpHED#d5b',
-                logoImg:require('@/assets/logo.png')
+                logoImg:require('@/assets/logo.png'),
+                errmsg:'',
+                href:
+                {
+                    register: `${process.env.BASE_BACKEND_URL}Identity/Account/Register`,
+                    forgotPassword: `${process.env.BASE_BACKEND_URL}Identity/Account/ForgotPassword`
+                }
             }
         },
     mounted()
@@ -68,6 +77,7 @@ export default {
                 }
                 catch(err)
                 {
+                    this.errmsg = "username or password invalid"
                     console.log(err)
                 }
                 
@@ -118,12 +128,15 @@ export default {
     border: 1px black solid;
 }
 
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active  {
-      -webkit-text-fill-color: #000000;
-      -webkit-box-shadow: 0 0 0 1000px rgba(255,255,255,0) inset;
-      /* transition: background-color 5000s ease-in-out 0s; */
-  }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+    -webkit-text-fill-color: #000000;
+    -webkit-box-shadow: 0 0 0 1000px rgba(255,255,255,0) inset;
+    /* transition: background-color 5000s ease-in-out 0s; */
+}
+.errmsg{
+    color: red;
+}
 </style>
