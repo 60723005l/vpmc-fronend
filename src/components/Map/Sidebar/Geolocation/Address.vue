@@ -4,6 +4,9 @@
             <span>輸入門牌</span>
             <input type="text">
         </div>
+        <div class="item submit">
+            <button>確認</button>
+        </div>
     </div>
 </template>
 <script>
