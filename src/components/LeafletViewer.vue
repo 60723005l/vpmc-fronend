@@ -8,11 +8,13 @@
 import Leaflet from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import GeoLocation from "@/components/mapWidget/GeoLocation"
-import Global from '@/global'
-import UUID from "@/lib/LayerManage/UUID"
-import LayerManageCenter from "@/lib/LayerManage/LayerManageCenter"
-import {Factory} from "@/lib/LayerManage/Factory"
-import Product from "@/lib/LayerManage/LayerProduct"
+import Global from '../global'
+import { UUID } from '../utilities'
+console.log(UUID)
+// import UUID from "@/lib/LayerManage/UUID"
+// import LayerManageCenter from "@/lib/LayerManage/LayerManageCenter"
+// import {Factory} from "@/lib/LayerManage/Factory"
+// import Product from "@/lib/LayerManage/LayerProduct"
 
 export default {
   name: 'LeafletViewer',
@@ -40,7 +42,7 @@ export default {
         type: Number,
         default: 121
       },
-      zooom:
+      zoom:
       {
         type: Number,
         default: 7
@@ -65,26 +67,28 @@ export default {
   mounted()
     {
       this.initMap()
-      // this.test2()
     },
   methods:
     {
       initMap()
       {
-        var myLayerCenter = new LayerManageCenter()
-        Global.LayerCenter = myLayerCenter
         
-        var viewer = Leaflet.map(this.viewerContainer).setView([this.lat, this.lon], this.zooom);
-        Global.viewer = viewer
-        window.Global = Global
-        window.viewer = viewer
-
+        let option = 
+        {
+          elemId: this.viewerContainer,
+          position: [this.lat, this.lon],
+          zoom: this.zoom
+        }
+        let viewer = Global.createViewer(option)
+        Global.viewerPromise.setViewer(viewer)
+        var data = Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+        viewer.addLayer(data)
         viewer.zoomControl.getContainer().hidden = !this.zoomControl.show
         viewer.zoomControl.getContainer().parentElement.classList.remove('leaflet-left')
         viewer.zoomControl.getContainer().parentElement.classList.add('leaflet-right')
+        window.Global = Global
+        window.viewer = viewer
 
-        var data = Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
-        viewer.addLayer(data)
       },
     },
   components:

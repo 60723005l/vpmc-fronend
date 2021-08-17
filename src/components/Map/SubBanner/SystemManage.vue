@@ -45,7 +45,8 @@ export default {
                 {
                     case '帳號管理':
                         
-                        window.location.href = `${process.env.BASE_BACKEND_URL}}Identity/Account/Manage`
+                        let url = `${process.env.BASE_BACKEND_URL}Identity/Account/Manage`
+                        window.open(url, '_blank').focus();
                         break
                 }
             }
