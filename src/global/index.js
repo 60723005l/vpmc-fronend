@@ -1,23 +1,15 @@
-// var Global = 
-// {
-//     viewer: undefined
-// }
-
-// export default Global
-
-import { ViewerPromise, createViewer } from "../lib/viewer";
-
-class Global
+import VPMC from "../VPMC"
+import StrategySwitcher from "../VPMC/module/StrategySwitcher"
+        
+const Global = 
 {
-    constructor( option = {} )
+    VPMC: new VPMC(process.env.CONTAINERID),
+    LayerType:
     {
-        this.viewer = undefined,
-        this.viewerPromise = new ViewerPromise()
-    }
-    createViewer( option )
-    {
-        return this.viewer = createViewer( option )
-    }
+        POINT: 'point',
+        LINE: 'line',
+        POLYGON: 'polygon',
+        BASEMAP: 'image',
+    },
 }
-
-export default new Global()
+export default Global

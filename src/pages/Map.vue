@@ -3,7 +3,9 @@
         <Banner/>
         <SubBanner/>
         <div class="body">
-            <LeafletViewer/>
+            <LeafletViewer
+                :viewerContainer="containerId"
+                :option="mapOption" />
             <Sidebar :side="'right'" :open="$store.state.subbanner.open" @collapse="handleCollaps">
                 <template v-slot:body>
                     <component :is="$store.state.subbanner.current.value"></component>
@@ -29,7 +31,8 @@ export default {
     data()
         {
             return {
-                
+                containerId: process.env.CONTAINERID,
+                mapOption: {}
             }
         },
     mounted()
