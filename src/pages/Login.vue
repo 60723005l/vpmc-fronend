@@ -21,6 +21,7 @@
                 </div>
                 <div>
                     <p><input type="submit" value="登入"></p>
+                    <p><button @click="handleDevLogin">DEV</button></p>
                 </div>
                 <div>
                     <a :href="href.register">註冊</a>
@@ -33,6 +34,7 @@
     
 </template>
 <script>
+import config from "../../config"
 import API from '../api'
 const axios = require('axios').default;
 window.axios = axios
@@ -81,6 +83,14 @@ export default {
                     console.log(err)
                 }
                 
+            },
+            async handleDevLogin()
+            {
+                let {username} = await this.$store.dispatch('user/login', {
+                        username: 'dev',
+                        token: 'dev'
+                    })
+                this.$router.push(`./${username}/map`)
             }
         }
 }
