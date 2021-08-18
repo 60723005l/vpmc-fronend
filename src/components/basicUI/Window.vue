@@ -198,13 +198,13 @@ export default {
 .basic-window{
     
     /* border: 1px solid #3d3d3d; */
-    border: 1px solid #41b883;
+    /* border: 1px solid #41b883; */
     border-radius: 3px;
     margin: 5px;
 }
 .top-holder{
     /* background: #313136; */
-    background: #41b883;
+    background: #0e3c63;
     border-radius: 1px 1px 0px 0px;
     width: 100%;
     height: 20px;
@@ -223,7 +223,7 @@ export default {
     cursor: pointer;
     color: #e2d3c2;
     /* border: 0.5px solid #655f58; */
-    border: 1px solid #58cf99 ;
+    /* border: 1px solid #272727 ; */
     border-radius: 3px;
     margin: 2px;
     width: 20px;
@@ -232,9 +232,9 @@ export default {
 }
 .win-btn:hover{
     /* background: #272727 ; */
-    background: #43aa7c ;
+    background: #15568f ;
     /* border: 1px solid #8f8f8f ; */
-    border: 1px solid #58cf99 ;
+    /* border: 1px solid #272727 ; */
 }
 .container-holder{
     /* background: #151517; */
@@ -257,6 +257,6 @@ export default {
     position: fixed;
     z-index: 10;
     box-shadow: rgb(0 0 0 / 71%) 5px 5px 15px 0px;
-    border: 1px solid #ffffff66;
+    /* border: 1px solid #ffffff66; */
 }
 </style>
