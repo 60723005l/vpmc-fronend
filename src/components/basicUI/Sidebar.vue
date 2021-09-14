@@ -1,13 +1,9 @@
 <template>
-    <!-- <div class="sidebar-container" :class="{close: !open}" :style="cssProps">
-        <div class="collapse" @click="handleCollaps">➥</div>
-        <slot name='tabs'></slot>
-        <slot name='body'></slot>
-    </div> -->
-    <md-drawer style="z-index:999;" :md-right="side==='right'" :md-active="open">
+    <md-drawer md-persistent="full" :md-right="side==='right'" :md-active="open">
         <md-button class="md-icon-button"  @click="handleCollaps">
-            <md-icon>home</md-icon>
+            <md-icon>menu_open</md-icon>
         </md-button>
+        <md-divider/>
         <template>
             <component :is="$store.state.subbanner.current.value"></component>
         </template>

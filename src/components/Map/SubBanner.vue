@@ -22,7 +22,7 @@
             <FullScreenButton class="item"/>
         </div>
     </div> -->
-    <md-toolbar class="md-dense sub-baner md-primary">
+    <md-toolbar class="md-dense sub-baner md-third">
         <div class="group">
             <SystemManage  />
             <DataMaintain  />

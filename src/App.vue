@@ -28,8 +28,8 @@ body{
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
 
 @include md-register-theme("default", (
-  primary: md-get-palette-color(Cyan, 800), // The primary color of your application
-  accent: md-get-palette-color(amber, A200), // The accent or secondary color
+  primary: md-get-palette-color(blue, 800), // The primary color of your application
+  accent: md-get-palette-color(red, A200), // The accent or secondary color
   theme: dark // This can be dark or light
 ));
 @import "~vue-material/dist/theme/all";

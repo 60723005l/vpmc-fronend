@@ -1,9 +1,11 @@
 <template>
   <div :id="viewerContainer" class="leaflet-viewer">
+      <Measuerment />
   </div>
 </template>
 
 <script>
+import Measuerment from "./mapWidget/Measuerment.vue"
 import Leaflet from 'leaflet'
 import '@geoman-io/leaflet-geoman-free';  //https://github.com/geoman-io/leaflet-geoman
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
@@ -83,6 +85,10 @@ export default {
       {
         viewer.addLayer( Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') )
       }, 
+    },
+  components: 
+    {
+      Measuerment
     }
 }
 </script>
@@ -90,6 +96,7 @@ export default {
 <style scoped>
 .leaflet-viewer{
   width: 100%;
-  height: 100%
+  height: 100%;
+  z-index: 1;
 }
 </style>
