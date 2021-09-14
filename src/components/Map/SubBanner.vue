@@ -1,5 +1,5 @@
 <template>
-    <div class="sub-baner">
+    <!-- <div class="sub-baner">
         <div class="group">
             <SystemManage  class="item"/>
             <DataMaintain  class="item"/>
@@ -21,9 +21,30 @@
             <PrintButton class="item"/>
             <FullScreenButton class="item"/>
         </div>
-
-
-    </div>
+    </div> -->
+    <md-toolbar class="md-dense sub-baner">
+        <div class="group">
+            <SystemManage  />
+            <DataMaintain  />
+            <AppraisalAnalysis  />
+        </div>
+        <div class="group">
+            <YuantaModule  />
+            <TaishinModule  />
+        </div>
+        <div class="group">
+            <OnlineSupport  />
+            <StatsAndQuote  />
+        </div>
+        <div class="group">
+            <GeolocationButton />
+            <LayerButton />
+            <MeasureButton />
+            <InfoButton />
+            <PrintButton />
+            <FullScreenButton />
+        </div>
+    </md-toolbar>
 </template>
 <script>
 import SystemManage from './SubBanner/SystemManage'

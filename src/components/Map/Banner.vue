@@ -1,5 +1,5 @@
 <template>
-    <div class="banner row">
+    <!-- <div class="banner row">
         <div class="system-info row">
             <div class="logo group">
                 <img :src="require('@/assets/logo.png')">
@@ -18,7 +18,29 @@
             <router-link style="color:#44b2ff;" v-if="!userState.isLogin" to="/">登入</router-link>
         </div>
         
-    </div>
+    </div> -->
+    <md-toolbar class="md-dense md-primary">
+        <div class="system-info row md-toolbar-section-start">
+            <div class="logo group">
+                <img :src="require('@/assets/logo.png')">
+            </div>
+            <div class="title">
+                <span>VPMC不動產資情網</span>
+            </div>
+        </div>
+
+        <div class="push-notification  group">
+            <span>焦點要聞:  眾所矚目的旋轉豪宅「陶朱隱園」傳每坪 8百萬天價全棟完售</span>
+        </div>
+        <div class="md-toolbar-section-end group">
+            
+            <div class="divider user" @click="handleUserClick">
+                <img :src="require('@/assets/img/unknown-user.jpg')">
+                <span>{{userState.username}}</span>
+                <router-link style="color:#44b2ff;" v-if="!userState.isLogin" to="/">登入</router-link>
+            </div>
+        </div>
+    </md-toolbar>
 </template>
 <script>
 export default {
@@ -64,6 +86,8 @@ export default {
     padding: 0px 10px;
     margin: 5px 0px;
     height: 80%;
+}
+.divider{
     border-left: 2px solid rgba(255, 255, 255, 0.335);
 }
 .logo{
@@ -123,6 +147,8 @@ animation: push-notification 20s linear infinite;
     align-items: center;
     margin: 0px 10px;
     background: none;
+    height: 100%;
+    padding: 3px 10px;
     transition: 0.3s all;
     /* padding: 10px; */
 }

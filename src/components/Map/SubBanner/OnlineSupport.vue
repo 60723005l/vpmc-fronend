@@ -2,9 +2,9 @@
 <div>
     <dropdown-menu
         v-model="show">
-        <button class="btn btn-primary dropdown-toggle">
+        <md-button class="btn btn-primary dropdown-toggle">
             {{placeholder}}
-        </button>
+        </md-button>
         <div slot="dropdown" class="dropdown-content">
             <div class="option" v-for="(item, index) in options" :key="index">{{item.name}}</div>
         </div>

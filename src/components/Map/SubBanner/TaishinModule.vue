@@ -1,5 +1,5 @@
 <template>
-    <button>台新模組 </button>
+    <md-button>台新模組 </md-button>
 </template>
 <script>
 export default {

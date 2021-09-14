@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <md-button class="md-icon-button">
         <IconButton :src="'/static/icon/print.png'"/>
-    </div>
+    </md-button>
 </template>
 <script>
 import IconButton from "@/components/basicUI/IconButton"

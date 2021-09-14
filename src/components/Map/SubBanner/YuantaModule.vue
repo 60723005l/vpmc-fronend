@@ -1,5 +1,5 @@
 <template>
-    <button>元大模組</button>
+    <md-button>元大模組</md-button>
 </template>
 <script>
 export default {

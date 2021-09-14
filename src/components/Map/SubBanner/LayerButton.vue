@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <IconButton :src="'/static/icon/layer.png'" @Click="handleClick"/>
-    </div>
+    <md-button class="md-icon-button" @click="handleClick">
+        <IconButton :src="'/static/icon/layer.png'" />
+    </md-button>
 </template>
 <script>
 import IconButton from "@/components/basicUI/IconButton"
