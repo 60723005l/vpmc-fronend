@@ -6,11 +6,12 @@
             <LeafletViewer
                 :viewerContainer="containerId"
                 :option="mapOption" />
-            <Sidebar :side="'right'" :open="$store.state.subbanner.open" @collapse="handleCollaps">
+            <!-- <Sidebar :side="'right'" :open="$store.state.subbanner.open" @collapse="handleCollaps">
                 <template v-slot:body>
                     <component :is="$store.state.subbanner.current.value"></component>
                 </template>
-            </Sidebar>
+            </Sidebar> -->
+            <Sidebar :side="'left'" :open="$store.state.subbanner.open"></Sidebar>
         </div>
         
         
@@ -22,9 +23,9 @@ import Banner from "@/components/Map/Banner"
 import SubBanner from "@/components/Map/SubBanner"
 import Sidebar from "@/components/basicUI/Sidebar"
 
-import Layer from "@/components/Map/Sidebar/Layer"
-import Info from "@/components/Map/Sidebar/Info"
-import Geolocation from "@/components/Map/Sidebar/Geolocation"
+// import Layer from "@/components/Map/Sidebar/Layer"
+// import Info from "@/components/Map/Sidebar/Info"
+// import Geolocation from "@/components/Map/Sidebar/Geolocation"
 
 export default {
     name: "Map",
@@ -53,9 +54,9 @@ export default {
             SubBanner,
             Sidebar,
             //----------------
-            Layer,
-            Info,
-            Geolocation,
+            // Layer,
+            // Info,
+            // Geolocation,
 
         }            
 }

@@ -1,11 +1,22 @@
 <template>
-    <div class="sidebar-container" :class="{close: !open}" :style="cssProps">
+    <!-- <div class="sidebar-container" :class="{close: !open}" :style="cssProps">
         <div class="collapse" @click="handleCollaps">➥</div>
         <slot name='tabs'></slot>
         <slot name='body'></slot>
-    </div>
+    </div> -->
+    <md-drawer style="z-index:999;" :md-right="side==='right'" :md-active="open">
+        <md-button class="md-icon-button"  @click="handleCollaps">
+            <md-icon>home</md-icon>
+        </md-button>
+        <template>
+            <component :is="$store.state.subbanner.current.value"></component>
+        </template>
+    </md-drawer>
 </template>
 <script>
+import Layer from "@/components/Map/Sidebar/Layer"
+import Info from "@/components/Map/Sidebar/Info"
+import Geolocation from "@/components/Map/Sidebar/Geolocation"
 export default {
     name:"Sidebar",
     props:
@@ -48,9 +59,15 @@ export default {
         {
             handleCollaps()
             {
-                this.$emit('collapse')
+                // this.$emit('collapse')
+                this.$store.commit('subbanner/open', false)
             }
-        }
+        },
+    components: {
+        Layer,
+        Info,
+        Geolocation,
+    }
 }
 </script>
 <style scoped>

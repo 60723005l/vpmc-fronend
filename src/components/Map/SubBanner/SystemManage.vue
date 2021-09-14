@@ -2,7 +2,8 @@
 <div>
     <dropdown-menu
         v-model="show">
-        <md-button class="btn btn-primary dropdown-toggle ">
+        <!-- btn btn-primary dropdown-toggle -->
+        <md-button class=" md-raised md-accent">
             {{placeholder}}
         </md-button>
         <div slot="dropdown" class="dropdown-content">
