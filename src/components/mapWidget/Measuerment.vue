@@ -70,7 +70,7 @@ export default {
     beforeDestroy()
         {
             this.handleDrawCancle()
-            viewer.pm.getGeomanLayers().forEach( layer => 
+            Global.VPMC.viewer.pm.getGeomanLayers().forEach( layer => 
             {
                 viewer.removeLayer(layer)
             })

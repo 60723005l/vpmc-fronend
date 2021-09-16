@@ -1,8 +1,6 @@
 <template>
   <div class="viewer-container">
-    <div :id="viewerContainer" class="leaflet-viewer">
-      
-    </div>
+    <div :id="viewerContainer" class="leaflet-viewer"></div>
     <Measuerment v-if="measurement.activate" @onClose="measurement.onToggle" />
   </div>
   
@@ -84,7 +82,6 @@ export default {
       initMap()
       {
         let viewer = Global.VPMC.createViewer(this.option)
-        console.log(456)
         this.adjustWidget(viewer)
         this.addBasemap(viewer)
       },
