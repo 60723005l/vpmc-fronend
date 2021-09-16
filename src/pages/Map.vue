@@ -5,7 +5,8 @@
         <div class="body">
             <LeafletViewer
                 :viewerContainer="containerId"
-                :option="mapOption" />
+                :option="mapOption" 
+                :measurement="measurementOptions"/>
             <!-- <Sidebar :side="'right'" :open="$store.state.subbanner.open" @collapse="handleCollaps">
                 <template v-slot:body>
                     <component :is="$store.state.subbanner.current.value"></component>
@@ -33,18 +34,33 @@ export default {
         {
             return {
                 containerId: process.env.CONTAINERID,
-                mapOption: {}
+                mapOption: {},
             }
         },
     mounted()
         {            
             
         },
+    computed:
+        {
+            measurementOptions(){
+                    return{
+                        activate: this.$store.state.measurement.activate,
+                        onToggle: this.onMeasuerWindowToggle
+                    }
+                }
+        },
     methods:
         {
             handleCollaps()
             {
                 this.$store.commit('subbanner/open', false)
+            },
+            onMeasuerWindowToggle( )
+            {
+                this.$store.commit('measurement/toggle')
+                this.measurementOptions.activate = this.$store.state.measurement.activate
+                // this.measurementOptions.activate = !this.measurementOptions.activate
             }
         },
     components:
