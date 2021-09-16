@@ -174,6 +174,7 @@ export default {
     margin-top: -1px;
 }
 .body{
+    z-index: 1;
     background: cadetblue;
     height: 100%;
     position: relative;

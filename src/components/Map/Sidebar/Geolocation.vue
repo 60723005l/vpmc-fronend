@@ -1,10 +1,15 @@
 <template>
-    <div class="geolocation-sidebar-container col">
+    <!-- <div class="geolocation-sidebar-container col">
         <Tabs :tabs="tabs" @Click="handleTabClick"/>
         <div class="body">
             <component :is="currentTab.comp_name"></component>
         </div>
-    </div>
+    </div> -->
+    <md-tabs class="custom-tabs">
+      <md-tab v-for="(tab, index) in tabs" :key="index" :id="tab.name" :md-label="tab.name">
+          <component :is="tab.comp_name"></component>
+      </md-tab>
+    </md-tabs>
 </template>
 <script>
 
@@ -44,6 +49,6 @@ export default {
         }
 }
 </script>
-<style lang="sass">
-    @import './geolocation.scss'
+<style lang="scss">
+    @import './geolocation.scss';
 </style>

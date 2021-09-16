@@ -3,7 +3,7 @@
         <md-button class="md-icon-button" @click="handleMeasureClick">
             <IconButton :src="'/static/icon/measure.png'" />
         </md-button>
-        <Window
+        <!-- <Window
             v-if="show"
             :title="'測量'"
             :float="true"
@@ -15,7 +15,7 @@
             <template v-slot:body>
                 <component :is="currentTab.comp_name"></component>
             </template>
-        </Window>
+        </Window> -->
     </div>
 </template>
 <script>
@@ -46,6 +46,7 @@ export default {
         {
             handleMeasureClick()
             {
+                this.$store.commit('measurement/toggle')
                 this.show = true
             },
             handleTabClick(tab)

@@ -19,7 +19,7 @@
         </div>
         
     </div> -->
-    <md-toolbar class="md-dense md-primary">
+    <md-toolbar class="md-dense banner ">
         <div class="system-info row md-toolbar-section-start">
             <div class="logo group">
                 <img :src="require('@/assets/logo.png')">
@@ -77,9 +77,9 @@ export default {
 <style scoped>
 .banner{
     justify-content: space-between;
-    background: #0e3c63;
+    /* background: #0e3c63; */
     padding: 5px 0px;
-        color: white;
+    color: white;
 }
 .group{
     align-items: center;

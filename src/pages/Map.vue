@@ -5,12 +5,9 @@
         <div class="body">
             <LeafletViewer
                 :viewerContainer="containerId"
-                :option="mapOption" />
-            <Sidebar :side="'right'" :open="$store.state.subbanner.open" @collapse="handleCollaps">
-                <template v-slot:body>
-                    <component :is="$store.state.subbanner.current.value"></component>
-                </template>
-            </Sidebar>
+                :option="mapOption" 
+                :measurement="measurementOptions"/>
+            <Sidebar :side="'left'" :open="$store.state.subbanner.open"></Sidebar>
         </div>
         
         
@@ -22,28 +19,39 @@ import Banner from "@/components/Map/Banner"
 import SubBanner from "@/components/Map/SubBanner"
 import Sidebar from "@/components/basicUI/Sidebar"
 
-import Layer from "@/components/Map/Sidebar/Layer"
-import Info from "@/components/Map/Sidebar/Info"
-import Geolocation from "@/components/Map/Sidebar/Geolocation"
-
 export default {
     name: "Map",
     data()
         {
             return {
                 containerId: process.env.CONTAINERID,
-                mapOption: {}
+                mapOption: {},
             }
         },
     mounted()
         {            
             
         },
+    computed:
+        {
+            measurementOptions(){
+                    return{
+                        activate: this.$store.state.measurement.activate,
+                        onToggle: this.onMeasuerWindowToggle
+                    }
+                }
+        },
     methods:
         {
             handleCollaps()
             {
                 this.$store.commit('subbanner/open', false)
+            },
+            onMeasuerWindowToggle( )
+            {
+                this.$store.commit('measurement/toggle')
+                this.measurementOptions.activate = this.$store.state.measurement.activate
+                // this.measurementOptions.activate = !this.measurementOptions.activate
             }
         },
     components:
@@ -53,9 +61,9 @@ export default {
             SubBanner,
             Sidebar,
             //----------------
-            Layer,
-            Info,
-            Geolocation,
+            // Layer,
+            // Info,
+            // Geolocation,
 
         }            
 }

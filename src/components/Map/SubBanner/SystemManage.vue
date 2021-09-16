@@ -1,17 +1,12 @@
 <template>
-<div>
-    <dropdown-menu
-        v-model="show">
-        <md-button class="btn btn-primary dropdown-toggle ">
-            {{placeholder}}
-        </md-button>
-        <div slot="dropdown" class="dropdown-content">
-            <div class="option" 
-                v-for="(item, index) in options" :key="index"
-                @click="handleSelect(item)">{{item.name}}</div>
-        </div>
-    </dropdown-menu>
-</div>
+    <md-menu md-direction="bottom-end">
+        <md-button md-menu-trigger>{{placeholder}}</md-button>
+
+        <md-menu-content class="banner-menu-content">
+        <md-menu-item v-for="(item, index) in options" :key="index"
+                    @click="handleSelect(item)">{{item.name}}</md-menu-item>
+        </md-menu-content>
+    </md-menu>
 
 </template>
 <script>

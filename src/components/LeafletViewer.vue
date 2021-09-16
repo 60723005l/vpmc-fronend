@@ -1,9 +1,13 @@
 <template>
-  <div :id="viewerContainer" class="leaflet-viewer">
+  <div class="viewer-container">
+    <div :id="viewerContainer" class="leaflet-viewer"></div>
+    <Measuerment v-if="measurement.activate" @onClose="measurement.onToggle" />
   </div>
+  
 </template>
 
 <script>
+import Measuerment from "./mapWidget/Measuerment.vue"
 import Leaflet from 'leaflet'
 import '@geoman-io/leaflet-geoman-free';  //https://github.com/geoman-io/leaflet-geoman
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
@@ -36,12 +40,20 @@ export default {
   data ()
     {
        return {
-        msg: 'Welcome to Your Vue.js App'
+        msg: 'Welcome to Your Vue.js App',
+        
       }
 
     },
   props:
     {
+      measurement: {
+        type: Object,
+        default: () => ({
+          activate: false,
+          onToggle: () => {}
+        })
+      },
       viewerContainer:
       {
         type: String,
@@ -70,7 +82,6 @@ export default {
       initMap()
       {
         let viewer = Global.VPMC.createViewer(this.option)
-        console.log(456)
         this.adjustWidget(viewer)
         this.addBasemap(viewer)
       },
@@ -83,13 +94,27 @@ export default {
       {
         viewer.addLayer( Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') )
       }, 
+    },
+  components: 
+    {
+      Measuerment
     }
 }
 </script>
 
 <style scoped>
+.viewer-container{
+  position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
 .leaflet-viewer{
+  position: absolute;
+  top: 0px;
+  left: 0px;
   width: 100%;
-  height: 100%
+  height: 100%;
+  z-index: 1;
 }
 </style>
