@@ -3,11 +3,17 @@ import ViewerPromise from "./module/ViewerPromise";
 import Leaflet from 'leaflet'
 import { defaults } from "lodash";
 
+/**
+ *  @class
+ *  @constructor
+ *  @property {Leaflet.Map} viewer 
+ */
 class VPMC
 {
     constructor(id, option = {})
     {
         this.id = id
+        /**@type {Leaflet.Map} */
         this.viewer = undefined
         this.layerControl = undefined
         this.viewerPromise = new ViewerPromise()
