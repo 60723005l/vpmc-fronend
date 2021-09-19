@@ -81,7 +81,7 @@ export default {
 .container{
     .custom-select{
         width: 100%;
-        background: var(--md-theme-default-theme);
+        background: #424242;
         border: none;
         color: white;
         &.selected{

@@ -69,7 +69,7 @@ export default {
                     let fileList = files.map( file => ({
                         title: fileType.zh_name,
                         subtitle: file.renderName,
-                        link: process.env.BASE_API_URL + file.serverRoute.slice(1)
+                        link: process.env.BASE_BACKEND_URL + file.serverRoute.slice(1)
                     }))
                     this.decreeMap[fileType.zh_name] = fileList
                     this.titles.push(fileType.zh_name)
