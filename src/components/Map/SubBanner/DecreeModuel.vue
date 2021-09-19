@@ -19,6 +19,7 @@
     </div>
 </template>
 <script>
+import api from "../../../api"
 import { groupBy, keys } from 'lodash'
 
 const DecreeList = [
@@ -54,8 +55,26 @@ export default {
         decreeMap: DecreeMap,
         titles: titles
     }),
+    created()
+        {
+            this.extendFiles()
+        },
     methods:
         {
+            async extendFiles()
+            {
+                const fileTypes = [{zh_name: '通則', type: "GeneralLaw"}, {zh_name: '公報', type: "Bulletin"}]
+                for( let fileType of fileTypes ) {
+                    let files = await api.File.getLawFiles({item: fileType.type})
+                    let fileList = files.map( file => ({
+                        title: fileType.zh_name,
+                        subtitle: file.renderName,
+                        link: process.env.BASE_API_URL + file.serverRoute.slice(1)
+                    }))
+                    this.decreeMap[fileType.zh_name] = fileList
+                    this.titles.push(fileType.zh_name)
+                }
+            },
             handleShowDialog()
             {
                 this.showDialog = true
