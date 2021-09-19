@@ -1,4 +1,6 @@
 import axios from "axios";
+import { groupBy, keys } from "lodash";
+
 // const cors = 'https://cors-anywhere.herokuapp.com/';
 /**
  * 
@@ -68,3 +70,86 @@ export const getGeoinfoFromAddr = async ( payload ) =>
     }
 }
 
+/**
+ * 
+ * @param {String} oAPPId: "KUELVYPeym2WwQ/0/HegdG3SAC3+KlK/czjeAeDNoOhGlKMYXiwF2w==",
+ * @param {String} oAPIKey: "cGEErDNy5yNr14zbs',
+ * @param {String} oPX: '',
+ * @param {String} oPY: '',
+ * @param {String} oSRS: 'EPSG:4326',
+ * @param {String} oResultDataType: "JSON",
+ * 
+ */
+ export const getAddrfromXY = async ( payload ) =>
+ {
+     let url = 'https://addr.tgos.tw/addrws/v30/GeoQueryAddr.asmx/PointQueryNearAddr'
+     let defaultPayload = {
+        oAPPId: "hXnCKqbsocMgLj3nAtVZedsAzevpyFtw7AkTogtHPg6sm3axF7Lm2A==",
+        oAPIKey: "cGEErDNy5yM+0u7x1r+mjNNXaL9xwf/Jj+MEyjWia+ONeXsFwFMSN5w9ZGM4oFPYZXUH45vh50Ko0nYxmAqemqHygV84bozSyloCC5XPUeqfQclPHEL0ZjXHhLjcBwZ4x9v9tDt9WEY4bFNfeKJvOycL1io9OE3/mLR7URCSdgRiSh5PN2yy48VMhYZVDVrrKkcPVSBo2UmjScTjbZeaFerZ5BUsN+XrpRr2FFz/rYV0stotKR5jyUU80HohSg9lfN3/8I5WlLxWvRqeQd0ynmTilDnthfiOpjZdJbjpIA8MpExbKbqJrUz+/eYOuoODo8KBuU9xTmCrwMYmUVz37vyzxyn3cTT+sRP8gYXHiWsKfph9UAijpA==",
+        oPX: "",
+        oPY: "",
+        oSRS: "EPSG:4326",
+        oResultDataType: "JSON"
+     }
+     let params = {...defaultPayload, ...payload}
+     let headers = {
+         'Content-Type': 'application/x-www-form-urlencoded',
+     }
+     let searchParam = new URLSearchParams(params)
+     try
+     {
+         // let resp = await axios.get(url, {params, headers} )
+         let resp = await axios.post(url, searchParam.toString(), {headers})
+         console.log(resp)
+         const parser = new DOMParser()
+         const root = parser.parseFromString(resp.data, "text/xml")
+         console.log(root)
+         const result = root.querySelector("string").innerHTML
+         return JSON.parse(result)
+     }
+     catch(err)
+     {
+         return Promise.reject(err)
+     }
+ }
+
+
+/**
+ * 
+ * @param {String} oAPPId: "KUELVYPeym2WwQ/0/HegdG3SAC3+KlK/czjeAeDNoOhGlKMYXiwF2w==",
+ * @param {String} oAPIKey: "cGEErDNy5yNr14zbs',
+ * @param {String} oPX: '',
+ * @param {String} oPY: '',
+ * @param {String} oSRS: 'EPSG:4326',
+ * @param {String} oResultDataType: "JSON",
+ * 
+ */
+ export const getAdminGeoinfos = async ( payload ) =>
+ {
+     let url = `${window.location.origin}/static/adminGeoInfos.json`
+     try
+     {
+         // let resp = await axios.get(url, {params, headers} )
+         let resp = await axios.get(url)
+         console.log(resp)
+         let extendedInfos = resp.data.map(e=>({
+             county: e["行政區名"].slice(0,3), 
+             town: e["行政區名"].slice(3),
+             latlng: [e["中心點緯度"], e["中心點經度"]]
+            }))
+         const adminGeoInfo = {
+            value: groupBy(extendedInfos, "county"),
+            get counties() {
+                return keys(this.value)
+            },
+            getTownsInfoByCounty(county) {
+                return this.value[county]
+            }
+         }
+         return adminGeoInfo
+     }
+     catch(err)
+     {
+         return Promise.reject(err)
+     }
+ }
