@@ -60,6 +60,7 @@ export default {
         {
             console.log(this)
             console.log(process.env)
+            window.api = API
 
         },
     methods:
