@@ -27,6 +27,7 @@
             <SystemManage  />
             <DataMaintain  />
             <AppraisalAnalysis  />
+            <DecreeModuel  />
         </div>
         <div class="group">
             <YuantaModule  />
@@ -50,6 +51,7 @@
 import SystemManage from './SubBanner/SystemManage'
 import DataMaintain from './SubBanner/DataMaintain'
 import AppraisalAnalysis from './SubBanner/AppraisalAnalysis'
+import DecreeModuel from './SubBanner/DecreeModuel'
 //---------------
 import YuantaModule from './SubBanner/YuantaModule'
 import TaishinModule from './SubBanner/TaishinModule'
@@ -94,6 +96,7 @@ export default {
             SystemManage,
             DataMaintain,
             AppraisalAnalysis,
+            DecreeModuel,
             //-----------------
             YuantaModule,
             TaishinModule,
