@@ -43,6 +43,7 @@ export default {
         {
             async handleSearchClick()
             {
+                this.handleClear()
                 let resp = await api.Location.getGeoinfoFromAddr({oAddress: this.addr})
                 this.search.results = this.createPoints(resp.AddressList)
                 this.search.show = true
