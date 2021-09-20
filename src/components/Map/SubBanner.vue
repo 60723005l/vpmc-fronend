@@ -1,52 +1,118 @@
 <template>
-    <div class="sub-baner">
-        <button class="item">定位</button>
-        <LayerButton class="item"/>
-        <MeasureButton class="item"/>
-        <select class="item"><option value="測試">測試</option></select>
-        <select class="item"><option value="測試">測試</option></select>
-        <button class="item">測試</button>
-        <select class="item">
-            <option value="估價分析">估價分析</option>
-        </select>
-        <select class="item">
-            <option value="估價分析">內勤作業</option>
-        </select>
-    </div>
+    <!-- <div class="sub-baner">
+        <div class="group">
+            <SystemManage  class="item"/>
+            <DataMaintain  class="item"/>
+            <AppraisalAnalysis  class="item"/>
+        </div>
+        <div class="group">
+            <YuantaModule  class="item"/>
+            <TaishinModule  class="item"/>
+        </div>
+        <div class="group">
+            <OnlineSupport  class="item"/>
+            <StatsAndQuote  class="item"/>
+        </div>
+        <div class="group">
+            <GeolocationButton class="item"/>
+            <LayerButton class="item"/>
+            <MeasureButton class="item"/>
+            <InfoButton class="item"/>
+            <PrintButton class="item"/>
+            <FullScreenButton class="item"/>
+        </div>
+    </div> -->
+    <md-toolbar class="md-dense sub-baner md-third">
+        <div class="group">
+            <SystemManage  />
+            <DataMaintain  />
+            <AppraisalAnalysis  />
+            <DecreeModuel  />
+        </div>
+        <div class="group">
+            <YuantaModule  />
+            <TaishinModule  />
+        </div>
+        <div class="group">
+            <OnlineSupport  />
+            <StatsAndQuote  />
+        </div>
+        <div class="group">
+            <GeolocationButton />
+            <LayerButton />
+            <MeasureButton />
+            <InfoButton />
+            <PrintButton />
+            <FullScreenButton />
+        </div>
+    </md-toolbar>
 </template>
 <script>
+import SystemManage from './SubBanner/SystemManage'
+import DataMaintain from './SubBanner/DataMaintain'
+import AppraisalAnalysis from './SubBanner/AppraisalAnalysis'
+import DecreeModuel from './SubBanner/DecreeModuel'
+//---------------
+import YuantaModule from './SubBanner/YuantaModule'
+import TaishinModule from './SubBanner/TaishinModule'
+//---------------
+import OnlineSupport from './SubBanner/OnlineSupport'
+import StatsAndQuote from './SubBanner/StatsAndQuote'
+
+//---------------
 import LayerButton from './SubBanner/LayerButton'
 import MeasureButton from './SubBanner/MeasureButton'
-
+import GeolocationButton from './SubBanner/GeolocationButton'
+import PrintButton from './SubBanner/PrintButton'
+import InfoButton from './SubBanner/InfoButton'
+import FullScreenButton from './SubBanner/FullScreenButton'
 
 export default {
     name: "SubBanner",
+    mounted()
+        {
+            this.setSubBannerSideBarVuex()
+        },
+    methods:
+        {
+            setSubBannerSideBarVuex()
+            {
+                //value will be component name that used in sidebar slot
+                let map_list = [
+                    {key: 'Layer', value: 'Layer'},
+                    {key: 'Geolocation', value: 'Geolocation'},
+                    {key: 'Info', value: 'Info'},
+                ]
+                map_list.forEach( item =>
+                {
+                    let {key, value} = item
+                    this.$store.commit('subbanner/addComponent', {key, value})
+                })
+                
+            }
+        },
     components:
         {
+            SystemManage,
+            DataMaintain,
+            AppraisalAnalysis,
+            DecreeModuel,
+            //-----------------
+            YuantaModule,
+            TaishinModule,
+            //------------------
+            OnlineSupport,
+            StatsAndQuote,
+            //-------------------
             LayerButton,
-            MeasureButton
+            MeasureButton,
+            GeolocationButton,
+            PrintButton,
+            InfoButton,
+            FullScreenButton
         }
 }
 </script>
-<style scoped>
-.sub-baner{
-    display: flex;
-    justify-content: center;
-    background: #dcdcdc;
-    box-shadow: 0px 5px 2px 0 #0000008c;
-    z-index: 500;
-}
-.sub-baner .item{
-    background: #ffffff6b;
-    border: 1px solid #ffffff;
-    margin: 0px 5px;
-    padding: 5px 10px;
-    border-radius: 0px;
-    cursor: pointer;
-    -webkit-transition: 0.5s all;
-    transition: 0.3s all;
-}
-.sub-baner .item:hover{
-    background: #2280fb69;
-}
+<style lang="sass">
+    @import "./subbanner.scss"
 </style>

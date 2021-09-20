@@ -1,6 +1,5 @@
-
-
-
+import { isNull } from 'lodash';
+import validator from 'validator';
 
 /**
  * @param {Array} option.input - Array-like table
@@ -57,7 +56,23 @@ class TableBuilder
     
 
 }
-
+TableBuilder.__proto__.createHTML = ( header, row ) =>
+{
+    var table_start = `<div class="vpmc-popup-content"><table><tbody>`,
+        table_end = `</tbody></table></div>`
+    header.forEach( (key, index) =>
+        {
+            var value = isNull(row[index]) ? '' : row[index]
+            var td1 = `<td> ${key} </td>`,
+                td2 = `<td> ${value} </td>`
+            if( validator.isURL(value) )
+            {
+                td2 = `<td> <a href="${value}" target="_blank">${value}</a> </td>`
+            }
+            table_start += `<tr> ${td1} ${td2} </tr>`
+        })
+    return table_start + table_end
+}
 
 function set_TH_index(header)
 {

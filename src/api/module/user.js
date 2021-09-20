@@ -1,3 +1,4 @@
+import axios from "axios";
 // const cors = 'https://cors-anywhere.herokuapp.com/';
 /**
  * 
@@ -5,28 +6,19 @@
  * @param {String} payload.password
  * 
  */
-export const login = ( payload ) =>
+export const login = async ( payload ) =>
 {
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    let raw = JSON.stringify(payload);
-    let requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow',
-        credentials: 'include'
-    };
-
-    return new Promise( ( res, rej ) =>
+    let url = process.env.BASE_API_URL+'JwtAuth/authenticate'
+    try
     {
-        fetch(process.env.BASE_API_URL+'JwtAuth/authenticate', requestOptions)
-        .then( resp => resp.text())
-        .then( resp => res(resp))
-        .catch( err => rej(err))
-    } )
-
+        let resp = await axios.post(url, payload, { withCredentials: true }) //cookies will be written when withCredentials true
+        console.log(resp)
+        return resp.data
+    }
+    catch(err)
+    {
+        return Promise.reject(err)
+    }
 }
 
 /**
@@ -37,24 +29,22 @@ export const login = ( payload ) =>
  * @param {String} payload.phoneNumber
  * 
  */
- export const register = ( payload ) =>
+ export const register = async ( payload ) =>
  {
-     let myHeaders = new Headers();
-     myHeaders.append("Content-Type", "application/json");
- 
-     let raw = JSON.stringify(payload);
-     let requestOptions = {
-         method: 'POST',
-         headers: myHeaders,
-         body: raw,
-         redirect: 'follow',
-         credentials: 'include'
-     };
-     return new Promise( ( res, rej ) =>
-    {
-        fetch(process.env.BASE_API_URL+'JwtAuth/register', requestOptions)
-        .then( resp => resp.text())
-        .then( resp => res(resp))
-        .catch( err => rej(err))
-    } )
+    let url = process.env.BASE_API_URL+'JwtAuth/authenticate'
+    let resp = await axios.post(url, payload)
+    return resp.text()
+ }
+
+ export const validate = async ( token ) =>
+ {
+     let url = process.env.BASE_API_URL + 'JwtAuth/validate?token=' + token
+     try{
+        let resp = await axios.get(url)
+        return resp.data
+     }
+     catch(err){
+         return Promise.reject(err)
+     }
+     
  }

@@ -43,7 +43,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     watchOptions: {
       poll: config.dev.poll,
     },
-    https: true
+    https: config.dev.protocol === 'https'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -83,7 +83,7 @@ module.exports = new Promise((resolve, reject) => {
       // Add FriendlyErrorsPlugin
       devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
         compilationSuccessInfo: {
-          messages: [`Your application is running here: https://localhost:8080`],
+          messages: [`Your application is running here: ${config.dev.protocol}://localhost:8080`],
         },
         onErrors: config.dev.notifyOnErrors
         ? utils.createNotifierCallback()

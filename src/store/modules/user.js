@@ -10,16 +10,21 @@ const state = () => ({
 
 // actions
 const actions = {
+  /**
+   * 
+   * @example
+   * payload = { username, token }
+   */
   async login ({ commit, state }, payload ) 
   {
     try
     {
-
-      let token = await API.User.login(payload)
+      // console.log(payload)
+      // let token = await API.User.login(payload)
       commit('setUsername', payload.username)
-      commit('setToken', token)
+      commit('setToken', payload.token)
       commit('setLoginStatus', true)
-      return {...payload, token}
+      return {...payload}
     }
     catch( err )
     {

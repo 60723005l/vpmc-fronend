@@ -1,0 +1,36 @@
+body {
+    .banner-menu-content{
+        z-index: 400;
+    }
+}
+.sub-baner{
+    display: flex;
+    justify-content: center;
+    background: #dcdcdc;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .group{
+        display: flex;
+        align-items: center;
+    }
+    .dropdown{
+        // button{
+        //     border: 0px;
+        //     background: none;
+        // }
+        .dropdown-content{
+            background: variable-exists($name: md-theme);
+            position: absolute;
+            border: 1px solid #a0a0a0;
+            .option{
+                padding: 3px 10px;
+            }
+            .option:hover{
+                background: rgb(0, 119, 255);
+                // color: white;
+            }
+        }
+    }
+    
+    
+}

@@ -1,8 +1,28 @@
 <template>
-    <button>圖層</button>
+    <md-button class="md-icon-button" @click="handleClick">
+        <IconButton :src="'/static/icon/layer.png'" />
+    </md-button>
 </template>
 <script>
+import IconButton from "@/components/basicUI/IconButton"
+
 export default {
-    name: "LayerButton"
+    name: "LayerButton",
+    methods:
+        {
+            handleClick()
+            {
+                this.$store.dispatch('subbanner/activate', 'Layer')
+                this.$store.commit('subbanner/open', true)
+                
+            }
+        },
+    components:
+        {
+            IconButton
+        }
 }
 </script>
+<style scoped>
+
+</style>
