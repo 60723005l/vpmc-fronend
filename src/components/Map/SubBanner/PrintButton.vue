@@ -1,5 +1,5 @@
 <template>
-    <md-button class="md-icon-button">
+    <md-button class="md-icon-button" @click="handlePrintClick">
         <IconButton :src="'/static/icon/print.png'"/>
     </md-button>
 </template>
@@ -11,6 +11,14 @@ export default {
     components:
         {
             IconButton
+        },
+    methods:
+        {
+            handlePrintClick()
+            {
+                this.$store.commit('subbanner/open', false)
+                setTimeout(print, 1000)
+            }
         }
 }
 </script>

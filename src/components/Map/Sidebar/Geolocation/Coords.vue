@@ -48,8 +48,9 @@ export default {
         {
             async handleSubmit()
             {
-                this.handleClear()
+                
                 let resp = await api.Location.getAddrfromXY({oPX:this.lng, oPY:this.lat})
+                this.handleClear()
                 this.search.results = this.createPoints(resp.AddressList)
                 this.search.show = true
             },

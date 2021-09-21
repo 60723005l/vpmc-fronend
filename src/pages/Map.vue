@@ -7,7 +7,10 @@
                 :viewerContainer="containerId"
                 :option="mapOption" 
                 :measurement="measurementOptions"/>
-            <Sidebar :side="'left'" :open="$store.state.subbanner.open"></Sidebar>
+            <Sidebar 
+                :basemaps="basemaps"
+                :side="'left'" 
+                :open="$store.state.subbanner.open"></Sidebar>
         </div>
         
         
@@ -19,6 +22,11 @@ import Banner from "@/components/Map/Banner"
 import SubBanner from "@/components/Map/SubBanner"
 import Sidebar from "@/components/basicUI/Sidebar"
 
+import api from "../api"
+import Global from "../global"
+import Layer, { LayerInfo } from "../VPMC/module/Layer"
+import Type from '../VPMC/module/Layer/Type'
+
 export default {
     name: "Map",
     data()
@@ -26,7 +34,12 @@ export default {
             return {
                 containerId: process.env.CONTAINERID,
                 mapOption: {},
+                basemaps:[]
             }
+        },
+    created()
+        {
+            this.setBasemaps()
         },
     mounted()
         {            
@@ -52,7 +65,33 @@ export default {
                 this.$store.commit('measurement/toggle')
                 this.measurementOptions.activate = this.$store.state.measurement.activate
                 // this.measurementOptions.activate = !this.measurementOptions.activate
-            }
+            },
+            async setBasemaps()
+            {
+                let basemaps = await api.Layer.getBasemaps()
+                this.addToMap(basemaps)
+            },
+            addToMap( rawLayers )
+            {
+                rawLayers.forEach( (layer, index) => {
+                    let layerItem = new Layer( 
+                        new LayerInfo({
+                            name: layer.name,
+                            type: Type.WMTS,
+                            options: { url: layer.url }
+                        })
+                    )
+                    
+                    Global.VPMC.viewerPromise.execute( viewer => 
+                    {
+                        layerItem.addToMap(viewer)
+                        .addToControler( Global.VPMC.layerControl )
+                        layerItem.show = false
+                    })
+                    
+                })
+                this.basemaps = Global.VPMC.layerControl.layerInfos
+            },
         },
     components:
         {

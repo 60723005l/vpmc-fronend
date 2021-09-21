@@ -92,6 +92,7 @@ export const getGeoinfoFromAddr = async ( payload ) =>
         oResultDataType: "JSON"
      }
      let params = {...defaultPayload, ...payload}
+     console.log(params)
      let headers = {
          'Content-Type': 'application/x-www-form-urlencoded',
      }

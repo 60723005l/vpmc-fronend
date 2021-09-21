@@ -1,12 +1,12 @@
 <template>
-    <md-drawer md-persistent="full" :md-right="side==='right'" :md-active="open">
+    <md-drawer class="sidebar-container" md-persistent="full" :md-right="side==='right'" :md-active="open">
         <md-button class="md-icon-button"  @click="handleCollaps">
             <md-icon>menu_open</md-icon>
         </md-button>
         <md-divider/>
-        <template>
+        <keep-alive>
             <component :is="$store.state.subbanner.current.value"></component>
-        </template>
+        </keep-alive>
     </md-drawer>
 </template>
 <script>
@@ -68,32 +68,6 @@ export default {
 </script>
 <style scoped>
 .sidebar-container{
-    position: absolute;
-    left: var(--left);
-    right: var(--right);
-    top: 0px;
-    background: #ffffffc7;
-    height: 100%;
-    min-width: 300px;
-    width: auto;
-    z-index: 1000;
-    transition: 0.3s all;
-}
-.sidebar-container.close{
-    min-width: 0px;
-    width: 0px;
-}
-.sidebar-container.close .collapse{
-    display: none;
-}
-.collapse{
-    font-size: 20px;
-    position: absolute;
-    top: 0px;
-    left: -26px;
-    background: #0e3c63;
-    color: white;
-    padding: 0px 3px;
-    cursor: pointer;
+    z-index: 1;
 }
 </style>
