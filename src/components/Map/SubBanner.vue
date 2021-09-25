@@ -29,7 +29,7 @@
             <AppraisalAnalysis  />
             <DecreeModuel  />
         </div>
-        <div class="group">
+        <div class="group" v-if="$store.state.user.role ==='Admin'">
             <YuantaModule  />
             <TaishinModule  />
         </div>
