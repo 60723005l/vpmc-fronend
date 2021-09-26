@@ -62,6 +62,10 @@ export default {
                 return addrs.map( addr => {
                     let marker = Leaflet.marker( new Leaflet.LatLng(addr.Y, addr.X) )
                     marker.bindPopup(addr.FULL_ADDR)
+                    marker.on( 'click', e => {
+                        let properties = addr
+                        this.$store.commit('subbanner/setPayload', {key: "Info", payload: {properties}})
+                    } )
                     Global.VPMC.viewer.addLayer(marker)
                     return {
                         ...addr,

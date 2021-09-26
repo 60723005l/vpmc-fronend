@@ -1,7 +1,6 @@
 import axios from "axios";
 import { groupBy, keys } from "lodash";
 
-// const cors = 'https://cors-anywhere.herokuapp.com/';
 /**
  * 
  * @param {String} oAPPId: "KUELVYPeym2WwQ/0/HegdG3SAC3+KlK/czjeAeDNoOhGlKMYXiwF2w==",
@@ -154,3 +153,27 @@ export const getGeoinfoFromAddr = async ( payload ) =>
          return Promise.reject(err)
      }
  }
+
+ /**
+  * 
+  * @param {{"lands[]":"臺北市華興段三小段142號"}} payload
+  * @returns {{
+  * features: [{
+  * type: "Feature",
+  * geometry: {},
+  * properties: {}
+  * }],
+  * type: "FeatureCollection"
+  * }}
+  */
+ export const getGeomByLands = async ( payload ) => 
+ {
+     let url = `https://twland.ronny.tw/index/search`
+     try {
+        let resp = await axios.get( url, {params: payload})
+        return resp.data
+     } catch ( error ) {
+         Promise.reject( error )
+     }
+     
+ } 

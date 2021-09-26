@@ -1,19 +1,38 @@
 // import shop from '../../api/shop'
+import store from '..'
 import API from '../../api'
 
+/**
+ * @interface
+ */
+ export const ILoginPayload = { username: '', token: '', role: '', id: '' }
+
+/**
+ * @interface
+ */
+export const IState = {username: '',token: '',group: '', role: '', id: '',isLogin: false}
+
+/**
+ * 
+ * @returns {IState}
+ */
 const state = () => ({
   username: '',
   token: '',
+  role: '',
+  id: '',
   group: '',
   isLogin: false
 })
+
 
 // actions
 const actions = {
   /**
    * 
    * @example
-   * payload = { username, token }
+   * @param {{commit: import('vuex').Commit, state: IState}}
+   * @param {ILoginPayload} payload
    */
   async login ({ commit, state }, payload ) 
   {
@@ -24,6 +43,8 @@ const actions = {
       commit('setUsername', payload.username)
       commit('setToken', payload.token)
       commit('setLoginStatus', true)
+      commit('setRole', payload.role)
+      commit('setId', payload.id)
       return {...payload}
     }
     catch( err )
@@ -52,6 +73,12 @@ const mutations = {
   setLoginStatus (state, status) {
     state.isLogin = status
   },
+  setRole ( state, role ) {
+    state.role = role
+  },
+  setId ( state, id ) {
+    state.id = id
+  }
 
 
 }
