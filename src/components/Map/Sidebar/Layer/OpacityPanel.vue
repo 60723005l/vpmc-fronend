@@ -58,14 +58,12 @@ export default {
             getOpacity()
             {
                 let layer = Global.VPMC.layerControl.get(this.layerInfo)
-                console.log(1,layer.content.options.opacity )
                 this.value = layer.content.options.opacity || "1"
             },
             handleInputChange()
             {
                 let layer = Global.VPMC.layerControl.get(this.layerInfo)
                 layer.content.setOpacity( this.value )
-                console.log(2,layer.content.options.opacity )
             },
             asdf(){
                 // this.$parent.

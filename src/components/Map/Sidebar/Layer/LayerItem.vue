@@ -40,7 +40,6 @@ export default {
         {
             handleClick()
             {
-                console.log(333)
             },
             handleCheck(event)
             {

@@ -57,7 +57,6 @@ export default {
             {
                 let layerControl = Global.VPMC.layerControl
                 let layerItem = layerControl.get( layer )
-                console.log(layerItem)
                 layerItem.show = checked
                 layerItem.zIndex = layer.zIndex
                 layerControl.setLayerList()

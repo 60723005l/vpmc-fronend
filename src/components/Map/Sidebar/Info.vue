@@ -31,7 +31,7 @@ export default {
                 return isEmpty( this.properties )
             },
             names() {
-                if( this.isEmpty ) return []
+                if( this.isEmpty  ) return []
                 return Object.keys( this.properties )
             }
         }

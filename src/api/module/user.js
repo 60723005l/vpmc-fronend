@@ -29,10 +29,9 @@ export const login = async (payload) => {
 export const register = async (payload) => {
     try {
         let url = process.env.BASE_API_URL + 'JwtAuth/register'
-        let resp = await axios.post(url, payload)
-        return resp.text()
+        await axios.post(url, payload)
+        return 'ok'
     } catch ( error ) {
-        console.log(3333333)
         return Promise.reject(error)
     }
 }

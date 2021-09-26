@@ -11,14 +11,19 @@
                 <label for="username">帳號</label>
                 <md-input name="username"  v-model="username" required></md-input>
             </md-field>
-            <md-field :class="{'md-invalid': this.psw.errmsg !== ''}" :md-toggle-password="false">
+            <md-field :class="{'md-invalid': psw.errmsg !== ''}" :md-toggle-password="false">
                 <label >密碼</label>
                 <md-input :type="psw_inputType" autocomplete="off" v-model="password" @input="checkPassword"></md-input>
                 <md-button class="md-icon-button" @click="psw.show = !psw.show"><md-icon>{{psw_iconType}}</md-icon></md-button>
                 <span class="md-error">{{psw.errmsg}}</span>
             </md-field>
+            <md-field :class="{'md-invalid': psw2.errmsg !== ''}">
+                <label >再次輸入密碼</label>
+                <md-input type="password" v-model="password_2" required @input="checkPassword2"></md-input>
+                <span class="md-error">{{psw2.errmsg}}</span>
+            </md-field>
 
-            <md-field :class="{'md-invalid': this.email.errmsg !== ''}">
+            <md-field :class="{'md-invalid':email.errmsg !== ''}">
                 <label >E-mail</label>
                 <md-input v-model="email.value" required @input="checkEmail"></md-input>
                 <span class="md-error">{{email.errmsg}}</span>
@@ -46,12 +51,14 @@ export default {
     data: () => ({
         username: "",
         password: "",
+        password_2: "",
         email: {
             value: "",
             errmsg: ''
         },
         phone: null,
         psw: { show: false, inputType: 'text', errmsg: '' },
+        psw2: { show: false, inputType: 'text', errmsg: '' },
         errmsg: ""
     }),
     mounted()
@@ -80,13 +87,14 @@ export default {
                 if (
                     (this.password !== null && this.password !== "") &&
                     this.checkPassword() &&
+                    this.checkPassword2() &&
                     this.checkEmail() &&
                     (this.phone !== null && this.phone !== "")
                 ) {
                     this.errmsg = ''
                     return true
                 } else {
-                    this.errmsg = 'form not complete'
+                    this.errmsg = '未輸入完全'
                     return false
                 }
             },
@@ -97,6 +105,16 @@ export default {
                     return true
                 } else {
                     this.psw.errmsg = 'invalid password'
+                    return false
+                }
+            },
+            checkPassword2()
+            {
+                if( this.password_2 === this.password ) {
+                    this.psw2.errmsg = ''
+                    return true
+                } else {
+                    this.psw2.errmsg = 'different password'
                     return false
                 }
             },
@@ -121,7 +139,6 @@ export default {
                             phoneNumber: this.phone
                         })
                     } catch ( error ) {
-                        console.log(12)
                         this.errmsg = error.message
                     }
                 }

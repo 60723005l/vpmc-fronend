@@ -47,9 +47,7 @@ class Layer {
     }
     get zIndex() { return this.info.zIndex }
     set zIndex( val ) {
-        console.log(val, 2323223)
         if( this.isAddedToMap() ) {
-            console.log(val, 121212)
             this.info.setZIndex( val )
             this.content.setZIndex( val )
         }
