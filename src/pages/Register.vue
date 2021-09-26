@@ -138,6 +138,7 @@ export default {
                             email: this.email.value,
                             phoneNumber: this.phone
                         })
+                        this.$router.push({name: 'Login'})
                     } catch ( error ) {
                         this.errmsg = error.message
                     }
