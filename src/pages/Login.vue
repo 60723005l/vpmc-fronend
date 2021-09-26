@@ -1,6 +1,6 @@
 <template>
     <div style="width: 100vw;height: 100vh;overflow: hidden;">
-        <video autoplay muted restart style="width: 100vw;">
+        <video autoplay muted restart class="myVideo">
             <source src="/static/domo-vdo.mp4" type="video/mp4">
         </video>
         <div class="login-container col" autocomplete="off">
@@ -132,6 +132,14 @@ export default {
 }
 </script>
 <style scoped>
+.myVideo {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 .login-container{
     padding: 30px;
     border: 1px rgb(187 187 187) solid;

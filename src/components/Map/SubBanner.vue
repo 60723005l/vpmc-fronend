@@ -79,14 +79,14 @@ export default {
             {
                 //value will be component name that used in sidebar slot
                 let map_list = [
-                    {key: 'Layer', value: 'Layer'},
-                    {key: 'Geolocation', value: 'Geolocation'},
-                    {key: 'Info', value: 'Info'},
+                    {key: 'Layer', value: 'Layer', payload: {}},
+                    {key: 'Geolocation', value: 'Geolocation', payload: {}},
+                    {key: 'Info', value: 'Info', payload: {}},
                 ]
                 map_list.forEach( item =>
                 {
-                    let {key, value} = item
-                    this.$store.commit('subbanner/addComponent', {key, value})
+                    let {key, value, payload} = item
+                    this.$store.commit('subbanner/addComponent', {key, value, payload})
                 })
                 
             }
