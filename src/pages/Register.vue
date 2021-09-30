@@ -1,5 +1,8 @@
 <template>
     <div class="register-container">
+        <video autoplay muted restart class="myVideo">
+            <source src="/static/domo-vdo.mp4" type="video/mp4">
+        </video>
         <form autocomplete="nope">
 <!-- prevent browser autocomplete ignore this block------------------ -->
 <md-field class="preventer"><label for="username2">帳號</label><md-input name="username2" required></md-input></md-field>
@@ -167,12 +170,13 @@ export default {
     height: 100vh;
     form{
         padding: 15px;
-        background: white;
+        background: #ffffffed;
         margin: 15px;
         min-width: 300px;
+        z-index: 1;
         .preventer{
             position: fixed;
-            top: -1000px;
+            top: -10000px;
             left: 0px;
         }
         .error{
@@ -180,5 +184,12 @@ export default {
         }
     }
 }
-
+.myVideo {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 </style>

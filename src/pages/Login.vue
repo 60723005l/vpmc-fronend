@@ -21,12 +21,13 @@
                     <span>{{errmsg}}</span>
                 </div>
                 <md-card-actions>
+                    <md-button class="md-primary md-raised" @click="handleDevLogin('訪客')">訪客登入</md-button>
                     <md-button class="md-primary md-raised" @click="handleFormSubmit">登入</md-button>
                </md-card-actions>
                 <div>
                     <!-- <p><input type="submit" value="登入"></p> -->
-                    <p><button @click="handleDevLogin('Admin')">DEV_Admin</button></p>
-                    <p><button @click="handleDevLogin('Anymouse')">DEV_Anymouse</button></p>
+                    <!-- <p><button @click="handleDevLogin('Admin')">DEV_Admin</button></p> -->
+                    <!-- <p><md-button @click="handleDevLogin('Anymouse')">DEV_Anymouse</md-button></p> -->
                 </div>
                 <div>
                     <router-link :to="{ name: 'Register' }">註冊</router-link>
@@ -121,7 +122,7 @@ export default {
             async handleDevLogin( role )
             {
                 let {username} = await this.$store.dispatch('user/login', {
-                        username: `dev_${role}`,
+                        username: `${role}`,
                         token: `dev_${role}`,
                         role: role,
                         id: `dev_${role}`
