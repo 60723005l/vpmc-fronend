@@ -1,5 +1,6 @@
 import axios from "axios";
 import { groupBy, keys } from "lodash";
+import admins from "../../assets/adminGeoInfos.json"
 
 /**
  * 
@@ -130,9 +131,14 @@ export const getGeoinfoFromAddr = async ( payload ) =>
      try
      {
          // let resp = await axios.get(url, {params, headers} )
-         let resp = await axios.get(url)
-         console.log(resp)
-         let extendedInfos = resp.data.map(e=>({
+        //  let resp = await axios.get(url)
+        //  console.log(resp)
+        //  let extendedInfos = resp.data.map(e=>({
+        //      county: e["行政區名"].slice(0,3), 
+        //      town: e["行政區名"].slice(3),
+        //      latlng: [e["中心點緯度"], e["中心點經度"]]
+        //     }))
+         let extendedInfos = admins.map(e=>({
              county: e["行政區名"].slice(0,3), 
              town: e["行政區名"].slice(3),
              latlng: [e["中心點緯度"], e["中心點經度"]]

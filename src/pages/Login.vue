@@ -1,7 +1,7 @@
 <template>
     <div style="width: 100vw;height: 100vh;overflow: hidden;">
         <video autoplay muted restart class="myVideo">
-            <source src="/static/domo-vdo.mp4" type="video/mp4">
+            <source :src="require('@/assets/domo-vdo.mp4')" type="video/mp4">
         </video>
         <div class="login-container col" autocomplete="off">
             <div class="logo row">

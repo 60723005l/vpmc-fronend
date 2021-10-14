@@ -1,7 +1,7 @@
 <template>
     <div>
         <md-button class="md-icon-button" @click="handleMeasureClick">
-            <IconButton :src="'/static/icon/measure.png'" />
+            <IconButton :src="require('@/assets/icon/measure.png')"/>
         </md-button>
         <!-- <Window
             v-if="show"

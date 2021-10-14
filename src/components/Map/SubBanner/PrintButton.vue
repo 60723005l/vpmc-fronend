@@ -1,6 +1,6 @@
 <template>
     <md-button class="md-icon-button" @click="handlePrintClick">
-        <IconButton :src="'/static/icon/print.png'"/>
+        <IconButton :src="require('@/assets/icon/print.png')"/>
     </md-button>
 </template>
 <script>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import basemaps from "../../assets/basemaps.json"
 
 /**
  * 
@@ -10,8 +11,9 @@ export const getBasemaps = async ( payload ) =>
     let url = `${window.location.origin}/static/basemaps.json`
     try
     {
-        let resp = await axios.get(url)
-        return resp.data
+        // let resp = await axios.get(url)
+        // return resp.data
+        return basemaps
     }
     catch(err)
     {

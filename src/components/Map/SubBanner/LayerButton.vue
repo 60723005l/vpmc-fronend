@@ -1,6 +1,6 @@
 <template>
     <md-button class="md-icon-button" @click="handleClick">
-        <IconButton :src="'/static/icon/layer.png'" />
+        <IconButton :src="require('@/assets/icon/layer.png')"/>
     </md-button>
 </template>
 <script>
