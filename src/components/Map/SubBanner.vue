@@ -37,7 +37,7 @@
             <OnlineSupport  />
             <StatsAndQuote  />
         </div>
-        <div class="group">
+        <div class="group align-start">
             <GeolocationButton />
             <LayerButton />
             <MeasureButton />

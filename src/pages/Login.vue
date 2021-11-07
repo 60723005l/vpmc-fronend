@@ -11,11 +11,15 @@
                 <md-field class="field">
                     <label for="username">帳號</label>
                     <md-input type="text" id="username" v-model="username"></md-input>
+                    <span class="vpmc-helper-text">請輸入6-20碼英/數混合字元</span>
                 </md-field>
                 <md-field class="field" :md-toggle-password="false">
                     <label for="password">密碼</label>
                     <md-input :type="psw_inputType" id="password" class="" v-model="password"></md-input>
                     <md-button class="md-icon-button" @click="togglePassword"><md-icon>{{psw_iconType}}</md-icon></md-button>
+                    <span class="vpmc-helper-text">
+                        至少8個字元，混合大小寫英文、數字及符號
+                    </span>
                 </md-field>
                 <div class="errmsg">
                     <span>{{errmsg}}</span>

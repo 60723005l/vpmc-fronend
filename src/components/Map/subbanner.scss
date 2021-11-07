@@ -7,13 +7,19 @@ body {
 }
 .sub-baner{
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     background: #dcdcdc;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    // justify-content: space-between;
+    // flex-wrap: wrap;
     .group{
         display: flex;
         align-items: center;
+        &.align-start{
+            align-items: flex-start;
+            flex: 1;
+            display: flex;
+            justify-content: end;
+        }
         .md-button.md-theme-default{
             color: $vpmc-color-primary !important;
         }

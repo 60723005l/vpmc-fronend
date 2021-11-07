@@ -1,8 +1,8 @@
 <template>
     <div>
-        <md-button class="md-icon-button" @click="handleMeasureClick">
-            <IconButton :src="require('@/assets/icon/measure.png')"/>
-        </md-button>
+        <!-- <md-button class="md-icon-button" @click="handleMeasureClick"> -->
+            <IconButton :src="require('@/assets/icon/measure.png')"  :text="'測量'" @Click="handleMeasureClick"/>
+        <!-- </md-button> -->
         <!-- <Window
             v-if="show"
             :title="'測量'"

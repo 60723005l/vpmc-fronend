@@ -1,7 +1,7 @@
 <template>
-    <md-button class="md-icon-button" @click="handlePrintClick">
-        <IconButton :src="require('@/assets/icon/print.png')"/>
-    </md-button>
+    <!-- <md-button class="md-icon-button" @click="handlePrintClick"> -->
+        <IconButton :src="require('@/assets/icon/print.png')" :text="'列印'" @Click="handlePrintClick"/>
+    <!-- </md-button> -->
 </template>
 <script>
 import IconButton from "@/components/basicUI/IconButton"
