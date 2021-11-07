@@ -1,21 +1,6 @@
 <template>
     <div>
-        <!-- <md-button class="md-icon-button" @click="handleMeasureClick"> -->
-            <IconButton :src="require('@/assets/icon/measure.png')"  :text="'測量'" @Click="handleMeasureClick"/>
-        <!-- </md-button> -->
-        <!-- <Window
-            v-if="show"
-            :title="'測量'"
-            :float="true"
-            :resize="false"
-            @onClose="handleWindowClose">
-            <template v-slot:windowBar>
-                <Tabs :tabs="tabs" @Click="handleTabClick"/>
-            </template>
-            <template v-slot:body>
-                <component :is="currentTab.comp_name"></component>
-            </template>
-        </Window> -->
+        <IconButton :src="require('@/assets/icon/measure.png')"  :text="'測量'" @Click="handleMeasureClick"/>
     </div>
 </template>
 <script>
@@ -25,8 +10,7 @@ import Window from "@/components/basicUI/Window"
 import MeasureDistance from "./Measurement/MeasureDistance.vue"
 import MeasureArea from "./Measurement/MeasureArea.vue"
 
-import * as turf from '@turf/turf'
-console.log(turf)
+// import * as turf from '@turf/turf'
 
 let tabs = [
     {name:'面積', comp_name:'MeasureArea'},

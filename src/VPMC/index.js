@@ -22,7 +22,8 @@ class VPMC
     {
         let _option = defaults(option, {
             center: [24.86471, 121.29002],
-            zoom: 13
+            zoom: 13,
+            maxZoom: 22
         })
 
         this.viewer = Leaflet.map( this.id, _option)

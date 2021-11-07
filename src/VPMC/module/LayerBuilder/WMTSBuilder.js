@@ -13,7 +13,7 @@ class WMTSBuilder extends Builder {
      * @param {LayerInfo} info 
      */
     processor( info ){
-        return Leaflet.tileLayer(info.options.url)
+        return Leaflet.tileLayer(info.options.url, {maxZoom: 22, maxNativeZoom: 18})
     }
 }
 export default WMTSBuilder
