@@ -22,7 +22,7 @@
             <FullScreenButton class="item"/>
         </div>
     </div> -->
-    <md-toolbar class="md-dense sub-baner md-third">
+    <md-toolbar class="md-dense sub-baner md-third vpmc-subbanner">
         <div class="group">
             <SystemManage  />
             <DataMaintain  />
@@ -79,14 +79,13 @@ export default {
             {
                 //value will be component name that used in sidebar slot
                 let map_list = [
-                    {key: 'Layer', value: 'Layer', payload: {}},
-                    {key: 'Geolocation', value: 'Geolocation', payload: {}},
-                    {key: 'Info', value: 'Info', payload: {}},
+                    {key: 'Layer', value: 'Layer', title: '圖層', payload: {}},
+                    {key: 'Geolocation', value: 'Geolocation', title: '定位', payload: {}},
+                    {key: 'Info', value: 'Info', title: '資訊', payload: {}},
                 ]
                 map_list.forEach( item =>
                 {
-                    let {key, value, payload} = item
-                    this.$store.commit('subbanner/addComponent', {key, value, payload})
+                    this.$store.commit('subbanner/addComponent', {...item})
                 })
                 
             }
@@ -114,5 +113,10 @@ export default {
 }
 </script>
 <style lang="sass">
-    @import "./subbanner.scss"
+    @import "./subbanner.scss";
+</style>
+<style lang="scss" scoped>
+.vpmc-subbanner{
+    background-color: $vpmc-bg-subbanner !important;
+}
 </style>

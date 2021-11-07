@@ -13,8 +13,8 @@
             </md-card-content>
             
             <md-card-actions>
-                <md-button @click="handleClear">清除</md-button>
-                <md-button @click="handleSubmit">查詢</md-button>
+                <md-button class="vpmc-btn" @click="handleClear">清除</md-button>
+                <md-button class="vpmc-btn" @click="handleSubmit">查詢</md-button>
             </md-card-actions>
         </md-card>
         <md-list class="search-list" v-if="search.show">

@@ -1,0 +1,80 @@
+$vpmc-bg-banner: #568dac;
+$vpmc-bg-subbanner: #98c4d1;
+$vpmc-bg-dropdown: #cbd3da;
+$vpmc-bg-content: #e3e1c6;
+$vpmc-bg-title: #73a1af;
+$vpmc-bg-subtitle: #dec570;
+$vpmc-btn-primary: #d8cfc4;
+$vpmc-color-primary: #2f375b;
+$vpmc-color-disabled: #95a7b5;
+
+.vpmc-btn{
+    background-color: $vpmc-btn-primary !important;
+    color: $vpmc-color-primary;
+    box-shadow: 1px 1px 2px 0px #00000091;
+}
+
+.vpmc-title{
+    font-weight: bolder;
+    color: $vpmc-color-primary;
+}
+
+.md-tabs.md-theme-default .md-tabs-indicator{
+    background-color: white !important;
+}
+
+.md-dialog-container.md-theme-default{
+    background-color: $vpmc-bg-title !important;
+}
+
+.md-drawer.md-theme-default{
+    background-color: $vpmc-bg-content !important;
+    color: $vpmc-color-primary !important;
+}
+
+.md-tabs.md-theme-default .md-tabs-navigation {
+    background-color: $vpmc-bg-subtitle !important;
+    color: white !important;
+    .md-button-content{
+        color: white !important;
+    }
+}
+
+.md-content.md-theme-default {
+    background-color: $vpmc-bg-content !important;
+    color: $vpmc-color-primary !important;
+}
+
+.md-card.md-theme-default{
+    background-color: $vpmc-bg-content !important;
+    color: $vpmc-color-primary !important;
+}
+
+.md-list.md-theme-default{
+    background-color: $vpmc-bg-content !important;
+    color: $vpmc-color-primary !important;
+    .md-list-item-container{
+        color: $vpmc-color-primary !important;
+    }
+}
+
+.md-menu-content-container{
+    .md-list.md-theme-default{
+        background-color: $vpmc-bg-dropdown !important;
+        color: $vpmc-color-primary !important;
+        .md-list-item-container{
+            color: $vpmc-color-primary !important;
+        }
+    }
+}
+
+.vpmc-md {
+    &.md-button.md-theme-default{
+        color: white !important;
+    }
+}
+
+.md-button.md-theme-default{
+    // background-color: $vpmc-bg-content !important;
+    color: $vpmc-color-primary !important;
+}

@@ -1,3 +1,5 @@
+@import "../../css//global.scss";
+
 body {
     .banner-menu-content{
         z-index: 400;
@@ -12,6 +14,9 @@ body {
     .group{
         display: flex;
         align-items: center;
+        .md-button.md-theme-default{
+            color: $vpmc-color-primary !important;
+        }
     }
     .dropdown{
         // button{

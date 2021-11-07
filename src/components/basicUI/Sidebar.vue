@@ -1,8 +1,13 @@
 <template>
     <md-drawer class="sidebar-container" md-persistent="full" :md-right="side==='right'" :md-active="open">
-        <md-button class="md-icon-button"  @click="handleCollaps">
-            <md-icon>menu_open</md-icon>
-        </md-button>
+        <div class="title-container">
+            <div class="vpmc-title">{{$store.state.subbanner.current.title}}</div>
+            <div class="action">
+                <md-button class="md-icon-button"  @click="handleCollaps">
+                    <md-icon>menu_open</md-icon>
+                </md-button>
+            </div>
+        </div>
         <md-divider/>
         <keep-alive>
             <component :is="$store.state.subbanner.current.value"></component>
@@ -66,8 +71,22 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .sidebar-container{
     z-index: 1;
+    .title-container{
+        display: flex;
+        align-items: center;
+        padding: 0px 10px;
+        background-color: $vpmc-bg-title;
+        .action{
+            justify-content: end;
+            display: flex;
+            flex: 1;
+        }
+    }
 }
+</style>
+<style scoped>
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <md-menu md-direction="bottom-end">
+    <md-menu md-size="small" md-align-trigger>
         <md-button md-menu-trigger>{{placeholder}}</md-button>
 
         <md-menu-content class="banner-menu-content">

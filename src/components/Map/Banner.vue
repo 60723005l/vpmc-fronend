@@ -54,13 +54,17 @@ export default {
         }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .banner{
     justify-content: space-between;
     /* background: #0e3c63; */
     padding: 5px 0px;
-    color: white;
+    color: $vpmc-color-primary !important;
+    background-color: $vpmc-bg-banner !important;
 }
+</style>
+<style scoped>
+
 .group{
     align-items: center;
     padding: 0px 10px;

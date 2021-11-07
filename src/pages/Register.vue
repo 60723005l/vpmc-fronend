@@ -40,7 +40,7 @@
             </div>
                 
             <md-card-actions>
-                <md-button class="md-primary md-raised" @click="handleRegister">註冊</md-button>
+                <md-button class="md-primary md-raised vpmc-md" @click="handleRegister">註冊</md-button>
             </md-card-actions>
         </form>
     </div>

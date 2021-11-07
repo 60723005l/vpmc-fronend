@@ -21,8 +21,8 @@
                     <span>{{errmsg}}</span>
                 </div>
                 <md-card-actions>
-                    <md-button class="md-primary md-raised" @click="handleDevLogin('訪客')">訪客登入</md-button>
-                    <md-button class="md-primary md-raised" @click="handleFormSubmit">登入</md-button>
+                    <md-button class="md-primary md-raised vpmc-md" @click="handleDevLogin('訪客')">訪客登入</md-button>
+                    <md-button class="md-primary md-raised vpmc-md" @click="handleFormSubmit">登入</md-button>
                </md-card-actions>
                 <div>
                     <!-- <p><input type="submit" value="登入"></p> -->

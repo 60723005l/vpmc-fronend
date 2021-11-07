@@ -26,8 +26,8 @@ const actions = {
 // mutations
 const mutations = {
   addComponent (state, component) {
-    let { key, value, payload } = component
-    state.components[component.key] = { key, value, payload }
+    let { key, value, payload, title } = component
+    state.components[component.key] = { key, value, payload, title }
   },
   removeComponent (state, key) {
     delete state.components[key]
