@@ -31,6 +31,16 @@ class VPMC
         this.viewerPromise.setViewer(this.viewer)
         return this.viewer
     }
+    addCountdownTask(callback, second)
+    {
+        return window.setTimeout(() => {
+            callback()
+        }, second * 1000)
+    }
+    removeCountdownTask(id)
+    {
+        clearTimeout(id)
+    }
 }
 
 export default VPMC

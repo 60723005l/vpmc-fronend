@@ -46,6 +46,7 @@
 <script>
 import config from "../../config"
 import API from '../api'
+import Global from '../global';
 import { ILoginPayload } from "../store/modules/user"
 const axios = require('axios').default;
 window.axios = axios
@@ -90,7 +91,6 @@ export default {
             console.log(this)
             console.log(process.env)
             window.api = API
-
         },
     methods:
         {
@@ -115,6 +115,7 @@ export default {
                     this.$cookies.set('vpmc-token', token)
                     this.$cookies.set('vpmc-username', username)
                     this.$router.push(`./${username}/map`)
+                    this.addCountdownEvent()
                 }
                 catch(err)
                 {
@@ -131,7 +132,26 @@ export default {
                         role: role,
                         id: `dev_${role}`
                     })
+                this.addCountdownEvent()
                 this.$router.push(`./${username}/map`)
+            },
+            addCountdownEvent()
+            {
+                let timeoutId = null
+                const TIME = 2 * 60 * 60
+                const handleTimeout = () => {
+                    this.$bus.$emit('alert:message', {
+                        title:'登出通知',
+                        text: `系統閒置超過 ${TIME / 60 / 60} 小時，跳轉登入頁面`,
+                        confirm: () => this.$router.push({name: "Login"})
+                    })
+                }
+                timeoutId = Global.VPMC.addCountdownTask(handleTimeout, TIME)
+                document.body.addEventListener('click', () => {
+                    Global.VPMC.removeCountdownTask(timeoutId)
+                    timeoutId = Global.VPMC.addCountdownTask(handleTimeout, TIME)
+                })
+                
             }
         }
 }

@@ -1,13 +1,19 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
+    <VpmcAlert />
     <router-view/>
   </div>
 </template>
 
 <script>
+import VpmcAlert from './components/basicUI/VpmcAlert.vue'
 export default {
-  name: 'App'
+  name: 'App',
+  components:
+    {
+      VpmcAlert
+    }
 }
 </script>
 

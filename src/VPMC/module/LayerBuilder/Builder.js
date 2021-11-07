@@ -1,7 +1,9 @@
 import { Layer } from "leaflet";
 import LayerInfo from "../Layer/LayerInfo";
 import Type from "../Layer/Type";
-
+/**
+ * this is a abstract class, shouldn't use it through new syntax
+ */
 class Builder {
     constructor() {
         /**
@@ -10,6 +12,7 @@ class Builder {
         this.type = null
     }
     /**
+     * implement how layer should be created
      * @param {LayerInfo} info
      * @return {Layer}
      */
