@@ -1,29 +1,9 @@
 <template>
-    <!-- <div class="banner row">
-        <div class="system-info row">
-            <div class="logo group">
-                <img :src="require('@/assets/logo.png')">
-            </div>
-            <div class="title">
-                <span>VPMC不動產資情網</span>
-            </div>
-        </div>
-
-        <div class="push-notification  group">
-            <span>焦點要聞:  眾所矚目的旋轉豪宅「陶朱隱園」傳每坪 8百萬天價全棟完售</span>
-        </div>
-        <div class="user group" @click="handleUserClick">
-            <img :src="require('@/assets/img/unknown-user.jpg')">
-            <span>{{userState.username}}</span>
-            <router-link style="color:#44b2ff;" v-if="!userState.isLogin" to="/">登入</router-link>
-        </div>
-        
-    </div> -->
     <md-toolbar class="md-dense banner ">
         <div class="system-info row md-toolbar-section-start">
-            <div class="logo group">
+            <!-- <div class="logo group">
                 <img :src="require('@/assets/logo.png')">
-            </div>
+            </div> -->
             <div class="title">
                 <span>VPMC不動產資情網</span>
             </div>
@@ -74,13 +54,17 @@ export default {
         }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .banner{
     justify-content: space-between;
     /* background: #0e3c63; */
     padding: 5px 0px;
-    color: white;
+    color: $vpmc-color-primary !important;
+    background-color: $vpmc-bg-banner !important;
 }
+</style>
+<style scoped>
+
 .group{
     align-items: center;
     padding: 0px 10px;
@@ -102,6 +86,7 @@ export default {
     display: flex;
     margin: 0px 10px;
     font-size: x-large;
+    white-space: nowrap;
 }
 .push-notification{
     display: flex;

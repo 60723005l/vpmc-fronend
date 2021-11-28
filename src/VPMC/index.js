@@ -22,13 +22,24 @@ class VPMC
     {
         let _option = defaults(option, {
             center: [24.86471, 121.29002],
-            zoom: 13
+            zoom: 13,
+            maxZoom: 22
         })
 
         this.viewer = Leaflet.map( this.id, _option)
         this.layerControl = new LayerControl(this.viewer)
         this.viewerPromise.setViewer(this.viewer)
         return this.viewer
+    }
+    addCountdownTask(callback, second)
+    {
+        return window.setTimeout(() => {
+            callback()
+        }, second * 1000)
+    }
+    removeCountdownTask(id)
+    {
+        clearTimeout(id)
     }
 }
 

@@ -26,14 +26,15 @@ const actions = {
 // mutations
 const mutations = {
   addComponent (state, component) {
-    state.components[component.key] = component.value
+    let { key, value, payload, title } = component
+    state.components[component.key] = { key, value, payload, title }
   },
   removeComponent (state, key) {
     delete state.components[key]
   },
   setActivate (state, key) {
     if( state.components[key] === undefined ) throw new Error(`key: ${state.components[key]} is not inside components`)
-    state.current = {value: state.components[key]}
+    state.current = state.components[key]
   },
   open (state, bool) {
     state.open = bool
@@ -41,6 +42,18 @@ const mutations = {
   toogle (state) {
     state.open = !tate.open
   },
+  /**
+   * 
+   * @param {*} state 
+   * @param {{key: string, payload: {}}} payload 
+   */
+  setPayload (state, options ) {
+    let { key, payload } = options
+    if( state.components[key] === undefined ) throw new Error(`key: ${state.components[key]} is not inside components`)
+    let components = state.components[key]
+    components.payload = {...payload}
+
+  }
 }
 
 export default {

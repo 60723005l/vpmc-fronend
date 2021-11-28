@@ -2,6 +2,9 @@
     <md-content class="measuer-widgit-contaner">
         <div class="header">
             <span class="close" @click="handleWindowClose">✖</span>
+            <div class="title">測量</div>
+        </div>
+        <div class="tab-container">
             <div class="tabs" v-for="(mode, index) in measureMode.modes" :key="index">
                 <md-ripple>
                 <div 
@@ -24,10 +27,12 @@
         </div>
         <md-divider />
         <div class="action">
-            <md-button class="md-default md-flat outline" @click="handleDrawCancle">
+            <md-button class="md-default md-flat outline" @click="handleDrawCancleOrClearResults">
+                <span>清除</span>
                 <md-icon>block</md-icon>
             </md-button>
             <md-button class="md-default md-flat outline" @click.exact="handleMeasureClick" :disabled="active">
+                <span>新增</span>
                 <md-icon>add_circle_outline</md-icon>
             </md-button>
         </div>
@@ -38,6 +43,7 @@
 <script>
 import Global from "../../global"
 import {area, length} from "@turf/turf"
+import Leaflet from 'leaflet'
 let viewer
 
 
@@ -69,11 +75,7 @@ export default {
         },
     beforeDestroy()
         {
-            this.handleDrawCancle()
-            Global.VPMC.viewer.pm.getGeomanLayers().forEach( layer => 
-            {
-                viewer.removeLayer(layer)
-            })
+            this.handleDrawCancleOrClearResults()
             this.unListenMouseClick()
         },
     mounted()
@@ -117,22 +119,42 @@ export default {
             },
             handleDrawEnd(shape)
             {
-                this.active = false
+                
                 let result = ''
                 let len = undefined
+                let label
+                let lastPoint
                 switch(this.measureMode.current) {
                     case 'area':
+                        lastPoint = shape.marker.getLatLngs()[0][0]
                         len = area(shape.layer.toGeoJSON())
-                         result = len.toFixed(3) + ' m²'
+                        result = (len.toFixed(3)).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' m²'
+                        label = this.createLabel(lastPoint, result)
                         break
                     case 'distance':
-                        len = length(shape.layer.toGeoJSON(), 'kilometers')
-                        result = len.toFixed(3) + ' km'
+                        lastPoint = shape.marker.getLatLngs()[0]
+                        len = length(shape.layer.toGeoJSON(), {units: 'kilometers'})
+                        result = ((len * 1000).toFixed(3).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")) + ' m'
+                        label = this.createLabel(lastPoint, result)
                         break
                 }
-                this.measures.push( { result, content: shape} )
+                this.measures.push( { result, content: shape, label} )
                 this.unListenMouseClick()
-
+                this.active = false
+            },
+            createLabel(point, text)
+            {
+                const popup = Leaflet.popup({
+                        keepInView:true, 
+                        closeButton:false,
+                        autoClose: false,
+                        closeOnClick: false,
+                        autoPan: false
+                    })
+                    .setLatLng(point)
+                    .setContent(`<p>${text}</p>`)
+                Global.VPMC.viewer.addLayer(popup)
+                return popup
             },
             handleMeasureClick()
             {
@@ -149,28 +171,52 @@ export default {
             handleModeChange( mode )
             {
                 
-                this.handleDrawCancle()
+                this.cancleDrawing()
                 this.unListenMouseClick()
                 this.active = false
                 this.measureMode.current = mode; 
             },
-            handleDrawCancle()
+            handleDrawCancleOrClearResults()
+            {
+                if(this.active){
+                    this.cancleDrawing()
+                } else {
+                    this.clearResults()
+                }
+            },
+            cancleDrawing()
             {
                 if(this.active){
                     switch(this.measureMode.current) {
                     case 'area':
-                         viewer.pm.Draw.Polygon.disable()
+                        viewer.pm.Draw.Polygon.disable()
                         break
                     case 'distance':
                         viewer.pm.Draw.Line.disable()
                         break
-                } 
+                    } 
                 }
+            },
+            clearResults() 
+            {
+                if (this.active) return
+                this.removeDrewShape()
+                this.measures = []
             },
             handleResultClick( content )
             {
-                Global.VPMC.viewer.flyToBounds(content.layer.getBounds())
-
+                const bound = content.layer.getBounds()
+                Global.VPMC.viewer.flyToBounds(bound, {padding: Leaflet.point(100, 100)})
+            },
+            removeDrewShape()
+            {
+                Global.VPMC.viewer.pm.getGeomanLayers().forEach( layer => 
+                {
+                    viewer.removeLayer(layer)
+                })
+                this.measures.forEach( measure => {
+                    Global.VPMC.viewer.removeLayer(measure.label)
+                })
             }
         }
 }
@@ -192,6 +238,14 @@ export default {
         display: flex;
         padding: 5px;
         align-items: center;
+        background-color: $vpmc-bg-title;
+        .title{
+            display: flex;
+            justify-content: center;
+            flex: 1;
+            color: white;
+            font-weight: bolder;
+        }
         .close{
             padding: 0px 15px 0px 3px;
             cursor: pointer;
@@ -199,18 +253,29 @@ export default {
                 color: grey;
             }
         }
+        
+    }
+    .tab-container{
+        display: flex;
+        justify-content: center;
+        background-color: $vpmc-bg-subtitle;
         .tabs{
             display: flex;
+            flex: 1;
+            text-align: center;
             .tab{
                 // margin: 3px;
                 padding: 0px 5px;
                 cursor: pointer;
                 transition: 0.3s all;
+                border-bottom: 1px solid $vpmc-bg-subtitle;
+                color: white;
                 &.active {
-                    background: #1e88e5;
+                    border-bottom: 1px solid white;
+                    font-weight: bolder;
                 }
                 &:hover {
-                    background: #1e88e5;
+                    font-weight: bolder;
                 }
             }
         }

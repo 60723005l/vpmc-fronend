@@ -2,7 +2,7 @@
 module.exports = {
   NODE_ENV: '"production"',
   CONTAINERID: '"vpmc"',
-  BASE_API_URL:'"https://localhost:44367/api/"',
-  BASE_BACKEND_URL:'"https://localhost:44367/"',
+  BASE_API_URL:'"/api/"',
+  BASE_BACKEND_URL:'"/"',
   HOST:'"0.0.0.0"'
 }

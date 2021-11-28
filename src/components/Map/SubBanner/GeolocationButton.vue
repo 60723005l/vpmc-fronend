@@ -1,7 +1,9 @@
 <template>
-    <md-button class="md-icon-button" @click="handleClick">
-        <IconButton :src="'/static/icon/locate.png'" />
-    </md-button>
+    <!-- <md-button class="md-icon-button" @click="handleClick"> -->
+        <!-- <md-ripple> -->
+        <IconButton :src="require('@/assets/icon/locate.png')" :text="'定位'" @Click="handleClick"/>
+        <!-- </md-ripple> -->
+    <!-- </md-button> -->
 </template>
 <script>
 import IconButton from "@/components/basicUI/IconButton"

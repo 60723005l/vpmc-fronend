@@ -92,7 +92,7 @@ export default {
       },
       addBasemap(viewer)
       {
-        viewer.addLayer( Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') )
+        viewer.addLayer( Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ maxZoom: 22, maxNativeZoom: 19}))
       }, 
     },
   components: 

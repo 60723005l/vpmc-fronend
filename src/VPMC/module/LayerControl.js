@@ -33,8 +33,10 @@ export default class LayerControl
     }
     add( layer )
     {
+        let currentZIndex = this.layers.values.length + 1
         this.viewer.addLayer( layer.content )
         this.layers.set(layer.id, layer)
+        layer.zIndex = currentZIndex
         this.setLayerList()
         this.onAddEvent.raise(layer)
     }

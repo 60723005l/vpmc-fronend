@@ -1,7 +1,7 @@
 <template>
-    <md-button class="md-icon-button">
-        <IconButton :src="'/static/icon/print.png'"/>
-    </md-button>
+    <!-- <md-button class="md-icon-button" @click="handlePrintClick"> -->
+        <IconButton :src="require('@/assets/icon/print.png')" :text="'列印'" @Click="handlePrintClick"/>
+    <!-- </md-button> -->
 </template>
 <script>
 import IconButton from "@/components/basicUI/IconButton"
@@ -11,6 +11,14 @@ export default {
     components:
         {
             IconButton
+        },
+    methods:
+        {
+            handlePrintClick()
+            {
+                this.$store.commit('subbanner/open', false)
+                setTimeout(print, 1000)
+            }
         }
 }
 </script>

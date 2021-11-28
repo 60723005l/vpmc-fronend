@@ -22,14 +22,13 @@
             <FullScreenButton class="item"/>
         </div>
     </div> -->
-    <md-toolbar class="md-dense sub-baner md-third">
+    <md-toolbar class="md-dense sub-baner md-third vpmc-subbanner">
         <div class="group">
             <SystemManage  />
             <DataMaintain  />
             <AppraisalAnalysis  />
-            <DecreeModuel  />
         </div>
-        <div class="group">
+        <div class="group" v-if="$store.state.user.role ==='Admin'">
             <YuantaModule  />
             <TaishinModule  />
         </div>
@@ -37,7 +36,7 @@
             <OnlineSupport  />
             <StatsAndQuote  />
         </div>
-        <div class="group">
+        <div class="group align-start">
             <GeolocationButton />
             <LayerButton />
             <MeasureButton />
@@ -51,7 +50,6 @@
 import SystemManage from './SubBanner/SystemManage'
 import DataMaintain from './SubBanner/DataMaintain'
 import AppraisalAnalysis from './SubBanner/AppraisalAnalysis'
-import DecreeModuel from './SubBanner/DecreeModuel'
 //---------------
 import YuantaModule from './SubBanner/YuantaModule'
 import TaishinModule from './SubBanner/TaishinModule'
@@ -79,14 +77,13 @@ export default {
             {
                 //value will be component name that used in sidebar slot
                 let map_list = [
-                    {key: 'Layer', value: 'Layer'},
-                    {key: 'Geolocation', value: 'Geolocation'},
-                    {key: 'Info', value: 'Info'},
+                    {key: 'Layer', value: 'Layer', title: '圖層', payload: {}},
+                    {key: 'Geolocation', value: 'Geolocation', title: '定位', payload: {}},
+                    {key: 'Info', value: 'Info', title: '資訊', payload: {}},
                 ]
                 map_list.forEach( item =>
                 {
-                    let {key, value} = item
-                    this.$store.commit('subbanner/addComponent', {key, value})
+                    this.$store.commit('subbanner/addComponent', {...item})
                 })
                 
             }
@@ -96,7 +93,6 @@ export default {
             SystemManage,
             DataMaintain,
             AppraisalAnalysis,
-            DecreeModuel,
             //-----------------
             YuantaModule,
             TaishinModule,
@@ -114,5 +110,10 @@ export default {
 }
 </script>
 <style lang="sass">
-    @import "./subbanner.scss"
+    @import "./subbanner.scss";
+</style>
+<style lang="scss" scoped>
+.vpmc-subbanner{
+    background-color: $vpmc-bg-subbanner !important;
+}
 </style>

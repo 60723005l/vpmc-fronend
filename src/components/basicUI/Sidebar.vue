@@ -1,12 +1,17 @@
 <template>
-    <md-drawer md-persistent="full" :md-right="side==='right'" :md-active="open">
-        <md-button class="md-icon-button"  @click="handleCollaps">
-            <md-icon>menu_open</md-icon>
-        </md-button>
+    <md-drawer class="sidebar-container" md-persistent="full" :md-right="side==='right'" :md-active="open">
+        <div class="title-container">
+            <div class="vpmc-title">{{$store.state.subbanner.current.title}}</div>
+            <div class="action">
+                <md-button class="md-icon-button"  @click="handleCollaps">
+                    <md-icon>menu_open</md-icon>
+                </md-button>
+            </div>
+        </div>
         <md-divider/>
-        <template>
+        <keep-alive>
             <component :is="$store.state.subbanner.current.value"></component>
-        </template>
+        </keep-alive>
     </md-drawer>
 </template>
 <script>
@@ -66,34 +71,22 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .sidebar-container{
-    position: absolute;
-    left: var(--left);
-    right: var(--right);
-    top: 0px;
-    background: #ffffffc7;
-    height: 100%;
-    min-width: 300px;
-    width: auto;
-    z-index: 1000;
-    transition: 0.3s all;
+    z-index: 1;
+    .title-container{
+        display: flex;
+        align-items: center;
+        padding: 0px 10px;
+        background-color: $vpmc-bg-title;
+        .action{
+            justify-content: end;
+            display: flex;
+            flex: 1;
+        }
+    }
 }
-.sidebar-container.close{
-    min-width: 0px;
-    width: 0px;
-}
-.sidebar-container.close .collapse{
-    display: none;
-}
-.collapse{
-    font-size: 20px;
-    position: absolute;
-    top: 0px;
-    left: -26px;
-    background: #0e3c63;
-    color: white;
-    padding: 0px 3px;
-    cursor: pointer;
-}
+</style>
+<style scoped>
+
 </style>

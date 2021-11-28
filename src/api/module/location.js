@@ -1,7 +1,7 @@
 import axios from "axios";
 import { groupBy, keys } from "lodash";
+import admins from "../../assets/adminGeoInfos.json"
 
-// const cors = 'https://cors-anywhere.herokuapp.com/';
 /**
  * 
  * @param {String} oAPPId: "KUELVYPeym2WwQ/0/HegdG3SAC3+KlK/czjeAeDNoOhGlKMYXiwF2w==",
@@ -92,6 +92,7 @@ export const getGeoinfoFromAddr = async ( payload ) =>
         oResultDataType: "JSON"
      }
      let params = {...defaultPayload, ...payload}
+     console.log(params)
      let headers = {
          'Content-Type': 'application/x-www-form-urlencoded',
      }
@@ -130,9 +131,14 @@ export const getGeoinfoFromAddr = async ( payload ) =>
      try
      {
          // let resp = await axios.get(url, {params, headers} )
-         let resp = await axios.get(url)
-         console.log(resp)
-         let extendedInfos = resp.data.map(e=>({
+        //  let resp = await axios.get(url)
+        //  console.log(resp)
+        //  let extendedInfos = resp.data.map(e=>({
+        //      county: e["行政區名"].slice(0,3), 
+        //      town: e["行政區名"].slice(3),
+        //      latlng: [e["中心點緯度"], e["中心點經度"]]
+        //     }))
+         let extendedInfos = admins.map(e=>({
              county: e["行政區名"].slice(0,3), 
              town: e["行政區名"].slice(3),
              latlng: [e["中心點緯度"], e["中心點經度"]]
@@ -153,3 +159,27 @@ export const getGeoinfoFromAddr = async ( payload ) =>
          return Promise.reject(err)
      }
  }
+
+ /**
+  * 
+  * @param {{"lands[]":"臺北市華興段三小段142號"}} payload
+  * @returns {{
+  * features: [{
+  * type: "Feature",
+  * geometry: {},
+  * properties: {}
+  * }],
+  * type: "FeatureCollection"
+  * }}
+  */
+ export const getGeomByLands = async ( payload ) => 
+ {
+     let url = `https://twland.ronny.tw/index/search`
+     try {
+        let resp = await axios.get( url, {params: payload})
+        return resp.data
+     } catch ( error ) {
+         Promise.reject( error )
+     }
+     
+ } 

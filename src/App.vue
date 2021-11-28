@@ -1,13 +1,19 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
+    <VpmcAlert />
     <router-view/>
   </div>
 </template>
 
 <script>
+import VpmcAlert from './components/basicUI/VpmcAlert.vue'
 export default {
-  name: 'App'
+  name: 'App',
+  components:
+    {
+      VpmcAlert
+    }
 }
 </script>
 
@@ -30,7 +36,7 @@ body{
 @include md-register-theme("default", (
   primary: md-get-palette-color(blue, 800), // The primary color of your application
   accent: md-get-palette-color(red, A200), // The accent or secondary color
-  theme: dark // This can be dark or light
+  theme: light // This can be dark or light
 ));
 @import "~vue-material/dist/theme/all";
 </style>

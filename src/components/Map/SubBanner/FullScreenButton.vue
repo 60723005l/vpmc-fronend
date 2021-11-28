@@ -1,7 +1,7 @@
 <template>
-    <md-button class="md-icon-button"  @click="handleClick">
-        <IconButton :src="'/static/icon/full-screen.png'"/>
-    </md-button>
+    <!-- <md-button class="md-icon-button"  @click="handleClick"> -->
+        <IconButton :src="require('@/assets/icon/full-screen.png')" :text="'全畫面'" @Click="handleClick"/>
+    <!-- </md-button> -->
 </template>
 <script>
 import IconButton from "@/components/basicUI/IconButton"

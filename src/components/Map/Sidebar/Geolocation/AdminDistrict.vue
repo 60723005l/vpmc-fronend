@@ -18,8 +18,8 @@
             </md-card-content>
             
             <md-card-actions>
-                <md-button @click="handleClear">清除</md-button>
-                <md-button @click="handleSearchClick">查詢</md-button>
+                <md-button class="vpmc-btn" @click="handleClear">清除</md-button>
+                <md-button class="vpmc-btn" @click="handleSearchClick">查詢</md-button>
             </md-card-actions>
         </md-card>
     </form>
@@ -81,9 +81,9 @@ export default {
 .container{
     .custom-select{
         width: 100%;
-        background: #424242;
+        background: $vpmc-bg-content;
         border: none;
-        color: white;
+        color: $vpmc-color-primary;
         &.selected{
             background: black;
         }

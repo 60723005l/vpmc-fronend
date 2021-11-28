@@ -1,10 +1,10 @@
 <template>
-    <md-menu md-direction="bottom-end">
+    <md-menu md-size="small" md-align-trigger>
         <md-button md-menu-trigger>{{placeholder}}</md-button>
 
         <md-menu-content class="banner-menu-content">
         <md-menu-item v-for="(item, index) in options" :key="index"
-                    @click="handleSelect(item)">{{item.name}}</md-menu-item>
+            @click="handleSelect(item)">{{item.name}}</md-menu-item>
         </md-menu-content>
     </md-menu>
 

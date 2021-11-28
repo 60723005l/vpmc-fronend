@@ -13,8 +13,8 @@
             </md-card-content>
             
             <md-card-actions>
-                <md-button @click="handleClear">清除</md-button>
-                <md-button @click="handleSubmit">查詢</md-button>
+                <md-button class="vpmc-btn" @click="handleClear">清除</md-button>
+                <md-button class="vpmc-btn" @click="handleSubmit">查詢</md-button>
             </md-card-actions>
         </md-card>
         <md-list class="search-list" v-if="search.show">
@@ -48,8 +48,9 @@ export default {
         {
             async handleSubmit()
             {
-                this.handleClear()
+                
                 let resp = await api.Location.getAddrfromXY({oPX:this.lng, oPY:this.lat})
+                this.handleClear()
                 this.search.results = this.createPoints(resp.AddressList)
                 this.search.show = true
             },
@@ -68,6 +69,10 @@ export default {
                 return addrs.map( addr => {
                     let marker = Leaflet.marker( new Leaflet.LatLng(addr.Y, addr.X) )
                     marker.bindPopup(addr.FULL_ADDR)
+                    marker.on( 'click', e => {
+                        let properties = addr
+                        this.$store.commit('subbanner/setPayload', {key: "Info", payload: {properties}})
+                    } )
                     Global.VPMC.viewer.addLayer(marker)
                     return {
                         ...addr,
