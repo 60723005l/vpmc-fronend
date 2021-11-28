@@ -63,6 +63,14 @@ class MeasureMode {
 
 }
 
+const useNumberComma = (num) => {
+    return Number(
+        parseFloat(num).toFixed(3)
+    ).toLocaleString("en", {
+        minimumFractionDigits: 3
+    })
+}
+
 export default {
     name: "Measuerment",
     data()
@@ -128,13 +136,13 @@ export default {
                     case 'area':
                         lastPoint = shape.marker.getLatLngs()[0][0]
                         len = area(shape.layer.toGeoJSON())
-                        result = (len.toFixed(3)).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' m²'
+                        result = useNumberComma(len) + ' m²'
                         label = this.createLabel(lastPoint, result)
                         break
                     case 'distance':
                         lastPoint = shape.marker.getLatLngs()[0]
                         len = length(shape.layer.toGeoJSON(), {units: 'kilometers'})
-                        result = ((len * 1000).toFixed(3).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")) + ' m'
+                        result = useNumberComma(len * 1000) + ' m'
                         label = this.createLabel(lastPoint, result)
                         break
                 }
