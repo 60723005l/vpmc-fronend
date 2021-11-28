@@ -119,29 +119,28 @@ export default {
             },
             handleDrawEnd(shape)
             {
-                this.active = false
+                
                 let result = ''
                 let len = undefined
                 let label
                 let lastPoint
                 switch(this.measureMode.current) {
                     case 'area':
-                        console.log(shape)
                         lastPoint = shape.marker.getLatLngs()[0][0]
                         len = area(shape.layer.toGeoJSON())
-                        result = len.toFixed(3) + ' m²'
+                        result = (len.toFixed(3)).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' m²'
                         label = this.createLabel(lastPoint, result)
                         break
                     case 'distance':
-                        console.log(shape)
                         lastPoint = shape.marker.getLatLngs()[0]
                         len = length(shape.layer.toGeoJSON(), {units: 'kilometers'})
-                        result = (len * 1000).toFixed(3) + ' m'
+                        result = ((len * 1000).toFixed(3).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")) + ' m'
                         label = this.createLabel(lastPoint, result)
                         break
                 }
                 this.measures.push( { result, content: shape, label} )
                 this.unListenMouseClick()
+                this.active = false
             },
             createLabel(point, text)
             {
@@ -206,7 +205,6 @@ export default {
             },
             handleResultClick( content )
             {
-                console.log(content.layer.getBounds())
                 const bound = content.layer.getBounds()
                 Global.VPMC.viewer.flyToBounds(bound, {padding: Leaflet.point(100, 100)})
             },

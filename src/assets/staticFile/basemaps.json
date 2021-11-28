@@ -1,0 +1,17 @@
+[
+    {
+        "name":"臺灣通用電子地圖(等高線+門牌)",
+        "url":"https://wmts.nlsc.gov.tw/wmts/EMAP5/default/GoogleMapsCompatible/{z}/{y}/{x}",
+        "group": "底圖"
+    },
+    {
+        "name":"正射影像(混合)",
+        "url":"https://wmts.nlsc.gov.tw/wmts/PHOTO_MIX/default/GoogleMapsCompatible/{z}/{y}/{x}",
+        "group": "底圖"
+    },
+    {
+        "name": "GoogleMap",
+        "url": "https://mt0.google.com/vt/lyrs=r&hl=zh-TW&x={x}&y={y}&z={z}",
+        "group": "底圖"
+    }
+]

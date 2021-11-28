@@ -39,7 +39,7 @@ export default {
         },
     created()
         {
-            this.setBasemaps()
+            this.setDefaultLayers()
         },
     mounted()
         {            
@@ -66,10 +66,12 @@ export default {
                 this.measurementOptions.activate = this.$store.state.measurement.activate
                 // this.measurementOptions.activate = !this.measurementOptions.activate
             },
-            async setBasemaps()
+            async setDefaultLayers()
             {
                 let basemaps = await api.Layer.getBasemaps()
+                let geoLayers = await api.Layer.getGeoLayers()
                 this.addToMap(basemaps)
+                this.addToMap(geoLayers)
             },
             addToMap( rawLayers )
             {
@@ -77,6 +79,7 @@ export default {
                     let layerItem = new Layer( 
                         new LayerInfo({
                             name: layer.name,
+                            group: layer.group,
                             type: Type.WMTS,
                             options: { url: layer.url }
                         })

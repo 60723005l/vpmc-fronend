@@ -88,8 +88,6 @@ export default {
         },
     mounted()
         {
-            console.log(this)
-            console.log(process.env)
             window.api = API
         },
     methods:
@@ -100,7 +98,6 @@ export default {
             },
             async handleFormSubmit()
             {
-                console.log(this)
                 try{
                     let token = await API.User.login({username: this.username, password: this.password})
                     let userInfo = await API.User.validate(token)
@@ -120,7 +117,6 @@ export default {
                 catch(err)
                 {
                     this.errmsg = `${err.message}`
-                    console.log(err)
                 }
                 
             },

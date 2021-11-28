@@ -5,6 +5,7 @@ class LayerInfo {
     constructor( options ) {
         this.id = options.id || UUID()
         this.name = options.name
+        this.group = options.group || '圖層'
         /**
          * @type {Type} on of Type
          */

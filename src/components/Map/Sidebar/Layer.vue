@@ -1,7 +1,9 @@
 <template>
     <div>
         <md-list :md-expand-single="false">
-            <LayerList :values="basemaps" :groupName="'底圖'" :action="action"/>
+            <LayerList v-for="(group, name) in groupedLayers" :key="name"
+                :values="group" :groupName="name" :action="action"/>
+            <!-- <LayerList :values="basemaps" :groupName="'底圖'" :action="action"/> -->
         </md-list>
         <OpacityPanel 
             v-if="opacityPanel.layerInfo"
@@ -13,7 +15,7 @@
 <script>
 import LayerList from "./Layer/LayerList.vue"
 import OpacityPanel from "./Layer/OpacityPanel.vue"
-
+import { groupBy } from 'lodash'
 import Leaflet from "leaflet"
 
 import Global from "../../../global"
@@ -22,7 +24,7 @@ import Layer, { LayerInfo } from "../../../VPMC/module/Layer"
 export default {
     name:"Layer",
     data: () => ({
-        basemaps:[],
+        groupedLayers: {},
         action: {},
         opacityPanel: {
             initvalue: "",
@@ -51,7 +53,7 @@ export default {
             setLayerList()
             {
                 let layerControl = Global.VPMC.layerControl
-                this.basemaps = layerControl.layerInfos
+                this.groupedLayers = groupBy(layerControl.layerInfos, (value)=> value.group )
             },
             onLayerCheck( checked, layer )
             {

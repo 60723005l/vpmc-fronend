@@ -1,5 +1,5 @@
 import axios from "axios";
-import basemaps from "../../assets/basemaps.json"
+import basemaps from "../../assets/staticFile/basemaps.json"
 
 /**
  * 
@@ -19,4 +19,8 @@ export const getBasemaps = async ( payload ) =>
     {
         return Promise.reject(err)
     }
+}
+
+export const getGeoLayers = async () => {
+    return (await import('../../assets/staticFile/geoLayers.json'))
 }

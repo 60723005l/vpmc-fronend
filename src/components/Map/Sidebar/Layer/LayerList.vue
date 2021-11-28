@@ -1,5 +1,5 @@
 <template>
-    <md-list-item md-expand>
+    <md-list-item md-expand :md-expanded="true">
         <span class="md-list-item-text">{{groupName}}</span>
             <md-list slot="md-expand" class="layer-list">
                 <LayerItem v-for="( layer, index ) in values" 
