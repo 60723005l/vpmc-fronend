@@ -70,17 +70,20 @@ export default {
             {
                 let basemaps = await api.Layer.getBasemaps()
                 let geoLayers = await api.Layer.getGeoLayers()
-                this.addToMap(basemaps)
-                this.addToMap(geoLayers)
+                let realEstateLayers = await api.Layer.getRealEstateLayers()
+                this.addToMap(realEstateLayers, Type.GEOJSON_BUILDING)
+                this.addToMap(basemaps, Type.WMTS)
+                this.addToMap(geoLayers, Type.WMTS)
+
             },
-            addToMap( rawLayers )
+            addToMap( rawLayers, type )
             {
                 rawLayers.forEach( (layer, index) => {
                     let layerItem = new Layer( 
                         new LayerInfo({
                             name: layer.name,
                             group: layer.group,
-                            type: Type.WMTS,
+                            type: type,
                             options: { url: layer.url }
                         })
                     )
