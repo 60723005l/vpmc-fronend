@@ -12,8 +12,9 @@ export default {
         {
             handleClick()
             {
-                this.$store.dispatch('subbanner/activate', 'Info')
-                this.$store.commit('subbanner/open', true)
+                this.$store.commit('appraisalAnalysisSidebar/open', false)
+                this.$store.dispatch('widgetSidebar/activate', 'Info')
+                this.$store.commit('widgetSidebar/open', true)
             }
         },
     components:

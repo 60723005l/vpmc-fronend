@@ -3,18 +3,14 @@
         <md-card  class="md-layout-item">
             <md-card-content>
                 <md-field >
-                    <label >輸入經度</label>
-                    <md-input v-model="lng"></md-input>
-                </md-field>
-                <md-field >
-                    <label >輸入緯度</label>
-                    <md-input v-model="lat"></md-input>
+                    <label >輸入門牌</label>
+                    <md-input v-model="addr"></md-input>
                 </md-field>
             </md-card-content>
             
             <md-card-actions>
                 <md-button class="vpmc-btn" @click="handleClear">清除</md-button>
-                <md-button class="vpmc-btn" @click="handleSubmit">查詢</md-button>
+                <md-button class="vpmc-btn" @click="handleSearchClick">查詢</md-button>
             </md-card-actions>
         </md-card>
         <md-list class="search-list" v-if="search.show">
@@ -26,33 +22,32 @@
     </div>
 </template>
 <script>
-// import Global from '@/global'
-import Leaflet from 'leaflet'
-import Global from "../../../../global"
 import api from "../../../../api"
+import Global from "../../../../global"
+import Leaflet from 'leaflet'
 
 export default {
-    name:"Coords",
-    data()
+    name:"Address",
+    data: () => ({
+        addr:'',
+        search: {
+            results:[],
+            show: false
+        }
+    }),
+    beforeDestroy()
         {
-            return{
-                lat: '',
-                lng: '',
-                search: {
-                    results:[],
-                    show: false
-                }
-            }
+            this.handleClear()
         },
     methods:
         {
-            async handleSubmit()
+            async handleSearchClick()
             {
-                
-                let resp = await api.Location.getAddrfromXY({oPX:this.lng, oPY:this.lat})
                 this.handleClear()
+                let resp = await api.Location.getGeoinfoFromAddr({oAddress: this.addr})
                 this.search.results = this.createPoints(resp.AddressList)
                 this.search.show = true
+
             },
             handleClear()
             {
@@ -61,8 +56,6 @@ export default {
                 })
                 this.search.results = []
                 this.search.show = false
-                this.lat = ""
-                this.lng = ""
             },
             createPoints(addrs)
             {
@@ -71,7 +64,7 @@ export default {
                     marker.bindPopup(addr.FULL_ADDR)
                     marker.on( 'click', e => {
                         let properties = addr
-                        this.$store.commit('subbanner/setPayload', {key: "Info", payload: {properties}})
+                        this.$store.commit('widgetSidebar/setPayload', {key: "Info", payload: {properties}})
                     } )
                     Global.VPMC.viewer.addLayer(marker)
                     return {
@@ -86,7 +79,7 @@ export default {
                 address.marker.openPopup()
                 Global.VPMC.viewer.flyTo(new Leaflet.LatLng(Y, X), 18)
             },
-        },
+        }
 }
 </script>
 <style lang="scss" scoped>

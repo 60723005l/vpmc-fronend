@@ -25,7 +25,7 @@ export default {
     computed:
         {
             properties(){
-                return this.$store.state.subbanner.current.payload.properties
+                return this.$store.state.widgetSidebar.current.payload.properties
             },
             isEmpty(){
                 return isEmpty( this.properties )

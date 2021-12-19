@@ -68,7 +68,7 @@ export default {
                     geojsonLayer.bindPopup( jsonView.singlePackToTable(feature.properties) )
                     geojsonLayer.on( 'click', e => {
                         let properties = e.layer.feature.properties
-                        this.$store.commit('subbanner/setPayload', {key: "Info", payload: {properties}})
+                        this.$store.commit('widgetSidebar/setPayload', {key: "Info", payload: {properties}})
                     } )
                     Global.VPMC.viewer.addLayer( geojsonLayer)
                     return {

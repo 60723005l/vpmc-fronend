@@ -16,7 +16,7 @@ export default {
         {
             handlePrintClick()
             {
-                this.$store.commit('subbanner/open', false)
+                this.$store.commit('widgetSidebar/open', false)
                 setTimeout(print, 1000)
             }
         }

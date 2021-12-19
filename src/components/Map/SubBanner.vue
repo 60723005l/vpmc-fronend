@@ -1,27 +1,4 @@
 <template>
-    <!-- <div class="sub-baner">
-        <div class="group">
-            <SystemManage  class="item"/>
-            <DataMaintain  class="item"/>
-            <AppraisalAnalysis  class="item"/>
-        </div>
-        <div class="group">
-            <YuantaModule  class="item"/>
-            <TaishinModule  class="item"/>
-        </div>
-        <div class="group">
-            <OnlineSupport  class="item"/>
-            <StatsAndQuote  class="item"/>
-        </div>
-        <div class="group">
-            <GeolocationButton class="item"/>
-            <LayerButton class="item"/>
-            <MeasureButton class="item"/>
-            <InfoButton class="item"/>
-            <PrintButton class="item"/>
-            <FullScreenButton class="item"/>
-        </div>
-    </div> -->
     <md-toolbar class="md-dense sub-baner md-third vpmc-subbanner">
         <div class="group">
             <SystemManage  />
@@ -67,27 +44,6 @@ import FullScreenButton from './SubBanner/FullScreenButton'
 
 export default {
     name: "SubBanner",
-    mounted()
-        {
-            this.setSubBannerSideBarVuex()
-        },
-    methods:
-        {
-            setSubBannerSideBarVuex()
-            {
-                //value will be component name that used in sidebar slot
-                let map_list = [
-                    {key: 'Layer', value: 'Layer', title: '圖層', payload: {}},
-                    {key: 'Geolocation', value: 'Geolocation', title: '定位', payload: {}},
-                    {key: 'Info', value: 'Info', title: '資訊', payload: {}},
-                ]
-                map_list.forEach( item =>
-                {
-                    this.$store.commit('subbanner/addComponent', {...item})
-                })
-                
-            }
-        },
     components:
         {
             SystemManage,

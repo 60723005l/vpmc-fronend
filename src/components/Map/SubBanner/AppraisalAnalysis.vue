@@ -14,9 +14,9 @@ import DropdownMenu from '@innologica/vue-dropdown-menu'
 
 let options = 
 [
-    {name:'現勘資料表'},
-    {name:'市場比較法'},
-    {name:'土開分析法'},
+    {name:'現勘資料表', componentName: 'OnsiteSurvey'},
+    {name:'市場比較法', componentName: 'MarketComparison'},
+    {name:'土開分析法', componentName: 'LandDevAnalysis'},
 ]
 export default {
     name:"AppraisalAnalysis",
@@ -34,6 +34,10 @@ export default {
             handleSelect(payload)
             {
                 this.selected = payload
+                
+                this.$store.commit('widgetSidebar/open', false)
+                this.$store.dispatch('appraisalAnalysisSidebar/activate', payload.componentName)
+                this.$store.commit('appraisalAnalysisSidebar/open', true)
             }
         },
     components:

@@ -7,10 +7,12 @@
                 :viewerContainer="containerId"
                 :option="mapOption" 
                 :measurement="measurementOptions"/>
-            <Sidebar 
+            <WidgetSidebar/>
+            <AppraisalAnalysisSidebar/>
+            <!-- <Sidebar 
                 :basemaps="basemaps"
                 :side="'left'" 
-                :open="$store.state.subbanner.open"></Sidebar>
+                :open="$store.state.widgetSidebar.open"></Sidebar> -->
         </div>
         
         
@@ -20,7 +22,7 @@
 import LeafletViewer from "@/components/LeafletViewer"
 import Banner from "@/components/Map/Banner"
 import SubBanner from "@/components/Map/SubBanner"
-import Sidebar from "@/components/basicUI/Sidebar"
+// import Sidebar from "@/components/basicUI/Sidebar"
 
 import api from "../api"
 import Global from "../global"
@@ -58,7 +60,7 @@ export default {
         {
             handleCollaps()
             {
-                this.$store.commit('subbanner/open', false)
+                this.$store.commit('widgetSidebar/open', false)
             },
             onMeasuerWindowToggle( )
             {
@@ -104,7 +106,8 @@ export default {
             LeafletViewer,
             Banner,
             SubBanner,
-            Sidebar,
+            WidgetSidebar: async () => import('../components/Map/WidgetSidebar/WidgetSidebar.vue'),
+            AppraisalAnalysisSidebar: async () => import('../components/Map/AppraisalAnalysisSidebar/AppraisalAnalysisSidebar.vue')
             //----------------
             // Layer,
             // Info,

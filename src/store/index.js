@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import user from './modules/user'
-import subbanner from './modules/subbanner'
+import widgetSidebar from './modules/widgetSidebar'
+import appraisalAnalysisSidebar from './modules/appraisalAnalysisSidebar'
 import measurement from './modules/measurement'
 // import cart from './modules/cart'
 // import createLogger from '../../../src/plugins/logger'
@@ -13,8 +14,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
     user,
-    subbanner,
-    measurement
+    widgetSidebar,
+    measurement,
+    appraisalAnalysisSidebar
   },
 //   strict: debug,
 //   plugins: debug ? [createLogger()] : []

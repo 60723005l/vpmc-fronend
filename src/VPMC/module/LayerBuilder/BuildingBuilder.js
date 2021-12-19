@@ -18,9 +18,9 @@ class BuildingBuilder extends Builder {
         geoJSON.eachLayer(layer => {
             const { properties } = layer.feature
             layer.on('click', e => {
-                store.dispatch('subbanner/activate', 'Info')
-                store.commit('subbanner/open', true)
-                store.commit('subbanner/setPayload', {key: "Info", payload: { properties }})
+                store.dispatch('widgetSidebar/activate', 'Info')
+                store.commit('widgetSidebar/open', true)
+                store.commit('widgetSidebar/setPayload', {key: "Info", payload: { properties }})
             })
             
         })
