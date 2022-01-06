@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import user from './modules/user'
 import widgetSidebar from './modules/widgetSidebar'
 import appraisalAnalysisSidebar from './modules/appraisalAnalysisSidebar'
+import statsAndQuoteSidebar from './modules/statsAndQuoteSidebar'
 import measurement from './modules/measurement'
 // import cart from './modules/cart'
 // import createLogger from '../../../src/plugins/logger'
@@ -16,7 +17,8 @@ export default new Vuex.Store({
     user,
     widgetSidebar,
     measurement,
-    appraisalAnalysisSidebar
+    appraisalAnalysisSidebar,
+    statsAndQuoteSidebar
   },
 //   strict: debug,
 //   plugins: debug ? [createLogger()] : []

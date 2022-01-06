@@ -1,6 +1,6 @@
 <template>
     <form novalidate class="md-layout" @submit.prevent="()=>{}">
-        <md-card>
+        <md-card class="form-card">
             <md-card-content>
                 <div class="vpmc-step-form-wraper">
                     <div class="vpmc-Step-title">步驟一：載入勘估標的位置</div>

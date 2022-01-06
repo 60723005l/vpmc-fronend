@@ -15,6 +15,7 @@ export default {
             handleClick()
             {
                 this.$store.commit('appraisalAnalysisSidebar/open', false)
+                this.$store.commit('statsAndQuoteSidebar/open', false)
                 this.$store.dispatch('widgetSidebar/activate', 'Geolocation')
                 this.$store.commit('widgetSidebar/open', true)
             }

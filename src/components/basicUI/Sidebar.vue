@@ -61,9 +61,9 @@ export default {
 <style lang="scss" scoped>
 .sidebar-container{
     z-index: 1;
-    max-width: 450px;
+    max-width: 500px;
     min-width: 200px;
-    width: auto;
+    width: fit-content;
     .title-container{
         display: flex;
         align-items: center;
