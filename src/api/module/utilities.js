@@ -14,8 +14,7 @@ export const getAllCounties = async () => {
         headers: { }
       }
     try {
-        const resp = JSON.stringify(await axios(config).data)
-        console.log(resp)
+        const resp = (await axios(config)).data
         return resp
     }
     catch (err) {
@@ -36,8 +35,7 @@ export const getAllCounties = async () => {
         headers: { }
       }
     try {
-        const resp = JSON.stringify(await axios(config).data)
-        console.log(resp)
+        const resp = (await axios(config)).data
         return resp
     }
     catch (err) {
@@ -58,8 +56,7 @@ export const getAllCounties = async () => {
         headers: { }
       }
     try {
-        const resp = JSON.stringify(await axios(config).data)
-        console.log(resp)
+        const resp = (await axios(config)).data
         return resp
     }
     catch (err) {
