@@ -36,6 +36,7 @@ export default {
                 this.selected = payload
                 
                 this.$store.commit('widgetSidebar/open', false)
+                this.$store.commit('statsAndQuoteSidebar/open', false)
                 this.$store.dispatch('appraisalAnalysisSidebar/activate', payload.componentName)
                 this.$store.commit('appraisalAnalysisSidebar/open', true)
             }

@@ -1,6 +1,6 @@
 <template>
     <form novalidate class="md-layout" @submit.prevent="()=>{}">
-        <md-card>
+        <md-card class="form-card">
             <md-card-content>
                 <div class="vpmc-step-form-wraper">
                     <div class="vpmc-Step-title">步驟二：比較標的篩選條件模式</div>

@@ -9,6 +9,7 @@
                 :measurement="measurementOptions"/>
             <WidgetSidebar/>
             <AppraisalAnalysisSidebar/>
+            <StatsAndQuoteSidebar/>
             <!-- <Sidebar 
                 :basemaps="basemaps"
                 :side="'left'" 
@@ -107,7 +108,8 @@ export default {
             Banner,
             SubBanner,
             WidgetSidebar: async () => import('../components/Map/WidgetSidebar/WidgetSidebar.vue'),
-            AppraisalAnalysisSidebar: async () => import('../components/Map/AppraisalAnalysisSidebar/AppraisalAnalysisSidebar.vue')
+            AppraisalAnalysisSidebar: async () => import('../components/Map/AppraisalAnalysisSidebar/AppraisalAnalysisSidebar.vue'),
+            StatsAndQuoteSidebar: async () => import('../components/Map/StatsAndQuoteSidebar/StatsAndQuoteSidebar.vue')
             //----------------
             // Layer,
             // Info,
