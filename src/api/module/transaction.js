@@ -157,3 +157,25 @@ export const getCommittee = async (params) => {
         return Promise.reject(err)
     }
 }
+
+/**
+ * 
+ * @param {{ xmin: Number, xmax: Number, ymin: Number, ymax: Number }} params 
+ * @returns 
+ */
+export const getByExtent = async (params) => {
+    const url = process.env.BASE_API_URL + 'Transaction/getExtentData'
+    const config = {
+        method: 'get',
+        url,
+        params,
+        headers: { }
+      }
+    try {
+        const resp = (await axios(config)).data
+        return resp
+    }
+    catch (err) {
+        return Promise.reject(err)
+    }
+}

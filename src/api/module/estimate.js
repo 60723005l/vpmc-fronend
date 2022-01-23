@@ -14,7 +14,7 @@ import axios from "axios";
       headers: { }
     }
   try {
-      const resp = JSON.stringify(await axios(config).data)
+    const resp = (await axios(config)).data
       console.log(resp)
       return resp
   }

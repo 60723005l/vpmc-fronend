@@ -24,11 +24,31 @@ import LeafletViewer from "@/components/LeafletViewer"
 import Banner from "@/components/Map/Banner"
 import SubBanner from "@/components/Map/SubBanner"
 // import Sidebar from "@/components/basicUI/Sidebar"
+import projector, { EPSG } from '../VPMC/module/projector'
+import TransactionDataStreaming from '../VPMC/module/TransactionDataStreaming'
+import { Map } from "leaflet"
 
 import api from "../api"
 import Global from "../global"
 import Layer, { LayerInfo } from "../VPMC/module/Layer"
 import Type from '../VPMC/module/Layer/Type'
+
+window.EPSG = EPSG
+window.projector = projector
+
+const readTransData = async () => {
+    /**@type {Map} */
+    const viewer = await Global.VPMC.asyncViewer
+    const streaming = new TransactionDataStreaming(viewer, api.Transaction.getByExtent)
+    streaming.start()
+    // const rawDatas = api.Transaction.getByExtent({
+    //     xmin: 0,
+    //     xmax: 10000000,
+    //     ymin: 0,
+    //     ymax: 10000000
+    // })
+    // console.log(rawDatas)
+}
 
 export default {
     name: "Map",
@@ -42,11 +62,16 @@ export default {
         },
     created()
         {
-            this.setDefaultLayers()
+            // this.setDefaultLayers()
+            Global.VPMC.asyncViewer.then(viewer => {
+                Global.VPMC.transactionDataStreaming.apiFactory = api.Transaction.getByExtent
+                Global.VPMC.transactionDataStreaming.start()
+            })
+            
         },
     mounted()
         {            
-            
+            readTransData()
         },
     computed:
         {
