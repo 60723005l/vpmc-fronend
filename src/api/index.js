@@ -6,6 +6,7 @@ import * as Decree from './module/decree'
 import * as Utilities from './module/utilities'
 import * as Transaction from './module/transaction'
 import * as Estimate from './module/estimate'
+import * as LicenseAndPermit from './module/licenseAndPermit'
 
 export default {
     User,
@@ -15,5 +16,6 @@ export default {
     Decree,
     Utilities,
     Transaction,
-    Estimate
+    Estimate,
+    LicenseAndPermit
 }

@@ -62,7 +62,7 @@ export default {
         },
     created()
         {
-            // this.setDefaultLayers()
+            this.setDefaultLayers()
             Global.VPMC.asyncViewer.then(viewer => {
                 Global.VPMC.transactionDataStreaming.apiFactory = api.Transaction.getByExtent
                 Global.VPMC.transactionDataStreaming.start()
