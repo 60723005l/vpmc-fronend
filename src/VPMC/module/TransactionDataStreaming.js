@@ -1,6 +1,7 @@
 import { Map, latLng, Marker, markerClusterGroup, featureGroup, CircleMarker } from "leaflet"
 // import markercluster from 'leaflet.markercluster'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
+import Event from "../../utilities/Event"
 import projector, { EPSG } from "./projector"
 
 class TransactionDataStreaming {
@@ -18,6 +19,7 @@ class TransactionDataStreaming {
     this.pointCluster = featureGroup()
     this.handleDragEnd = this.handleDragEnd.bind(this)
     this.handleDragStart = this.handleDragStart.bind(this)
+    this.updateEvent = new Event()
 
     this.viewer.addLayer(this.pointCluster)
   }
@@ -34,21 +36,13 @@ class TransactionDataStreaming {
   }
   
   async handleDragEnd (event) {
+    this.pointCluster.getLayers().forEach(layer => this.pointCluster.removeLayer(layer))
     if (this.viewer.getZoom() >= this.maxZoom) {
       this.rawdata = await this.fetchDataFromBound()
-      
-      // this.pointCluster.removeLayers(this.pointCluster.getLayers())
-      this.pointCluster.getLayers().map(layer => this.pointCluster.removeLayer(layer))
-      // this.viewer.removeLayer(this.pointCluster)
       const points = this.createPointsFromRawData()
       points.forEach(point => this.pointCluster.addLayer(point))
-      
-      // this.pointCluster.addLayers(points)
-      // this.viewer.addLayer(this.pointCluster)
-      console.log(this.pointCluster.getLayers().length)
-    } else {
-
     }
+    this.updateEvent.raise(this.pointCluster.getLayers())
   }
 
   handleDragStart (event) {

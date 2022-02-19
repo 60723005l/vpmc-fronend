@@ -19,25 +19,38 @@ export default {
         return {
             targetedLatlng: undefined,
             bufferGraphic: undefined,
-            mappedLayers: []
+            mappedLayers: [],
+            serials: [],
+            asyncSerials: undefined,
+            params: {}
         }
+    },
+    mounted () {
+        Global.VPMC.transactionDataStreaming.updateEvent.addEventListener(this.handleStramingUpdate)
+    },
+    beforeDestroy () {
+        Global.VPMC.transactionDataStreaming.updateEvent.removeEventListener(this.handleStramingUpdate)
     },
     methods: {
         async handleSerialsQuery (params) {
+            this.params = { ...params }
             this.createBufferGraphic(this.targetedLatlng, params.distance)
-            const { transactionSerialNumber: serials } = await api.Estimate.getComparativeCases(params)
-            const targetLayerGroup = Global.VPMC.transactionDataStreaming.pointCluster
-            
-            this.mappedLayers = serials.map(id => {
-                const mappedLayer = targetLayerGroup.getLayers().find(e => e.properties.id === id)
-                return mappedLayer
-            }).filter(layer => layer !== undefined && layer.getLatLng().distanceTo(this.targetedLatlng) <= params.distance)
+            this.asyncSerials = api.Estimate.getComparativeCases(params)
+            const resp = await this.asyncSerials
+            this.serials = resp.transactionSerialNumber
+            this.hightlightMatchSerialsPoints(this.serials)
+        },
+        hightlightMatchSerialsPoints (serials = []) {
+            const points = Global.VPMC.transactionDataStreaming.pointCluster.getLayers()
+            this.mappedLayers = serials.map(id => points.find(e => e.properties.id === id))
+            .filter(layer => layer !== undefined && layer.getLatLng().distanceTo(this.targetedLatlng) <= this.params.distance)
 
-            this.mappedLayers.map(layer => layer.setStyle({
+            this.mappedLayers.forEach(layer => layer.setStyle({
                 color: 'red'
             }))
-
-            console.log(serials, this.mappedLayers)
+        },
+        async handleStramingUpdate (points) {
+            this.hightlightMatchSerialsPoints(this.serials || [])
         },
         /**
          * @param {LatLng} latlng
@@ -51,7 +64,7 @@ export default {
                 viewer.removeLayer(this.bufferGraphic)
                 this.bufferGraphic = undefined
             }
-            const buffer = new Circle(latlng, { radius: distance })
+            const buffer = new Circle(latlng, { radius: distance, weight: 1.5, fillColor: '#03fcf8', dashArray: '2, 2' })
             this.bufferGraphic = buffer
             viewer.addLayer(buffer)
 

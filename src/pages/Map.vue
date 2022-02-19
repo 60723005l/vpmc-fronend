@@ -32,22 +32,23 @@ import api from "../api"
 import Global from "../global"
 import Layer, { LayerInfo } from "../VPMC/module/Layer"
 import Type from '../VPMC/module/Layer/Type'
+import Event from '../utilities/Event'
 
 window.EPSG = EPSG
 window.projector = projector
+window.E = Event
+
+const handleStreamingUpdate = (points) => {
+    // console.log(points)
+}
 
 const readTransData = async () => {
-    /**@type {Map} */
-    const viewer = await Global.VPMC.asyncViewer
-    const streaming = new TransactionDataStreaming(viewer, api.Transaction.getByExtent)
+    await Global.VPMC.asyncViewer
+    const streaming = Global.VPMC.transactionDataStreaming
+    streaming.apiFactory = api.Transaction.getByExtent
+    streaming.updateEvent.addEventListener(handleStreamingUpdate)
     streaming.start()
-    // const rawDatas = api.Transaction.getByExtent({
-    //     xmin: 0,
-    //     xmax: 10000000,
-    //     ymin: 0,
-    //     ymax: 10000000
-    // })
-    // console.log(rawDatas)
+    return streaming
 }
 
 export default {
@@ -57,22 +58,22 @@ export default {
             return {
                 containerId: process.env.CONTAINERID,
                 mapOption: {},
-                basemaps:[]
+                basemaps:[],
             }
         },
     created()
         {
             this.setDefaultLayers()
-            Global.VPMC.asyncViewer.then(viewer => {
-                Global.VPMC.transactionDataStreaming.apiFactory = api.Transaction.getByExtent
-                Global.VPMC.transactionDataStreaming.start()
-            })
-            
         },
-    mounted()
+    async mounted()
         {            
-            readTransData()
+            await readTransData()
         },
+    beforeDestroy () {
+        if (Global.VPMC.transactionDataStreaming) {
+            Global.VPMC.transactionDataStreaming.updateEvent.removeEventListener(handleStreamingUpdate)
+        }
+    },
     computed:
         {
             measurementOptions(){
