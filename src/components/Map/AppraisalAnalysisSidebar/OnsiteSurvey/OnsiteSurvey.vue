@@ -10,9 +10,9 @@
 <script>
 
 const tabs = [
-    {name:'土地', frameSrc:'https://localhost:5001/Land/Create'},
-    {name:'建物', frameSrc:'https://localhost:5001/Building/Create'},
-    {name:'車位', frameSrc:'https://localhost:5001/Park/Create'},
+    {name:'土地', frameSrc:'http://140.122.82.98/Land/Create'},
+    {name:'建物', frameSrc:'http://140.122.82.98/Building/Create'},
+    {name:'車位', frameSrc:'http://140.122.82.98/Park/Create'},
 ]
 export default {
     name: 'OnsiteSurvey',

@@ -1,6 +1,6 @@
 <template>
   <div class="vpmc-UnitInfo">
-    <span class="md-subheading">{{value.units}}</span>
+    <span class="md-subheading">{{Math.floor(value.units / 3.3)}}坪</span>
     <span>
       <span class="md-caption">{{value.bedNumber}}房</span>
       <span class="md-caption">{{value.hallNumber}}廳</span>
