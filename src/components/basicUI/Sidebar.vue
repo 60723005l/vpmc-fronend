@@ -1,23 +1,18 @@
 <template>
     <md-drawer class="sidebar-container" md-persistent="full" :md-right="side==='right'" :md-active="open">
         <div class="title-container">
-            <div class="vpmc-title">{{$store.state.subbanner.current.title}}</div>
+            <div class="vpmc-title">{{title}}</div>
             <div class="action">
-                <md-button class="md-icon-button"  @click="handleCollaps">
+                <md-button class="md-icon-button"  @click="$emit('collapse')">
                     <md-icon>menu_open</md-icon>
                 </md-button>
             </div>
         </div>
         <md-divider/>
-        <keep-alive>
-            <component :is="$store.state.subbanner.current.value"></component>
-        </keep-alive>
+        <slot></slot>
     </md-drawer>
 </template>
 <script>
-import Layer from "@/components/Map/Sidebar/Layer"
-import Info from "@/components/Map/Sidebar/Info"
-import Geolocation from "@/components/Map/Sidebar/Geolocation"
 export default {
     name:"Sidebar",
     props:
@@ -26,6 +21,11 @@ export default {
             {
                 type: Boolean,
                 default: false
+            },
+            title:
+            {
+                type: String,
+                default: ''
             },
             side:{
                 type: String,
@@ -55,25 +55,15 @@ export default {
                 }
                 return {"--left":left, "--right": right}
             }
-        },
-    methods:
-        {
-            handleCollaps()
-            {
-                // this.$emit('collapse')
-                this.$store.commit('subbanner/open', false)
-            }
-        },
-    components: {
-        Layer,
-        Info,
-        Geolocation,
-    }
+        }
 }
 </script>
 <style lang="scss" scoped>
 .sidebar-container{
     z-index: 1;
+    max-width: 500px;
+    min-width: 200px;
+    width: fit-content;
     .title-container{
         display: flex;
         align-items: center;

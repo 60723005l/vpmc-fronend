@@ -1,6 +1,7 @@
 import LayerControl from "./module/LayerControl";
 import ViewerPromise from "./module/ViewerPromise";
-import Leaflet from 'leaflet'
+import Leaflet, { Map } from 'leaflet'
+import TransactionDataStreaming from "./module/TransactionDataStreaming";
 import { defaults } from "lodash";
 
 /**
@@ -17,6 +18,13 @@ class VPMC
         this.viewer = undefined
         this.layerControl = undefined
         this.viewerPromise = new ViewerPromise()
+        this.transactionDataStreaming = undefined
+    }
+    /**
+     * @returns {Map}
+     */
+    get asyncViewer () {
+        return this.viewerPromise.await
     }
     createViewer( option = {})
     {
@@ -28,6 +36,7 @@ class VPMC
 
         this.viewer = Leaflet.map( this.id, _option)
         this.layerControl = new LayerControl(this.viewer)
+        this.transactionDataStreaming = new TransactionDataStreaming(this.viewer)
         this.viewerPromise.setViewer(this.viewer)
         return this.viewer
     }

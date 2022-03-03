@@ -6,6 +6,11 @@ export default class ViewerPromise
         this.viewer = undefined
         this.stack = []
     }
+    get await () {
+        return new Promise(res => {
+            this.execute(viewer => res(viewer))
+        })
+    }
     setViewer( viewer )
     {
         this.viewer = viewer

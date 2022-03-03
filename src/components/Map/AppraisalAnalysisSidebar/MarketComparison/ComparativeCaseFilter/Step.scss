@@ -1,0 +1,43 @@
+.form-card{
+    flex: 1;
+    .vpmc-step-form-wraper{
+        display: flex;
+        flex-direction: column;
+        .vpmc-Step-title{}
+        .vpmc-step-content{
+            display: flex;
+            flex-direction: column;
+            .col-item{
+                display: flex;
+                flex-direction: column;
+            }
+            .row-item{
+                display: flex;
+            }
+            .vpmc-step-item-group{
+                display: flex;
+                flex-direction: column;
+                margin: 10px 0px;
+                .item-group-title{
+
+                }
+                .item-group-content{
+                    display: flex;
+                    margin-left: 10px;
+                    .text-item{
+                        // flex: 1;
+                        white-space: nowrap;
+                        margin-left: 3px;
+                    }
+                    .form-item{
+                        flex: 1;
+                        & > *{
+                            width: 100%;
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+}
