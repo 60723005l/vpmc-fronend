@@ -8,11 +8,12 @@
         <md-menu-item v-for="(item) in options" :key="item.name"
                     @click="handleSelect(item)">{{item.name}}</md-menu-item>
         </md-menu-content>
-        
+        <EcomOverview v-if="ecomOpen" :open="ecomOpen" @onClose="ecomOpen = false"></EcomOverview>
     </md-menu>
 </template>
 <script>
 import DropdownMenu from '@innologica/vue-dropdown-menu'
+import EcomOverview from './StatsAndQuote/EcomOverview.vue'
 
 let optionsWithVuex = 
 [
@@ -27,7 +28,7 @@ let options =
 
 ]
 export default {
-    name:"StatsAndQuote",
+    name: "StatsAndQuote",
     data()
         {
             return{
@@ -35,7 +36,8 @@ export default {
                 options,
                 selected: undefined,
                 placeholder:'統計及行情',
-                show:false
+                show:false,
+                ecomOpen: false,
             }
         },
     methods:
@@ -51,11 +53,16 @@ export default {
             handleSelect(payload)
             {
                 this.selected = payload
+                switch (payload.name) {
+                    case '台灣總經蓋覽':
+                        this.ecomOpen = true
+                }
             }
         },
     components:
         {
-            DropdownMenu
+            DropdownMenu,
+            EcomOverview
         }
 }
 </script>
