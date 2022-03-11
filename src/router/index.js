@@ -9,6 +9,8 @@ import Map from '@/pages/Map'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import LostPassword from '@/pages/LostPassword'
+import ForgetPassword from '@/pages/ForgetPassword'
+import PasswordReset from '@/pages/PasswordReset'
 
 import NotFound from '@/pages/NotFound'
 
@@ -34,13 +36,23 @@ const router = new Router({
       component: LostPassword
     },
     {
+      path: '/forgetpassword',
+      name: 'ForgetPassword',
+      component: ForgetPassword
+    },
+    {
+      path: '/passwordreset',
+      name: 'PasswordReset',
+      component: PasswordReset
+    },
+    {
       path: '/:username/map',
       name: 'Map',
       component: Map,
       beforeEnter: loginGuard
     },
-    {path: '/:pathMatch(.*)*', name:'NotFound', component: NotFound},
-     
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
+
   ]
 })
 
@@ -70,7 +82,7 @@ const router = new Router({
 //       throw err
 //     }
 //   }
-  
+
 // }
 
 

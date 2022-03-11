@@ -5,25 +5,22 @@
     </video>
     <form autocomplete="nope">
       <!-- prevent browser autocomplete ignore this block------------------ -->
-      <md-field class="preventer"
-        ><label for="username2">帳號</label
-        ><md-input name="username2" required></md-input
-      ></md-field>
-      <md-field class="preventer" :md-toggle-password="false"
-        ><label>密碼</label><md-input type="password"></md-input
-      ></md-field>
-      <!-- ------------------ -->
+      <md-field :class="{ 'md-invalid': email.errmsg !== '' }">
+        <label>E-mail</label>
+        <md-input v-model="email.value" required @input="checkEmail"></md-input>
+        <span class="md-error">{{ email.errmsg }}</span>
+      </md-field>
 
       <md-field>
-        <label for="username">帳號</label>
-        <md-input name="username" v-model="username" required></md-input>
-        <span class="vpmc-helper-text">請輸入6-20碼英/數混合字元</span>
+        <label>暫時密碼</label>
+        <md-input autocomplete="off" v-model="tempPassword"></md-input>
       </md-field>
+
       <md-field
         :class="{ 'md-invalid': psw.errmsg !== '' }"
         :md-toggle-password="false"
       >
-        <label>密碼</label>
+        <label>新密碼</label>
         <md-input
           :type="psw_inputType"
           autocomplete="off"
@@ -38,6 +35,7 @@
           至少8個字元，混合大小寫英文、數字及符號
         </span>
       </md-field>
+
       <md-field :class="{ 'md-invalid': psw2.errmsg !== '' }">
         <label>再次輸入密碼</label>
         <md-input
@@ -49,23 +47,13 @@
         <span class="md-error">{{ psw2.errmsg }}</span>
       </md-field>
 
-      <md-field :class="{ 'md-invalid': email.errmsg !== '' }">
-        <label>E-mail</label>
-        <md-input v-model="email.value" required @input="checkEmail"></md-input>
-        <span class="md-error">{{ email.errmsg }}</span>
-      </md-field>
-      <md-field>
-        <label>電話</label>
-        <md-input v-model="phone" required></md-input>
-        <span class="vpmc-helper-text"> 09xx-xxxxxx(台灣號碼) </span>
-      </md-field>
       <div v-if="errmsg !== ''">
         <span class="error">{{ errmsg }}</span>
       </div>
 
       <md-card-actions>
         <md-button class="md-primary md-raised vpmc-md" @click="handleRegister"
-          >註冊</md-button
+          >重新設置密碼</md-button
         >
       </md-card-actions>
     </form>
@@ -76,9 +64,10 @@ import api from "../api";
 import { validate } from "../utilities";
 
 export default {
-  name: "Register",
+  name: "ForgetPassword",
   data: () => ({
     username: "",
+    tempPassword: "",
     password: "",
     password_2: "",
     email: {
@@ -145,39 +134,19 @@ export default {
       }
     },
     async handleRegister() {
-      if (this.validateForm()) {
-        const response = await api.User.register({
-          username: this.username,
-          password: this.password,
-          email: this.email.value,
-          phoneNumber: this.phone,
-        });
-        if (response.status === 200) {
-          const response_2 = await api.User.sendVerifyEmail(this.username);
-          const responseContent_2 = await response_2.json();
-          if (response_2.status === 200) {
-            this.errmsg = `驗證信已寄至${this.email.value}，5秒後跳轉至登入頁面`;
-            setTimeout(() => {
-              this.$router.push({ name: "Login" });
-            }, 5000);
-          } else {
-            this.errmsg = `${responseContent_2.status}`;
-          }
-        } else {
-          const responseContent = await response.json();
-          this.errmsg = `${responseContent.status}`;
-        }
-        // try{
-        //     await api.User.register({
-        //         username: this.username,
-        //         password: this.password,
-        //         email: this.email.value,
-        //         phoneNumber: this.phone
-        //     })
-        //     this.$router.push({name: 'Login'})
-        // } catch ( error ) {
-        //     this.errmsg = error.message
-        // }
+      const response = await api.User.resetPassword({
+        email: this.email.value,
+        originalPassword: this.tempPassword,
+        newPassword: this.password,
+      });
+      const responseContent = await response.json();
+      if (response.status === 200) {
+        this.errmsg = `密碼重設成功，5秒後跳轉至登入頁面`;
+        setTimeout(() => {
+          this.$router.push({ name: "Login" });
+        }, 5000);
+      } else {
+        this.errmsg = `${responseContent.status}`;
       }
     },
   },
@@ -193,7 +162,7 @@ export default {
     // The primary color of your applicatio
     accent: md-get-palette-color(red, A200),
     // The accent or secondary colo
-    theme: light // This can be dark or ligh,,,,
+    theme: light // This can be dark or ligh,,,,,,,,,,,,,,,,,,,,
   )
 );
 
