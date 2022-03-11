@@ -64,7 +64,7 @@ import api from "../api";
 import { validate } from "../utilities";
 
 export default {
-  name: "ForgetPassword",
+  name: "PasswordReset",
   data: () => ({
     username: "",
     tempPassword: "",
@@ -162,7 +162,7 @@ export default {
     // The primary color of your applicatio
     accent: md-get-palette-color(red, A200),
     // The accent or secondary colo
-    theme: light // This can be dark or ligh,,,,,,,,,,,,,,,,,,,,
+    theme: light // This can be dark or ligh,,,,,,,,,,,,,,,,,,,,,
   )
 );
 
