@@ -109,7 +109,7 @@ export default {
       if (response.status === 200) {
         this.errmsg = `驗證信已寄至${this.email.value}，5秒後跳轉至登入頁面`;
         setTimeout(() => {
-          this.$router.push({ name: "Login" });
+          this.$router.push({ name: "PasswordReset" });
         }, 5000);
       } else {
         this.errmsg = `${responseContent.status}`;
@@ -139,7 +139,7 @@ export default {
     // The primary color of your applicatio
     accent: md-get-palette-color(red, A200),
     // The accent or secondary colo
-    theme: light // This can be dark or ligh,,,,,,,,,,
+    theme: light // This can be dark or ligh,,,,,,,,,,,
   )
 );
 
