@@ -6,14 +6,16 @@
       :id="tab.name"
       :md-label="tab.name"
     >
-      <div class="frame-wrapper">
+      <LandSheet v-if="index === 0"></LandSheet>
+      <!-- <div class="frame-wrapper">
         <iframe width="100%" height="100%" :src="tab.frameSrc"></iframe>
       </div>
-      <button @click="handleBtnClick(tab.editSrc)">現勘資料表儲存庫</button>
+      <button @click="handleBtnClick(tab.editSrc)">現勘資料表儲存庫</button> -->
     </md-tab>
   </md-tabs>
 </template>
 <script>
+import LandSheet from "./LandSheet.vue";
 const tabs = [
   {
     name: "土地",
@@ -44,6 +46,9 @@ export default {
       //   console.log(src);
       window.open(src, "_blank");
     },
+  },
+  components: {
+    LandSheet,
   },
 };
 </script>
