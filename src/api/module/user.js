@@ -99,6 +99,33 @@ export const sendVerifyEmail = async (username) => {
     return response
 }
 
+export const sendForgetPasswordEmail = async (email) => {
+    const url = process.env.BASE_API_URL_V2 + `api/User/sendPasswordResetEmail?email=${email}`
+    const headersList = {
+        Accept: '*/*',
+    }
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: headersList
+    })
+    return response
+}
+
+export const resetPassword = async (options) => {
+    const url = process.env.BASE_API_URL_V2 + `api/User/resetPassword`
+    const headersList = {
+        Accept: '*/*',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    const bodyContent = `email=${options.email}&originalPassword=${util.encodeBase64(sha256(options.originalPassword))}&newPassword=${util.encodeBase64(sha256(options.newPassword))}`;
+    const response = await fetch(url, {
+        method: 'POST',
+        body: bodyContent,
+        headers: headersList
+    })
+    return response
+}
+
 function fixCrapJson (crappyJSON) {
     let fixedJSON_key = crappyJSON.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": ');
     let fixedJSON_value = fixedJSON_key.replace(/(['"])?([a-zA-Z0-9_-]+)(['"])?,/g, '"$2", ');

@@ -50,7 +50,7 @@
         </div>
         <div>
           <router-link :to="{ name: 'Register' }">註冊</router-link>
-          <a :href="href.forgotPassword">忘記密碼</a>
+          <router-link :to="{ name: 'ForgetPassword' }">忘記密碼</router-link>
         </div>
       </div>
     </div>
@@ -253,7 +253,7 @@ input:-webkit-autofill:active {
     accent: md-get-palette-color(red, A200),
     // The accent or secondary colo
     theme: light
-      // This can be dark or ligh,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+      // This can be dark or ligh,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   )
 );
 
