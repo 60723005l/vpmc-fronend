@@ -7,7 +7,10 @@
         <span class="md-title">步驟一：載入勘估標的土地/建物謄本</span>
         <md-field>
           <label>點此上傳檔案</label>
-          <md-file v-model="landSheetData.transcriptFile" />
+          <md-file
+            v-model="landSheetData.transcriptFile"
+            @md-change="handleTranscriptFileSelect"
+          />
         </md-field>
       </div>
 
@@ -612,8 +615,23 @@ export default {
         this.addressVillageData = response;
       }
     },
+    handleTranscriptFileSelect(transcriptFile) {
+      this.transcriptFile = transcriptFile;
+      console.log(transcriptFile[0]);
+      this.getBase64(transcriptFile[0]);
+    },
     async handleSubmit() {
       console.log(this.landSheetData);
+    },
+    getBase64(file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function () {
+        console.log(reader.result);
+      };
+      reader.onerror = function (error) {
+        console.log("Error: ", error);
+      };
     },
   },
 };
