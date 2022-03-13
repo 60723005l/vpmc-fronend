@@ -8,6 +8,7 @@
     >
       <LandSheet v-if="index === 0"></LandSheet>
       <BuildingSheet v-if="index === 1"></BuildingSheet>
+      <ParkSheet v-if="index === 2"></ParkSheet>
       <!-- <div class="frame-wrapper">
         <iframe width="100%" height="100%" :src="tab.frameSrc"></iframe>
       </div>
@@ -18,6 +19,7 @@
 <script>
 import LandSheet from "./LandSheet.vue";
 import BuildingSheet from "./BuildingSheet.vue";
+import ParkSheet from "./ParkSheet.vue";
 const tabs = [
   {
     name: "土地",
@@ -52,6 +54,7 @@ export default {
   components: {
     LandSheet,
     BuildingSheet,
+    ParkSheet,
   },
 };
 </script>
