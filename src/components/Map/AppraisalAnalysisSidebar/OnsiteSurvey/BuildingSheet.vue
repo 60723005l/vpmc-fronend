@@ -111,6 +111,15 @@
               </div>
             </div>
           </div>
+
+          <div class="content-row">
+            <div class="label-set">
+              <p>6.建物面積：</p>
+              <div class="radio-set">
+                <input class="input-short" type="text" value="" />
+              </div>
+            </div>
+          </div>
         </div>
 
         <span class="md-subheading">二、產權分析</span>
@@ -118,6 +127,33 @@
           <div class="content-row">
             <div class="label-set">
               <p>1.土地所有權人及權利範圍：</p>
+              <div class="radio-set">
+                <input
+                  type="radio"
+                  id="land"
+                  name="type"
+                  value="land"
+                  checked
+                />
+                <label for="land">名下全部</label>
+              </div>
+            </div>
+            <div class="label-set">
+              <div class="radio-set">
+                <input
+                  type="radio"
+                  id="building"
+                  name="type"
+                  value="building"
+                />
+                <label for="building">持分產權</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-row">
+            <div class="label-set">
+              <p>2.建物所有權人及權利範圍：</p>
               <div class="radio-set">
                 <input
                   type="radio"
@@ -190,6 +226,50 @@
             </div>
             <div class="label-set">
               <p>法定容積率：</p>
+              <div class="radio-set">
+                <input class="input-short" type="text" value="" />
+              </div>
+            </div>
+          </div>
+          <div class="content-row">
+            <div class="label-set">
+              <p>3.建物法定用途：</p>
+              <div class="radio-set">
+                <input class="input-short" type="text" value="" />
+              </div>
+            </div>
+          </div>
+          <div class="content-row">
+            <div class="label-set">
+              <p>4.建物建造：</p>
+              <div class="radio-set">
+                <input class="input-short" type="text" value="" />
+              </div>
+            </div>
+          </div>
+          <div class="content-row">
+            <div class="label-set">
+              <p>5.建造完成日：</p>
+              <div class="radio-set">
+                <input class="input-short" type="text" value="" />
+              </div>
+            </div>
+          </div>
+          <div class="content-row">
+            <div class="label-set">
+              <p>6.建物量體： 地上：</p>
+              <div class="radio-set">
+                <input class="input-short" type="text" value="" />
+              </div>
+              <p>地下：</p>
+              <div class="radio-set">
+                <input class="input-short" type="text" value="" />
+              </div>
+            </div>
+          </div>
+          <div class="content-row">
+            <div class="label-set">
+              <p>7.勘估標的座落樓層： 地上：</p>
               <div class="radio-set">
                 <input class="input-short" type="text" value="" />
               </div>
@@ -298,7 +378,7 @@
 
 <script>
 export default {
-  name: "LandSheet",
+  name: "BuildingSheet",
   data() {
     return {
       transcriptFile: undefined,
