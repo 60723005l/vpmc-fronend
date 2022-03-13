@@ -1,19 +1,22 @@
 <template>
   <div class="sheet-container">
-    <div class="step-container">
-      <span class="md-title">步驟一：載入勘估標的土地/建物謄本</span>
-      <md-field>
-        <label>點此上傳檔案</label>
-        <md-file v-model="transcriptFile" />
-      </md-field>
-    </div>
+    <button @click="handleRepositoryClick">{{ optionName }}</button>
 
-    <div class="step-container">
-      <span class="md-title">步驟二：輸入勘估標的基本資料</span>
-      <div class="section-container">
-        <span class="md-subheading">一、標的內容</span>
-        <div class="section-content">
-          <div class="content-row">
+    <div class="sheet-form" v-if="mode === 'edit'">
+      <div class="step-container">
+        <span class="md-title">步驟一：載入勘估標的土地/建物謄本</span>
+        <md-field>
+          <label>點此上傳檔案</label>
+          <md-file v-model="transcriptFile" />
+        </md-field>
+      </div>
+
+      <div class="step-container">
+        <span class="md-title">步驟二：輸入勘估標的基本資料</span>
+        <div class="section-container">
+          <span class="md-subheading">一、標的內容</span>
+          <div class="section-content">
+            <!-- <div class="content-row">
             <div class="label-set">
               <p>1.資產類型：</p>
               <div class="radio-set">
@@ -22,7 +25,6 @@
                   id="land"
                   name="type"
                   value="land"
-                  checked
                 />
                 <label for="land">土地</label>
               </div>
@@ -40,272 +42,329 @@
                 <label for="park">車位</label>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <div class="content-row">
-            <div class="label-set">
-              <p>2.土地標示：</p>
-              <div class="radio-set">
-                <select>
-                  <option>台北市</option>
-                </select>
-              </div>
-              <div class="radio-set">
-                <select>
-                  <option>中山區</option>
-                </select>
-              </div>
-              <p>段小段：</p>
-              <div class="radio-set">
-                <input class="input-short" type="text" value="" />
-                <input class="input-short" type="text" value="" />
+            <div class="content-row">
+              <div class="label-set">
+                <p>2.土地標示：</p>
+                <div class="radio-set">
+                  <select>
+                    <option>台北市</option>
+                  </select>
+                </div>
+                <div class="radio-set">
+                  <select>
+                    <option>中山區</option>
+                  </select>
+                </div>
+                <p>段小段：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="text" value="" />
+                  <input class="input-short" type="text" value="" />
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="content-row">
-            <div class="label-set">
-              <p>3.建物標示：</p>
-              <div class="radio-set">
-                <select>
-                  <option>台北市</option>
-                </select>
-              </div>
-              <div class="radio-set">
-                <select>
-                  <option>中山區</option>
-                </select>
-              </div>
-              <p>段小段：</p>
-              <div class="radio-set">
-                <input class="input-short" type="text" value="" />
-                <input class="input-short" type="text" value="" />
+            <div class="content-row">
+              <div class="label-set">
+                <p>3.建物標示：</p>
+                <div class="radio-set">
+                  <select>
+                    <option>台北市</option>
+                  </select>
+                </div>
+                <div class="radio-set">
+                  <select>
+                    <option>中山區</option>
+                  </select>
+                </div>
+                <p>段小段：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="text" value="" />
+                  <input class="input-short" type="text" value="" />
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="content-row">
-            <div class="label-set">
-              <p>4.建物門牌：</p>
-              <div class="radio-set">
-                <select>
-                  <option>台北市</option>
-                </select>
-              </div>
-              <div class="radio-set">
-                <select>
-                  <option>中山區</option>
-                </select>
-              </div>
-              <div class="radio-set">
-                <input class="input-long" type="text" value="" />
+            <div class="content-row">
+              <div class="label-set">
+                <p>4.建物門牌：</p>
+                <div class="radio-set">
+                  <select>
+                    <option>台北市</option>
+                  </select>
+                </div>
+                <div class="radio-set">
+                  <select>
+                    <option>中山區</option>
+                  </select>
+                </div>
+                <div class="radio-set">
+                  <input class="input-long" type="text" value="" />
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="content-row">
-            <div class="label-set">
-              <p>5.土地面積：</p>
-              <div class="radio-set">
-                <input class="input-short" type="text" value="" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <span class="md-subheading">二、產權分析</span>
-        <div class="section-content">
-          <div class="content-row">
-            <div class="label-set">
-              <p>1.土地所有權人及權利範圍：</p>
-              <div class="radio-set">
-                <input
-                  type="radio"
-                  id="land"
-                  name="type"
-                  value="land"
-                  checked
-                />
-                <label for="land">名下全部</label>
-              </div>
-            </div>
-            <div class="label-set">
-              <div class="radio-set">
-                <input
-                  type="radio"
-                  id="building"
-                  name="type"
-                  value="building"
-                />
-                <label for="building">持分產權</label>
+            <div class="content-row">
+              <div class="label-set">
+                <p>5.土地面積：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="text" value="" />
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="content-row">
-            <div class="label-set">
-              <p>2.他項權利：</p>
-              <div class="radio-set">
-                <input class="input-short" type="text" value="" />
+          <span class="md-subheading">二、產權分析</span>
+          <div class="section-content">
+            <div class="content-row">
+              <div class="label-set">
+                <p>1.土地所有權人及權利範圍：</p>
+                <div class="radio-set">
+                  <input
+                    type="radio"
+                    id="land"
+                    name="type"
+                    value="land"
+                    checked
+                  />
+                  <label for="land">名下全部</label>
+                </div>
+              </div>
+              <div class="label-set">
+                <div class="radio-set">
+                  <input
+                    type="radio"
+                    id="building"
+                    name="type"
+                    value="building"
+                  />
+                  <label for="building">持分產權</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-row">
+              <div class="label-set">
+                <p>2.他項權利：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="text" value="" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <span class="md-subheading">三、使用現況</span>
-        <div class="section-content">
-          <div class="content-row">
-            <div class="label-set">
-              <p>1.使用分區：</p>
-              <div class="radio-set">
-                <input
-                  type="radio"
-                  id="land"
-                  name="type"
-                  value="land"
-                  checked
-                />
-                <label for="land">都市土地</label>
+          <span class="md-subheading">三、使用現況</span>
+          <div class="section-content">
+            <div class="content-row">
+              <div class="label-set">
+                <p>1.使用分區：</p>
+                <div class="radio-set">
+                  <input
+                    type="radio"
+                    id="land"
+                    name="type"
+                    value="land"
+                    checked
+                  />
+                  <label for="land">都市土地</label>
+                </div>
+              </div>
+              <div class="label-set">
+                <div class="radio-set">
+                  <input
+                    type="radio"
+                    id="building"
+                    name="type"
+                    value="building"
+                  />
+                  <label for="building">非都市土地</label>
+                </div>
               </div>
             </div>
-            <div class="label-set">
-              <div class="radio-set">
-                <input
-                  type="radio"
-                  id="building"
-                  name="type"
-                  value="building"
-                />
-                <label for="building">非都市土地</label>
+            <div class="content-row">
+              <div class="label-set"><p>2.使用強度：</p></div>
+              <div class="label-set">
+                <p>法定建蔽率：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="text" value="" />
+                </div>
+              </div>
+              <div class="label-set">
+                <p>法定容積率：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="text" value="" />
+                </div>
               </div>
             </div>
           </div>
-          <div class="content-row">
-            <div class="label-set"><p>2.使用強度：</p></div>
-            <div class="label-set">
-              <p>法定建蔽率：</p>
-              <div class="radio-set">
-                <input class="input-short" type="text" value="" />
+
+          <span class="md-subheading">四、勘查日期及價格日期</span>
+          <div class="section-content">
+            <div class="content-row">
+              <div class="label-set">
+                <p>1.勘查日期：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="datetime" value="" />
+                </div>
               </div>
-            </div>
-            <div class="label-set">
-              <p>法定容積率：</p>
-              <div class="radio-set">
-                <input class="input-short" type="text" value="" />
+              <div class="label-set">
+                <p>. 2.價格日期：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="datetime" value="" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <span class="md-subheading">四、勘查日期及價格日期</span>
-        <div class="section-content">
-          <div class="content-row">
-            <div class="label-set">
-              <p>1.勘查日期：</p>
-              <div class="radio-set">
-                <input class="input-short" type="datetime" value="" />
+          <span class="md-subheading">五、估價目的</span>
+          <div class="section-content">
+            <div class="content-row">
+              <div class="label-set">
+                <div class="radio-set">
+                  <select>
+                    <option>資產價值證明</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="label-set">
-              <p>. 2.價格日期：</p>
-              <div class="radio-set">
-                <input class="input-short" type="datetime" value="" />
+              <div class="label-set">
+                <div class="radio-set">
+                  <input class="input-long" type="text" value="" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <span class="md-subheading">五、估價目的</span>
-        <div class="section-content">
-          <div class="content-row">
-            <div class="label-set">
-              <div class="radio-set">
-                <select>
-                  <option>資產價值證明</option>
-                </select>
+          <span class="md-subheading">六、價格種類及估價條件</span>
+          <div class="section-content">
+            <div class="content-row-aa">
+              <div class="label-set-aa">
+                <p>1.價格種類：</p>
+                <div class="radio-set">
+                  <select>
+                    <option>正常價格</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="label-set">
-              <div class="radio-set">
-                <input class="input-long" type="text" value="" />
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <span class="md-subheading">六、價格種類及估價條件</span>
-        <div class="section-content">
-          <div class="content-row-aa">
-            <div class="label-set-aa">
-              <p>1.價格種類：</p>
-              <div class="radio-set">
-                <select>
-                  <option>正常價格</option>
-                </select>
+              <div class="label-set-aa">
+                <p>2.評估權利種類：</p>
+                <div class="radio-set">
+                  <select>
+                    <option>所有權價值評估</option>
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <div class="label-set-aa">
-              <p>2.評估權利種類：</p>
-              <div class="radio-set">
-                <select>
-                  <option>所有權價值評估</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="label-set-aa">
-              <p>3.評價條件：</p>
-              <div class="radio-set">
-                <input class="input-short" type="text" value="" />
+              <div class="label-set-aa">
+                <p>3.評價條件：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="text" value="" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <span class="md-subheading">七、現場勘查情形說明</span>
-        <div class="section-content">
-          <div class="content-row-aa">
-            <div class="label-set-aa">
-              <p>1.勘領人姓名：</p>
-              <div class="radio-set">
-                <input class="input-short" type="text" value="" />
+          <span class="md-subheading">七、現場勘查情形說明</span>
+          <div class="section-content">
+            <div class="content-row-aa">
+              <div class="label-set-aa">
+                <p>1.勘領人姓名：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="text" value="" />
+                </div>
               </div>
-            </div>
 
-            <div class="label-set-aa">
-              <p>2.勘領說明事項：</p>
-              <div class="radio-set">
-                <input class="input-short" type="text" value="" />
+              <div class="label-set-aa">
+                <p>2.勘領說明事項：</p>
+                <div class="radio-set">
+                  <input class="input-short" type="text" value="" />
+                </div>
               </div>
-            </div>
 
-            <div class="label-set-aa">
-              <p>3.現勘照片：</p>
-              <md-field>
-                <label>點此上傳檔案</label>
-                <md-file v-model="transcriptFile" />
-              </md-field>
+              <div class="label-set-aa">
+                <p>3.現勘照片：</p>
+                <md-field>
+                  <label>點此上傳檔案</label>
+                  <md-file v-model="transcriptFile" />
+                </md-field>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <button>新增</button>
     </div>
 
-    <button>新增</button>
+    <div class="list-table" v-if="mode === 'list'">
+      <table>
+        <thead>
+          <tr>
+            <th>現勘表ID</th>
+            <th>編輯</th>
+            <th>刪除</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(sheet, index) in listData" :key="index" :id="sheet.name">
+            <td>{{ sheet.sheetId }}</td>
+            <td>
+              <button @click="hadleEditClick(sheet.sheetId)">編輯</button>
+            </td>
+            <td>
+              <button @click="handleDeleteClick(sheet.sheetId)">刪除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
+import API from "../../../../api";
 export default {
   name: "LandSheet",
   data() {
     return {
+      optionName: "儲存庫",
+      mode: "edit", // mode = 'edit' | 'list' | 'update'
+      listData: [],
       transcriptFile: undefined,
+      assetType: true,
     };
   },
   methods: {
     handleBtnClick: (src) => {},
+    handleRepositoryClick() {
+      if (this.mode === "edit") {
+        this.mode = "list";
+        this.optionName = "新增";
+        this.fetchData();
+        return;
+      }
+      if (this.mode === "list") {
+        this.mode = "edit";
+        this.optionName = "儲存庫";
+        return;
+      }
+    },
+    async fetchData() {
+      const response = await (await API.Survey.listAllByUser()).json();
+      this.listData = response.land;
+    },
+    hadleEditClick(sheetId) {
+      console.log(sheetId);
+    },
+    async handleDeleteClick(sheetId) {
+      const response = await API.Survey.deleteLandSheetById(sheetId);
+      if (response.status === 200) {
+        await this.fetchData();
+      } else {
+        alert("刪除失敗");
+      }
+    },
   },
 };
 </script>
@@ -316,44 +375,52 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  .step-container {
-    width: 460px;
-    padding: 5px;
-    margin: 5px;
-    border-width: 1px;
-    border-style: solid;
-    .section-container {
+  .list-table {
+  }
+  .sheet-form {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    .step-container {
+      width: 460px;
       padding: 5px;
-      .section-content {
-        margin-bottom: 50px;
-        margin-left: 25px;
-        .content-row-aa {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          .label-set-aa {
+      margin: 5px;
+      border-width: 1px;
+      border-style: solid;
+      .section-container {
+        padding: 5px;
+        .section-content {
+          margin-bottom: 50px;
+          margin-left: 25px;
+          .content-row-aa {
             display: flex;
-            align-items: center;
-          }
-        }
-        .content-row {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          flex-wrap: wrap;
-
-          .label-set {
-            display: flex;
-            align-items: center;
-            .radio-set {
+            flex-direction: column;
+            align-items: flex-start;
+            .label-set-aa {
               display: flex;
-              flex-direction: row;
+              align-items: center;
+            }
+          }
+          .content-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
 
-              .input-long {
-                width: 100px;
-              }
-              .input-short {
-                width: 70px;
+            .label-set {
+              display: flex;
+              align-items: center;
+              .radio-set {
+                display: flex;
+                flex-direction: row;
+
+                .input-long {
+                  width: 100px;
+                }
+                .input-short {
+                  width: 70px;
+                }
               }
             }
           }

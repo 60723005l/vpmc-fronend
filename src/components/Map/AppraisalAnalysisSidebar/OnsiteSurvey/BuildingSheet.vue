@@ -1,5 +1,7 @@
 <template>
   <div class="sheet-container">
+    <button>儲存庫</button>
+
     <div class="step-container">
       <span class="md-title">步驟一：載入勘估標的土地/建物謄本</span>
       <md-field>
@@ -13,7 +15,7 @@
       <div class="section-container">
         <span class="md-subheading">一、標的內容</span>
         <div class="section-content">
-          <div class="content-row">
+          <!-- <div class="content-row">
             <div class="label-set">
               <p>1.資產類型：</p>
               <div class="radio-set">
@@ -40,7 +42,7 @@
                 <label for="park">車位</label>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="content-row">
             <div class="label-set">
