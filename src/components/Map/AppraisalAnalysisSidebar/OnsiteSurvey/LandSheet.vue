@@ -7,7 +7,7 @@
         <span class="md-title">步驟一：載入勘估標的土地/建物謄本</span>
         <md-field>
           <label>點此上傳檔案</label>
-          <md-file v-model="transcriptFile" />
+          <md-file v-model="landSheetData.transcriptFile" />
         </md-field>
       </div>
 
@@ -48,19 +48,49 @@
               <div class="label-set">
                 <p>2.土地標示：</p>
                 <div class="radio-set">
-                  <select>
-                    <option>台北市</option>
+                  <select
+                    v-model="landSheetData.objectContent.landMark.county"
+                    @change="
+                      handleCountySelect(
+                        landSheetData.objectContent.landMark.county,
+                        'land'
+                      )
+                    "
+                  >
+                    <option
+                      v-for="(county, index) in countyData"
+                      :key="index"
+                      :id="index"
+                    >
+                      {{ county }}
+                    </option>
                   </select>
                 </div>
                 <div class="radio-set">
-                  <select>
-                    <option>中山區</option>
+                  <select
+                    v-model="landSheetData.objectContent.landMark.village"
+                  >
+                    <option
+                      v-for="(village, index) in landVillageData"
+                      :key="index"
+                      :id="index"
+                    >
+                      {{ village }}
+                    </option>
                   </select>
                 </div>
                 <p>段小段：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="text" value="" />
-                  <input class="input-short" type="text" value="" />
+                  <input
+                    class="input-short"
+                    type="text"
+                    v-model="landSheetData.objectContent.landMark.name"
+                  />
+                  <input
+                    class="input-short"
+                    type="text"
+                    v-model="landSheetData.objectContent.landMark.code"
+                  />
                 </div>
               </div>
             </div>
@@ -69,19 +99,49 @@
               <div class="label-set">
                 <p>3.建物標示：</p>
                 <div class="radio-set">
-                  <select>
-                    <option>台北市</option>
+                  <select
+                    v-model="landSheetData.objectContent.buildMark.county"
+                    @change="
+                      handleCountySelect(
+                        landSheetData.objectContent.buildMark.county,
+                        'build'
+                      )
+                    "
+                  >
+                    <option
+                      v-for="(county, index) in countyData"
+                      :key="index"
+                      :id="index"
+                    >
+                      {{ county }}
+                    </option>
                   </select>
                 </div>
                 <div class="radio-set">
-                  <select>
-                    <option>中山區</option>
+                  <select
+                    v-model="landSheetData.objectContent.buildMark.village"
+                  >
+                    <option
+                      v-for="(village, index) in buildVillageData"
+                      :key="index"
+                      :id="index"
+                    >
+                      {{ village }}
+                    </option>
                   </select>
                 </div>
                 <p>段小段：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="text" value="" />
-                  <input class="input-short" type="text" value="" />
+                  <input
+                    class="input-short"
+                    type="text"
+                    v-model="landSheetData.objectContent.buildMark.name"
+                  />
+                  <input
+                    class="input-short"
+                    type="text"
+                    v-model="landSheetData.objectContent.buildMark.code"
+                  />
                 </div>
               </div>
             </div>
@@ -90,17 +150,41 @@
               <div class="label-set">
                 <p>4.建物門牌：</p>
                 <div class="radio-set">
-                  <select>
-                    <option>台北市</option>
+                  <select
+                    v-model="landSheetData.objectContent.address.county"
+                    @change="
+                      handleCountySelect(
+                        landSheetData.objectContent.address.county,
+                        'address'
+                      )
+                    "
+                  >
+                    <option
+                      v-for="(county, index) in countyData"
+                      :key="index"
+                      :id="index"
+                    >
+                      {{ county }}
+                    </option>
                   </select>
                 </div>
                 <div class="radio-set">
-                  <select>
-                    <option>中山區</option>
+                  <select v-model="landSheetData.objectContent.address.village">
+                    <option
+                      v-for="(village, index) in addressVillageData"
+                      :key="index"
+                      :id="index"
+                    >
+                      {{ village }}
+                    </option>
                   </select>
                 </div>
                 <div class="radio-set">
-                  <input class="input-long" type="text" value="" />
+                  <input
+                    class="input-long"
+                    type="text"
+                    v-model="landSheetData.objectContent.address.address"
+                  />
                 </div>
               </div>
             </div>
@@ -109,7 +193,12 @@
               <div class="label-set">
                 <p>5.土地面積：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="text" value="" />
+                  <input
+                    class="input-short"
+                    type="text"
+                    value=""
+                    v-model="landSheetData.objectContent.landArea"
+                  />
                 </div>
               </div>
             </div>
@@ -123,23 +212,30 @@
                 <div class="radio-set">
                   <input
                     type="radio"
-                    id="land"
-                    name="type"
-                    value="land"
-                    checked
+                    id="baneDown"
+                    name="rights"
+                    value="baneDown"
+                    :checked="
+                      landSheetData.propertyAnalysis.rightStatus === '名下全部'
+                    "
+                    @change="handleRightStatusChange('名下全部')"
                   />
-                  <label for="land">名下全部</label>
+                  <label for="baneDown">名下全部</label>
                 </div>
               </div>
               <div class="label-set">
                 <div class="radio-set">
                   <input
                     type="radio"
-                    id="building"
-                    name="type"
-                    value="building"
+                    id="share"
+                    name="rights"
+                    value="share"
+                    :checked="
+                      landSheetData.propertyAnalysis.rightStatus === '持分產權'
+                    "
+                    @change="handleRightStatusChange('持分產權')"
                   />
-                  <label for="building">持分產權</label>
+                  <label for="share">持分產權</label>
                 </div>
               </div>
             </div>
@@ -148,7 +244,11 @@
               <div class="label-set">
                 <p>2.他項權利：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="text" value="" />
+                  <input
+                    class="input-short"
+                    type="text"
+                    v-model="landSheetData.propertyAnalysis.otherRights"
+                  />
                 </div>
               </div>
             </div>
@@ -162,23 +262,28 @@
                 <div class="radio-set">
                   <input
                     type="radio"
-                    id="land"
-                    name="type"
-                    value="land"
-                    checked
+                    id="urbanLand"
+                    name="landUsage"
+                    value="urbanLand"
+                    :checked="landSheetData.currentUsage.landUse === '都市土地'"
+                    @change="handleLandUsageChange('都市土地')"
                   />
-                  <label for="land">都市土地</label>
+                  <label for="urbanLand">都市土地</label>
                 </div>
               </div>
               <div class="label-set">
                 <div class="radio-set">
                   <input
                     type="radio"
-                    id="building"
-                    name="type"
-                    value="building"
+                    id="nonUrbanLand"
+                    name="landUsage"
+                    value="nonUrbanLand"
+                    :checked="
+                      landSheetData.currentUsage.landUse === '非都市土地'
+                    "
+                    @change="handleLandUsageChange('非都市土地')"
                   />
-                  <label for="building">非都市土地</label>
+                  <label for="nonUrbanLand">非都市土地</label>
                 </div>
               </div>
             </div>
@@ -187,13 +292,21 @@
               <div class="label-set">
                 <p>法定建蔽率：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="text" value="" />
+                  <input
+                    class="input-short"
+                    type="text"
+                    v-model="landSheetData.currentUsage.coverageRatio"
+                  />
                 </div>
               </div>
               <div class="label-set">
                 <p>法定容積率：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="text" value="" />
+                  <input
+                    class="input-short"
+                    type="text"
+                    v-model="landSheetData.currentUsage.floorAreaRatio"
+                  />
                 </div>
               </div>
             </div>
@@ -205,13 +318,21 @@
               <div class="label-set">
                 <p>1.勘查日期：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="datetime" value="" />
+                  <input
+                    class="input-short"
+                    type="date"
+                    v-model="landSheetData.surveyDates.inspectionDate"
+                  />
                 </div>
               </div>
               <div class="label-set">
                 <p>. 2.價格日期：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="datetime" value="" />
+                  <input
+                    class="input-short"
+                    type="date"
+                    v-model="landSheetData.surveyDates.valueOpinionDate"
+                  />
                 </div>
               </div>
             </div>
@@ -222,14 +343,34 @@
             <div class="content-row">
               <div class="label-set">
                 <div class="radio-set">
-                  <select>
-                    <option>資產價值證明</option>
+                  <select
+                    v-model="landSheetData.appraisalObject.appraisalObject"
+                    @change="
+                      handleArrpaisalObjectChange(
+                        landSheetData.appraisalObject.appraisalObject
+                      )
+                    "
+                  >
+                    <option value="資產價值證明">資產價值證明</option>
+                    <option value="金融機構貸款">金融機構貸款</option>
+                    <option value="市場交易參考">市場交易參考</option>
+                    <option value="會計帳資產重估">會計帳資產重估</option>
+                    <option value="公司股東參考">公司股東參考</option>
+                    <option value="法院拍賣參考">法院拍賣參考</option>
+                    <option value="法院訴訟">法院訴訟</option>
+                    <option value="經銷商抵押設定">經銷商抵押設定</option>
+                    <option value="徵收補償評估">徵收補償評估</option>
+                    <option value="其他">其他</option>
                   </select>
                 </div>
               </div>
               <div class="label-set">
                 <div class="radio-set">
-                  <input class="input-long" type="text" value="" />
+                  <input
+                    class="input-long"
+                    type="text"
+                    v-model="landSheetData.appraisalObject.appraisalDescription"
+                  />
                 </div>
               </div>
             </div>
@@ -241,8 +382,13 @@
               <div class="label-set-aa">
                 <p>1.價格種類：</p>
                 <div class="radio-set">
-                  <select>
-                    <option>正常價格</option>
+                  <select v-model="landSheetData.estimateCondition.priceType">
+                    <option value="正常價格">正常價格</option>
+                    <option value="限定價格">限定價格</option>
+                    <option value="特定價格">特定價格</option>
+                    <option value="特殊價格">特殊價格</option>
+                    <option value="正常租金">正常租金</option>
+                    <option value="限定租金">限定租金</option>
                   </select>
                 </div>
               </div>
@@ -250,8 +396,15 @@
               <div class="label-set-aa">
                 <p>2.評估權利種類：</p>
                 <div class="radio-set">
-                  <select>
-                    <option>所有權價值評估</option>
+                  <select
+                    v-model="
+                      landSheetData.estimateCondition.evaluationRightsType
+                    "
+                  >
+                    <option value="所有權價值評估">所有權價值評估</option>
+                    <option value="地上權價值評估">地上權價值評估</option>
+                    <option value="租賃權價值評估">租賃權價值評估</option>
+                    <option value="租金評估">租金評估</option>
                   </select>
                 </div>
               </div>
@@ -259,7 +412,11 @@
               <div class="label-set-aa">
                 <p>3.評價條件：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="text" value="" />
+                  <input
+                    class="input-short"
+                    type="text"
+                    v-model="landSheetData.estimateCondition.appraisalCondition"
+                  />
                 </div>
               </div>
             </div>
@@ -271,14 +428,22 @@
               <div class="label-set-aa">
                 <p>1.勘領人姓名：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="text" value="" />
+                  <input
+                    class="input-short"
+                    type="text"
+                    v-model="landSheetData.surveyDescription.surveyorName"
+                  />
                 </div>
               </div>
 
               <div class="label-set-aa">
                 <p>2.勘領說明事項：</p>
                 <div class="radio-set">
-                  <input class="input-short" type="text" value="" />
+                  <input
+                    class="input-short"
+                    type="text"
+                    v-model="landSheetData.surveyDescription.surveyDescription"
+                  />
                 </div>
               </div>
 
@@ -286,7 +451,7 @@
                 <p>3.現勘照片：</p>
                 <md-field>
                   <label>點此上傳檔案</label>
-                  <md-file v-model="transcriptFile" />
+                  <md-file v-model="landSheetData.photoFiles" />
                 </md-field>
               </div>
             </div>
@@ -294,7 +459,7 @@
         </div>
       </div>
 
-      <button>新增</button>
+      <button @click="handleSubmit">新增</button>
     </div>
 
     <div class="list-table" v-if="mode === 'list'">
@@ -331,9 +496,67 @@ export default {
       optionName: "儲存庫",
       mode: "edit", // mode = 'edit' | 'list' | 'update'
       listData: [],
-      transcriptFile: undefined,
-      assetType: true,
+      countyData: [],
+      landVillageData: [],
+      buildVillageData: [],
+      addressVillageData: [],
+      landSheetData: {
+        transcriptFile: undefined,
+        photoFiles: [],
+        objectContent: {
+          landMark: {
+            county: "",
+            village: "",
+            name: "",
+            code: "",
+          },
+          buildMark: {
+            county: "",
+            village: "",
+            name: "",
+            code: "",
+          },
+          address: {
+            county: "",
+            village: "",
+            address: "",
+          },
+          landArea: 0,
+        },
+        propertyAnalysis: {
+          rightOwner: "",
+          rightStatus: "名下全部",
+          rightHolding: "",
+          otherRights: "",
+        },
+        currentUsage: {
+          landUse: "都市土地",
+          coverageRatio: 0,
+          floorAreaRatio: 0,
+        },
+        surveyDates: {
+          inspectionDate: undefined,
+          valueOpinionDate: undefined,
+        },
+        appraisalObject: {
+          appraisalObject: "",
+          appraisalDescription: "",
+        },
+        estimateCondition: {
+          priceType: "",
+          evaluationRightsType: "",
+          appraisalCondition: "",
+        },
+        surveyDescription: {
+          surveyorName: "",
+          surveyDescription: "",
+        },
+      },
     };
+  },
+  async mounted() {
+    const countyResponse = await (await API.Survey.listCountys()).json();
+    this.countyData = countyResponse;
   },
   methods: {
     handleBtnClick: (src) => {},
@@ -364,6 +587,33 @@ export default {
       } else {
         alert("刪除失敗");
       }
+    },
+    handleRightStatusChange(status) {
+      this.landSheetData.propertyAnalysis.rightStatus = status;
+    },
+    handleLandUsageChange(landUsage) {
+      this.landSheetData.currentUsage.landUse = landUsage;
+    },
+    handleArrpaisalObjectChange(object) {
+      this.landSheetData.appraisalObject.appraisalObject = object;
+    },
+    aa() {
+      alert(this.landSheetData.estimateCondition.priceType);
+    },
+    async handleCountySelect(county, type) {
+      const response = await (
+        await API.Survey.listVillageByCounty(county)
+      ).json();
+      if (type === "land") {
+        this.landVillageData = response;
+      } else if (type === "build") {
+        this.buildVillageData = response;
+      } else if (type === "address") {
+        this.addressVillageData = response;
+      }
+    },
+    async handleSubmit() {
+      console.log(this.landSheetData);
     },
   },
 };

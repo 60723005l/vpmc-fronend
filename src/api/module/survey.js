@@ -25,3 +25,29 @@ export const deleteLandSheetById = async (_sheetId) => {
     })
     return response
 }
+
+export const listCountys = async () => {
+    // const url = process.env.BASE_API_URL + "Utility/getCounty"
+    const url = 'http://localhost:5000/api/Utility/getCounty'
+    const headersList = {
+        Accept: '*/*'
+    }
+    const response = await fetch(url, {
+        method: "GET",
+        headers: headersList
+    })
+    return response
+}
+
+export const listVillageByCounty = async (county) => {
+    // const url = process.env.BASE_API_URL + `Utility/getTown?county=${county}`
+    const url = `http://localhost:5000/api/Utility/getTown?county=${county}`
+    let headersList = {
+        Accept: '*/*'
+    }
+    const response = await fetch(url, {
+        method: "GET",
+        headers: headersList
+    })
+    return response
+}
