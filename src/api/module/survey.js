@@ -12,8 +12,8 @@ export const listAllByUser = async () => {
 }
 
 export const listCountys = async () => {
-    // const url = process.env.BASE_API_URL + "Utility/getCounty"
-    const url = 'http://localhost:5000/api/Utility/getCounty'
+    const url = process.env.BASE_API_URL + "Utility/getCounty"
+    // const url = 'http://localhost:5000/api/Utility/getCounty'
     const headersList = {
         Accept: '*/*'
     }
@@ -25,8 +25,8 @@ export const listCountys = async () => {
 }
 
 export const listVillageByCounty = async (county) => {
-    // const url = process.env.BASE_API_URL + `Utility/getTown?county=${county}`
-    const url = `http://localhost:5000/api/Utility/getTown?county=${county}`
+    const url = process.env.BASE_API_URL + `Utility/getTown?county=${county}`
+    // const url = `http://localhost:5000/api/Utility/getTown?county=${county}`
     let headersList = {
         Accept: '*/*'
     }
@@ -124,8 +124,56 @@ export const deleteBuildingSheetById = async (_sheetId) => {
         "Accept": "*/*",
         "Content-Type": "application/x-www-form-urlencoded"
     }
-    let bodyContent = `token=${localStorage.getItem("token")}&_sheetId=${_sheetId}`;
-    const response = await fetch("http://140.122.82.98:9085/api/Survey/deleteBuildingSheet", {
+    const bodyContent = `token=${localStorage.getItem("token")}&_sheetId=${_sheetId}`;
+    const response = await fetch(url, {
+        method: "DELETE",
+        body: bodyContent,
+        headers: headersList
+    })
+    return response
+}
+
+// Park CRUD
+
+export const createParkSheet = async (parkSheet) => {
+    const url = process.env.BASE_API_URL_V2 + `api/Survey/createParkSheet`
+    const headersList = {
+        Accept: '*/*',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    const bodyContent = `token=${localStorage.getItem("token")}&assetType=${'停車位'}&landMarkCounty=${parkSheet.objectContent.landMark.county}&landMarkVillage=${parkSheet.objectContent.landMark.village}&landMarkName=${parkSheet.objectContent.landMark.name}&landMarkCode=${parkSheet.objectContent.landMark.code}&buildMarkCounty=${parkSheet.objectContent.buildMark.county}&buildMarkVillage=${parkSheet.objectContent.buildMark.village}&buildMarkName=${parkSheet.objectContent.buildMark.name}&buildMarkCode=${parkSheet.objectContent.buildMark.code}&buildAddressCounty=${parkSheet.objectContent.address.county}&buildAddressVillage=${parkSheet.objectContent.address.village}&buildAddress=${parkSheet.objectContent.address.address}&ParkArea=${parkSheet.objectContent.parkArea}&parkType=${parkSheet.objectContent.parkType}&parkMethod=${parkSheet.objectContent.parkMethod}&landRightsOwner=${parkSheet.propertyAnalysis.landRightsOwner}&landRightsStatus=${parkSheet.propertyAnalysis.landRightsStatus}&landRightsHolding=${parkSheet.propertyAnalysis.landRightsHolding}&buildingRightsOwner=${parkSheet.propertyAnalysis.buildingRightsOwner}&buildingRightsStatus=${parkSheet.propertyAnalysis.buildingRightsStatus}&buildingRightsHolding=${parkSheet.propertyAnalysis.buildingRightsHolding}&otherRights=${parkSheet.propertyAnalysis.otherRights}&assignMethod=${parkSheet.propertyAnalysis.assignMethod}&landUses=${parkSheet.currentUsage.landUse}&BuildingCoverageRatio=${parkSheet.currentUsage.BuildingCoverageRatio}&floorAreaRatio=${parkSheet.currentUsage.floorAreaRatio}&buildingUsage=${parkSheet.currentUsage.buildingUsage}&buildingStructure=${parkSheet.currentUsage.buildingStructure}&buildingFinishDate=${parkSheet.currentUsage.buildingFinishDate}&buildingUpFloor=${parkSheet.currentUsage.buildingUpFloor}&buildingDownFloor=${parkSheet.currentUsage.buildingDownFloor}&surveyFloor=${parkSheet.currentUsage.surveyFloor}&parkWidth=${parkSheet.currentUsage.parkWidth}&parkHeight=${parkSheet.currentUsage.parkHeight}&allowSuv=${parkSheet.currentUsage.allowSuv}&inspectionDate=${parkSheet.surveyDates.inspectionDate}&valueOpinionDate=${parkSheet.surveyDates.valueOpinionDate}&appraisalObject=${parkSheet.appraisalObject.appraisalObject}&appraisalDescription=${parkSheet.appraisalObject.appraisalDescription}&priceType=${parkSheet.estimateCondition.priceType}&evaluationRightsType=${parkSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${parkSheet.estimateCondition.appraisalCondition}&surveyorName=${parkSheet.surveyDescription.surveyorName}&surveyDescription=${parkSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(parkSheet.transcriptFile)}&photoFilesBase64=${encodeURIComponent(parkSheet.photoFiles)}&transcriptFileName=${parkSheet.transcriptFileName}&photoFilesName=${parkSheet.photoFilesName}`;
+    console.log(bodyContent)
+    const response = await fetch(url, {
+        method: "POST",
+        body: bodyContent,
+        headers: headersList
+    })
+    return response
+}
+
+export const editParkSheet = async (parkSheet, _sheetId) => {
+    const url = process.env.BASE_API_URL_V2 + `api/Survey/editParkSheet`
+    const headersList = {
+        Accept: '*/*',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    const bodyContent = `token=${localStorage.getItem("token")}&_sheetId=${_sheetId}&assetType=${'停車位'}&landMarkCounty=${parkSheet.objectContent.landMark.county}&landMarkVillage=${parkSheet.objectContent.landMark.village}&landMarkName=${parkSheet.objectContent.landMark.name}&landMarkCode=${parkSheet.objectContent.landMark.code}&buildMarkCounty=${parkSheet.objectContent.buildMark.county}&buildMarkVillage=${parkSheet.objectContent.buildMark.village}&buildMarkName=${parkSheet.objectContent.buildMark.name}&buildMarkCode=${parkSheet.objectContent.buildMark.code}&buildAddressCounty=${parkSheet.objectContent.address.county}&buildAddressVillage=${parkSheet.objectContent.address.village}&buildAddress=${parkSheet.objectContent.address.address}&ParkArea=${parkSheet.objectContent.parkArea}&parkType=${parkSheet.objectContent.parkType}&parkMethod=${parkSheet.objectContent.parkMethod}&landRightsOwner=${parkSheet.propertyAnalysis.landRightsOwner}&landRightsStatus=${parkSheet.propertyAnalysis.landRightsStatus}&landRightsHolding=${parkSheet.propertyAnalysis.landRightsHolding}&buildingRightsOwner=${parkSheet.propertyAnalysis.buildingRightsOwner}&buildingRightsStatus=${parkSheet.propertyAnalysis.buildingRightsStatus}&buildingRightsHolding=${parkSheet.propertyAnalysis.buildingRightsHolding}&otherRights=${parkSheet.propertyAnalysis.otherRights}&assignMethod=${parkSheet.propertyAnalysis.assignMethod}&landUses=${parkSheet.currentUsage.landUse}&BuildingCoverageRatio=${parkSheet.currentUsage.BuildingCoverageRatio}&floorAreaRatio=${parkSheet.currentUsage.floorAreaRatio}&buildingUsage=${parkSheet.currentUsage.buildingUsage}&buildingStructure=${parkSheet.currentUsage.buildingStructure}&buildingFinishDate=${parkSheet.currentUsage.buildingFinishDate}&buildingUpFloor=${parkSheet.currentUsage.buildingUpFloor}&buildingDownFloor=${parkSheet.currentUsage.buildingDownFloor}&surveyFloor=${parkSheet.currentUsage.surveyFloor}&parkWidth=${parkSheet.currentUsage.parkWidth}&parkHeight=${parkSheet.currentUsage.parkHeight}&allowSuv=${parkSheet.currentUsage.allowSuv}&inspectionDate=${parkSheet.surveyDates.inspectionDate}&valueOpinionDate=${parkSheet.surveyDates.valueOpinionDate}&appraisalObject=${parkSheet.appraisalObject.appraisalObject}&appraisalDescription=${parkSheet.appraisalObject.appraisalDescription}&priceType=${parkSheet.estimateCondition.priceType}&evaluationRightsType=${parkSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${parkSheet.estimateCondition.appraisalCondition}&surveyorName=${parkSheet.surveyDescription.surveyorName}&surveyDescription=${parkSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(parkSheet.transcriptFile)}&photoFilesBase64=${encodeURIComponent(parkSheet.photoFiles)}&transcriptFileName=${parkSheet.transcriptFileName}&photoFilesName=${parkSheet.photoFilesName}`;
+    const response = fetch(url, {
+        method: "PUT",
+        body: bodyContent,
+        headers: headersList
+    })
+    return response
+}
+
+export const deleteParkSheetById = async (_sheetId) => {
+    const url = process.env.BASE_API_URL_V2 + `api/Survey/deleteParkSheet`
+    const headersList = {
+        "Accept": "*/*",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    const bodyContent = `token=${localStorage.getItem("token")}&_sheetId=${_sheetId}`;
+    const response = await fetch(url, {
         method: "DELETE",
         body: bodyContent,
         headers: headersList
