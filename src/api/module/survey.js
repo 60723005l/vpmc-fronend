@@ -11,21 +11,6 @@ export const listAllByUser = async () => {
     return response
 }
 
-export const deleteLandSheetById = async (_sheetId) => {
-    const url = process.env.BASE_API_URL_V2 + `api/Survey/deleteLandSheet`
-    const headersList = {
-        "Accept": "*/*",
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    let bodyContent = `token=${localStorage.getItem("token")}&_sheetId=${_sheetId}`;
-    const response = await fetch(url, {
-        method: "DELETE",
-        body: bodyContent,
-        headers: headersList
-    })
-    return response
-}
-
 export const listCountys = async () => {
     // const url = process.env.BASE_API_URL + "Utility/getCounty"
     const url = 'http://localhost:5000/api/Utility/getCounty'
@@ -52,15 +37,15 @@ export const listVillageByCounty = async (county) => {
     return response
 }
 
+// Land CRUD
+
 export const createLandSheet = async (landSheet) => {
     const url = process.env.BASE_API_URL_V2 + `api/Survey/createLandSheet`
     const headersList = {
         Accept: '*/*',
         'Content-Type': 'application/x-www-form-urlencoded'
     }
-    // console.log('====================')
-    // console.log(landSheet.transcriptFileName)
-    const bodyContent = `token=${localStorage.getItem("token")}&assetType=${'土地'}&landMarkCounty=${landSheet.objectContent.landMark.county}&landMarkVillage=${landSheet.objectContent.landMark.village}&landMarkName=${landSheet.objectContent.landMark.name}&landMarkCode=${landSheet.objectContent.landMark.code}&buildMarkCounty=${landSheet.objectContent.buildMark.county}&buildMarkVillage=${landSheet.objectContent.buildMark.village}&buildMarkName=${landSheet.objectContent.buildMark.name}&buildMarkCode=${landSheet.objectContent.buildMark.code}&buildAddressCounty=${landSheet.objectContent.address.county}&buildAddressVillage=${landSheet.objectContent.address.village}&buildAddress=${landSheet.objectContent.address.address}&landArea=${landSheet.objectContent.landArea}&landRightsOwner=${landSheet.propertyAnalysis.rightOwner}&landRightsStatus=${landSheet.propertyAnalysis.rightStatus}&landRightsHolding=${landSheet.propertyAnalysis.rightHolding}&otherRights=${landSheet.propertyAnalysis.otherRights}&landUses=${landSheet.currentUsage.landUse}&BuildingCoverageRatio=${landSheet.currentUsage.coverageRatio}&floorAreaRatio=${landSheet.currentUsage.floorAreaRatio}&inspectionDate=${landSheet.surveyDates.inspectionDate}&valueOpinionDate=${landSheet.surveyDates.valueOpinionDate}&appraisalObject=${landSheet.appraisalObject.appraisalObject}&appraisalDescription=${landSheet.appraisalObject.appraisalDescription}&priceType=${landSheet.estimateCondition.priceType}&evaluationRightsType=${landSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${landSheet.estimateCondition.appraisalCondition}&surveyorName=${landSheet.surveyDescription.surveyorName}&surveyDescription=${landSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(landSheet.transcriptFile)}&photoFilesBase64=${encodeURIComponent(landSheet.photoFiles)}&transcriptFileName=${landSheet.transcriptFileName}&photoFilesName=${landSheet.photoFilesName}`;
+    const bodyContent = `token=${localStorage.getItem("token")}&assetType=${'建物'}&landMarkCounty=${landSheet.objectContent.landMark.county}&landMarkVillage=${landSheet.objectContent.landMark.village}&landMarkName=${landSheet.objectContent.landMark.name}&landMarkCode=${landSheet.objectContent.landMark.code}&buildMarkCounty=${landSheet.objectContent.buildMark.county}&buildMarkVillage=${landSheet.objectContent.buildMark.village}&buildMarkName=${landSheet.objectContent.buildMark.name}&buildMarkCode=${landSheet.objectContent.buildMark.code}&buildAddressCounty=${landSheet.objectContent.address.county}&buildAddressVillage=${landSheet.objectContent.address.village}&buildAddress=${landSheet.objectContent.address.address}&landArea=${landSheet.objectContent.landArea}&landRightsOwner=${landSheet.propertyAnalysis.rightOwner}&landRightsStatus=${landSheet.propertyAnalysis.rightStatus}&landRightsHolding=${landSheet.propertyAnalysis.rightHolding}&otherRights=${landSheet.propertyAnalysis.otherRights}&landUses=${landSheet.currentUsage.landUse}&BuildingCoverageRatio=${landSheet.currentUsage.coverageRatio}&floorAreaRatio=${landSheet.currentUsage.floorAreaRatio}&inspectionDate=${landSheet.surveyDates.inspectionDate}&valueOpinionDate=${landSheet.surveyDates.valueOpinionDate}&appraisalObject=${landSheet.appraisalObject.appraisalObject}&appraisalDescription=${landSheet.appraisalObject.appraisalDescription}&priceType=${landSheet.estimateCondition.priceType}&evaluationRightsType=${landSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${landSheet.estimateCondition.appraisalCondition}&surveyorName=${landSheet.surveyDescription.surveyorName}&surveyDescription=${landSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(landSheet.transcriptFile)}&photoFilesBase64=${encodeURIComponent(landSheet.photoFiles)}&transcriptFileName=${landSheet.transcriptFileName}&photoFilesName=${landSheet.photoFilesName}`;
     console.log(bodyContent)
     const response = await fetch(url, {
         method: "POST",
@@ -79,6 +64,69 @@ export const editLandSheet = async (landSheet, _sheetId) => {
     const bodyContent = `token=${localStorage.getItem("token")}&assetType=${'土地'}&landMarkCounty=${landSheet.objectContent.landMark.county}&landMarkVillage=${landSheet.objectContent.landMark.village}&landMarkName=${landSheet.objectContent.landMark.name}&landMarkCode=${landSheet.objectContent.landMark.code}&buildMarkCounty=${landSheet.objectContent.buildMark.county}&buildMarkVillage=${landSheet.objectContent.buildMark.village}&buildMarkName=${landSheet.objectContent.buildMark.name}&buildMarkCode=${landSheet.objectContent.buildMark.code}&buildAddressCounty=${landSheet.objectContent.address.county}&buildAddressVillage=${landSheet.objectContent.address.village}&buildAddress=${landSheet.objectContent.address.address}&landArea=${landSheet.objectContent.landArea}&landRightsOwner=${landSheet.propertyAnalysis.rightOwner}&landRightsStatus=${landSheet.propertyAnalysis.rightStatus}&landRightsHolding=${landSheet.propertyAnalysis.rightHolding}&otherRights=${landSheet.propertyAnalysis.otherRights}&landUses=${landSheet.currentUsage.landUse}&BuildingCoverageRatio=${landSheet.currentUsage.coverageRatio}&floorAreaRatio=${landSheet.currentUsage.floorAreaRatio}&inspectionDate=${landSheet.surveyDates.inspectionDate}&valueOpinionDate=${landSheet.surveyDates.valueOpinionDate}&appraisalObject=${landSheet.appraisalObject.appraisalObject}&appraisalDescription=${landSheet.appraisalObject.appraisalDescription}&priceType=${landSheet.estimateCondition.priceType}&evaluationRightsType=${landSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${landSheet.estimateCondition.appraisalCondition}&surveyorName=${landSheet.surveyDescription.surveyorName}&surveyDescription=${landSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(landSheet.transcriptFile)}&photoFilesBase64=${encodeURIComponent(landSheet.photoFiles)}&transcriptFileName=${landSheet.transcriptFileName}&photoFilesName=${landSheet.photoFilesName}&_sheetId=${_sheetId}`;
     const response = await fetch(url, {
         method: "PUT",
+        body: bodyContent,
+        headers: headersList
+    })
+    return response
+}
+
+export const deleteLandSheetById = async (_sheetId) => {
+    const url = process.env.BASE_API_URL_V2 + `api/Survey/deleteLandSheet`
+    const headersList = {
+        "Accept": "*/*",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    let bodyContent = `token=${localStorage.getItem("token")}&_sheetId=${_sheetId}`;
+    const response = await fetch(url, {
+        method: "DELETE",
+        body: bodyContent,
+        headers: headersList
+    })
+    return response
+}
+
+// Building CRUD
+
+export const createBuildingSheet = async (buildSheet) => {
+    const url = process.env.BASE_API_URL_V2 + `api/Survey/createBuildingSheet`
+    const headersList = {
+        Accept: '*/*',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    const bodyContent = `token=${localStorage.getItem("token")}&assetType=${'土地'}&landMarkCounty=${buildSheet.objectContent.landMark.county}&landMarkVillage=${buildSheet.objectContent.landMark.village}&landMarkName=${buildSheet.objectContent.landMark.name}&landMarkCode=${buildSheet.objectContent.landMark.code}&buildMarkCounty=${buildSheet.objectContent.buildMark.county}&buildMarkVillage=${buildSheet.objectContent.buildMark.village}&buildMarkName=${buildSheet.objectContent.buildMark.name}&buildMarkCode=${buildSheet.objectContent.buildMark.code}&buildAddressCounty=${buildSheet.objectContent.address.county}&buildAddressVillage=${buildSheet.objectContent.address.village}&buildAddress=${buildSheet.objectContent.address.address}&landArea=${buildSheet.objectContent.landArea}&buildingArea=${buildSheet.objectContent.buildArea}&landRightsOwner=${buildSheet.propertyAnalysis.landRightsOwner}&landRightsStatus=${buildSheet.propertyAnalysis.landRightsStatus}&landRightsHolding=${buildSheet.propertyAnalysis.landRightsHolding}&buildingRightsOwner=${buildSheet.propertyAnalysis.buildingRightsOwner}&buildingRightsStatus=${buildSheet.propertyAnalysis.buildingRightsStatus}&buildingRightsHolding=${buildSheet.propertyAnalysis.buildingRightsHolding}&otherRights=${buildSheet.propertyAnalysis.otherRights}&landUses=${buildSheet.currentUsage.landUse}&BuildingCoverageRatio=${buildSheet.currentUsage.BuildingCoverageRatio}&floorAreaRatio=${buildSheet.currentUsage.floorAreaRatio}&buildingUsage=${buildSheet.currentUsage.buildingUsage}&buildingStructure=${buildSheet.currentUsage.buildingStructure}&buildingFinishDate=${buildSheet.currentUsage.buildingFinishDate}&buildingUpFloor=${buildSheet.currentUsage.buildingUpFloor}&buildingDownFloor=${buildSheet.currentUsage.buildingDownFloor}&surveyFloor=${buildSheet.currentUsage.surveyFloor}&inspectionDate=${buildSheet.surveyDates.inspectionDate}&valueOpinionDate=${buildSheet.surveyDates.valueOpinionDate}&appraisalObject=${buildSheet.appraisalObject.appraisalObject}&appraisalDescription=${buildSheet.appraisalObject.appraisalDescription}&priceType=${buildSheet.estimateCondition.priceType}&evaluationRightsType=${buildSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${buildSheet.estimateCondition.appraisalCondition}&surveyorName=${buildSheet.surveyDescription.surveyorName}&surveyDescription=${buildSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(buildSheet.transcriptFile)}&photoFilesBase64=${encodeURIComponent(buildSheet.photoFiles)}&transcriptFileName=${buildSheet.transcriptFileName}&photoFilesName=${buildSheet.photoFilesName}`;
+    // console.log(bodyContent)
+    const response = await fetch(url, {
+        method: "POST",
+        body: bodyContent,
+        headers: headersList
+    })
+    return response
+}
+
+export const editBuildingSheet = async (buildSheet, _sheetId) => {
+    const url = process.env.BASE_API_URL_V2 + `api/Survey/editBuildingSheet`
+    const headersList = {
+        Accept: '*/*',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    const bodyContent = `token=${localStorage.getItem("token")}&_sheetId=${_sheetId}&assetType=${'建物'}&landMarkCounty=${buildSheet.objectContent.landMark.county}&landMarkVillage=${buildSheet.objectContent.landMark.village}&landMarkName=${buildSheet.objectContent.landMark.name}&landMarkCode=${buildSheet.objectContent.landMark.code}&buildMarkCounty=${buildSheet.objectContent.buildMark.county}&buildMarkVillage=${buildSheet.objectContent.buildMark.village}&buildMarkName=${buildSheet.objectContent.buildMark.name}&buildMarkCode=${buildSheet.objectContent.buildMark.code}&buildAddressCounty=${buildSheet.objectContent.address.county}&buildAddressVillage=${buildSheet.objectContent.address.village}&buildAddress=${buildSheet.objectContent.address.address}&landArea=${buildSheet.objectContent.landArea}&buildingArea=${buildSheet.objectContent.buildArea}&landRightsOwner=${buildSheet.propertyAnalysis.landRightsOwner}&landRightsStatus=${buildSheet.propertyAnalysis.landRightsStatus}&landRightsHolding=${buildSheet.propertyAnalysis.landRightsHolding}&buildingRightsOwner=${buildSheet.propertyAnalysis.buildingRightsOwner}&buildingRightsStatus=${buildSheet.propertyAnalysis.buildingRightsStatus}&buildingRightsHolding=${buildSheet.propertyAnalysis.buildingRightsHolding}&otherRights=${buildSheet.propertyAnalysis.otherRights}&landUses=${buildSheet.currentUsage.landUse}&BuildingCoverageRatio=${buildSheet.currentUsage.BuildingCoverageRatio}&floorAreaRatio=${buildSheet.currentUsage.floorAreaRatio}&buildingUsage=${buildSheet.currentUsage.buildingUsage}&buildingStructure=${buildSheet.currentUsage.buildingStructure}&buildingFinishDate=${buildSheet.currentUsage.buildingFinishDate}&buildingUpFloor=${buildSheet.currentUsage.buildingUpFloor}&buildingDownFloor=${buildSheet.currentUsage.buildingDownFloor}&surveyFloor=${buildSheet.currentUsage.surveyFloor}&inspectionDate=${buildSheet.surveyDates.inspectionDate}&valueOpinionDate=${buildSheet.surveyDates.valueOpinionDate}&appraisalObject=${buildSheet.appraisalObject.appraisalObject}&appraisalDescription=${buildSheet.appraisalObject.appraisalDescription}&priceType=${buildSheet.estimateCondition.priceType}&evaluationRightsType=${buildSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${buildSheet.estimateCondition.appraisalCondition}&surveyorName=${buildSheet.surveyDescription.surveyorName}&surveyDescription=${buildSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(buildSheet.transcriptFile)}&photoFilesBase64=${encodeURIComponent(buildSheet.photoFiles)}&transcriptFileName=${buildSheet.transcriptFileName}&photoFilesName=${buildSheet.photoFilesName}`;
+    const response = await fetch(url, {
+        method: "PUT",
+        body: bodyContent,
+        headers: headersList
+    })
+    return response
+}
+
+export const deleteBuildingSheetById = async (_sheetId) => {
+    const url = process.env.BASE_API_URL_V2 + `api/Survey/deleteBuildingSheet`
+    const headersList = {
+        "Accept": "*/*",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    let bodyContent = `token=${localStorage.getItem("token")}&_sheetId=${_sheetId}`;
+    const response = await fetch("http://140.122.82.98:9085/api/Survey/deleteBuildingSheet", {
+        method: "DELETE",
         body: bodyContent,
         headers: headersList
     })
