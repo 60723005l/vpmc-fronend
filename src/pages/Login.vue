@@ -118,12 +118,13 @@ export default {
         };
         let { username } = await this.$store.dispatch("user/login", payload);
         localStorage.setItem("token", token);
+        localStorage.setItem("username", responsePayload.username);
         this.$cookies.set("token", token);
-        this.$cookies.set("vpmc-token", token);
-        this.$cookies.set("vpmc-username", responsePayload.username);
+        this.$cookies.set("username", responsePayload.username);
+        // this.$cookies.set("vpmc-token", token);
+        // this.$cookies.set("vpmc-username", responsePayload.username);
         this.$router.push(`./${responsePayload.username}/map`);
         this.addCountdownEvent();
-        console.log("aaaa");
       } else {
         this.errmsg = `${responseContent.status}`;
       }
@@ -253,7 +254,7 @@ input:-webkit-autofill:active {
     accent: md-get-palette-color(red, A200),
     // The accent or secondary colo
     theme: light
-      // This can be dark or ligh,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+      // This can be dark or ligh,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   )
 );
 
