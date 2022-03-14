@@ -2,13 +2,13 @@
   <div class="sheet-container">
     <button @click="handleRepositoryClick">{{ optionName }}</button>
 
-    <div class="sheet-form" v-if="mode === 'edit'">
+    <div class="sheet-form" v-if="mode === 'edit' || mode === 'update'">
       <div class="step-container">
         <span class="md-title">步驟一：載入勘估標的土地/建物謄本</span>
         <md-field>
           <label>點此上傳檔案</label>
           <md-file
-            v-model="landSheetData.transcriptFile"
+            v-model="landSheetData.transcriptFileName"
             @md-change="handleTranscriptFileSelect"
           />
         </md-field>
@@ -322,17 +322,17 @@
                 <p>1.勘查日期：</p>
                 <div class="radio-set">
                   <input
-                    class="input-short"
+                    class="input-date"
                     type="date"
                     v-model="landSheetData.surveyDates.inspectionDate"
                   />
                 </div>
               </div>
               <div class="label-set">
-                <p>. 2.價格日期：</p>
+                <p>2.價格日期：</p>
                 <div class="radio-set">
                   <input
-                    class="input-short"
+                    class="input-date"
                     type="date"
                     v-model="landSheetData.surveyDates.valueOpinionDate"
                   />
@@ -454,7 +454,10 @@
                 <p>3.現勘照片：</p>
                 <md-field>
                   <label>點此上傳檔案</label>
-                  <md-file v-model="landSheetData.photoFiles" />
+                  <md-file
+                    v-model="landSheetData.photoFilesName"
+                    @md-change="handlePhotoFiles"
+                  />
                 </md-field>
               </div>
             </div>
@@ -462,7 +465,8 @@
         </div>
       </div>
 
-      <button @click="handleSubmit">新增</button>
+      <button @click="handleSubmit" v-if="mode === 'edit'">新增</button>
+      <button @click="handleUpdate" v-if="mode === 'update'">更新</button>
     </div>
 
     <div class="list-table" v-if="mode === 'list'">
@@ -492,6 +496,7 @@
 
 <script>
 import API from "../../../../api";
+import moment from "moment";
 export default {
   name: "LandSheet",
   data() {
@@ -503,9 +508,12 @@ export default {
       landVillageData: [],
       buildVillageData: [],
       addressVillageData: [],
+      editSheetId: "",
       landSheetData: {
-        transcriptFile: undefined,
-        photoFiles: [],
+        transcriptFile: "",
+        transcriptFileName: "",
+        photoFiles: "",
+        photoFilesName: "",
         objectContent: {
           landMark: {
             county: "",
@@ -563,25 +571,152 @@ export default {
   },
   methods: {
     handleBtnClick: (src) => {},
-    handleRepositoryClick() {
+    async handleRepositoryClick() {
       if (this.mode === "edit") {
         this.mode = "list";
         this.optionName = "新增";
-        this.fetchData();
+        await this.fetchData();
         return;
       }
       if (this.mode === "list") {
         this.mode = "edit";
         this.optionName = "儲存庫";
+        this.clearData();
         return;
       }
+    },
+    clearData() {
+      this.landSheetData = {
+        transcriptFile: "",
+        transcriptFileName: "",
+        photoFiles: "",
+        photoFilesName: "",
+        objectContent: {
+          landMark: {
+            county: "",
+            village: "",
+            name: "",
+            code: "",
+          },
+          buildMark: {
+            county: "",
+            village: "",
+            name: "",
+            code: "",
+          },
+          address: {
+            county: "",
+            village: "",
+            address: "",
+          },
+          landArea: 0,
+        },
+        propertyAnalysis: {
+          rightOwner: "",
+          rightStatus: "名下全部",
+          rightHolding: "",
+          otherRights: "",
+        },
+        currentUsage: {
+          landUse: "都市土地",
+          coverageRatio: 0,
+          floorAreaRatio: 0,
+        },
+        surveyDates: {
+          inspectionDate: undefined,
+          valueOpinionDate: undefined,
+        },
+        appraisalObject: {
+          appraisalObject: "",
+          appraisalDescription: "",
+        },
+        estimateCondition: {
+          priceType: "",
+          evaluationRightsType: "",
+          appraisalCondition: "",
+        },
+        surveyDescription: {
+          surveyorName: "",
+          surveyDescription: "",
+        },
+      };
+    },
+    loadInData(dataSheet) {
+      console.log(dataSheet);
+      this.handleCountySelect(dataSheet.landMarkCounty, "land");
+      this.handleCountySelect(dataSheet.buildMarkCounty, "build");
+      this.handleCountySelect(dataSheet.buildAddressCounty, "address");
+      this.landSheetData.objectContent.landMark.county =
+        dataSheet.landMarkCounty;
+      this.landSheetData.objectContent.landMark.village =
+        dataSheet.landMarkVillage;
+      this.landSheetData.objectContent.landMark.name = dataSheet.landMarkName;
+      this.landSheetData.objectContent.landMark.code = dataSheet.landMarkCode;
+      this.landSheetData.objectContent.buildMark.county =
+        dataSheet.buildMarkCounty;
+      this.landSheetData.objectContent.buildMark.village =
+        dataSheet.buildMarkVillage;
+      this.landSheetData.objectContent.buildMark.name = dataSheet.buildMarkName;
+      this.landSheetData.objectContent.buildMark.code = dataSheet.buildMarkCode;
+      this.landSheetData.objectContent.address.county =
+        dataSheet.buildAddressCounty;
+      this.landSheetData.objectContent.address.village =
+        dataSheet.buildAddressVillage;
+      this.landSheetData.objectContent.address.address = dataSheet.buildAddress;
+      this.landSheetData.objectContent.landArea = dataSheet.landArea;
+      this.landSheetData.propertyAnalysis.rightOwner =
+        dataSheet.landRightsOwner;
+      this.landSheetData.propertyAnalysis.rightStatus =
+        dataSheet.landRightsStatus;
+      this.landSheetData.propertyAnalysis.rightHolding =
+        dataSheet.landRightsHolding;
+      this.landSheetData.propertyAnalysis.otherRights = dataSheet.otherRights;
+      this.landSheetData.currentUsage.landUse = dataSheet.landUses;
+      this.landSheetData.currentUsage.coverageRatio =
+        dataSheet.BuildingCoverageRatio;
+      this.landSheetData.currentUsage.floorAreaRatio = dataSheet.floorAreaRatio;
+
+      this.landSheetData.surveyDates.inspectionDate = moment(
+        new Date(dataSheet.inspectionDate)
+      ).format("YYYY-MM-DD");
+
+      this.landSheetData.surveyDates.valueOpinionDate = moment(
+        new Date(dataSheet.valueOpinionDate)
+      ).format("YYYY-MM-DD");
+
+      this.landSheetData.appraisalObject.appraisalObject =
+        dataSheet.appraisalObject;
+      this.landSheetData.appraisalObject.appraisalDescription =
+        dataSheet.appraisalDescription;
+      this.landSheetData.estimateCondition.priceType = dataSheet.priceType;
+      this.landSheetData.estimateCondition.evaluationRightsType =
+        dataSheet.evaluationRightsType;
+      this.landSheetData.estimateCondition.appraisalCondition =
+        dataSheet.appraisalCondition;
+      this.landSheetData.surveyDescription.surveyorName =
+        dataSheet.surveyorName;
+      this.landSheetData.surveyDescription.surveyDescription =
+        dataSheet.surveyDescription;
+      this.landSheetData.transcriptFile = dataSheet.transcriptFileBase64;
+      this.landSheetData.photoFiles = dataSheet.photoFilesBase64;
+      this.landSheetData.transcriptFileName = dataSheet.transcriptFileName;
+      this.landSheetData.photoFilesName = dataSheet.photoFilesName;
     },
     async fetchData() {
       const response = await (await API.Survey.listAllByUser()).json();
       this.listData = response.land;
     },
-    hadleEditClick(sheetId) {
-      console.log(sheetId);
+    async hadleEditClick(sheetId) {
+      this.editSheetId = sheetId;
+      this.mode = "update";
+      this.optionName = "儲存庫";
+      await this.fetchData();
+      for (let i = 0; i < this.listData.length; i++) {
+        if (this.listData[i].sheetId === this.editSheetId) {
+          this.loadInData(this.listData[i]);
+          return;
+        }
+      }
     },
     async handleDeleteClick(sheetId) {
       const response = await API.Survey.deleteLandSheetById(sheetId);
@@ -615,23 +750,50 @@ export default {
         this.addressVillageData = response;
       }
     },
-    handleTranscriptFileSelect(transcriptFile) {
-      this.transcriptFile = transcriptFile;
-      console.log(transcriptFile[0]);
-      this.getBase64(transcriptFile[0]);
+    async handleTranscriptFileSelect(transcriptFile) {
+      const reader = await this.getBase64(transcriptFile[0]);
+      this.landSheetData.transcriptFile = reader.result;
+      this.landSheetData.transcriptFileName = reader.fileName;
+    },
+    async handlePhotoFiles(photofile) {
+      const reader = await this.getBase64(photofile[0]);
+      this.landSheetData.photoFiles = reader.result;
+      this.landSheetData.photoFilesName = reader.fileName;
     },
     async handleSubmit() {
-      console.log(this.landSheetData);
+      const response = await API.Survey.createLandSheet(this.landSheetData);
+      if (response.status === 200) {
+        this.clearData();
+        alert("資料表新增成功");
+      } else {
+        alert("資料表新增失敗");
+      }
+    },
+    async handleUpdate() {
+      const response = await API.Survey.editLandSheet(
+        this.landSheetData,
+        this.editSheetId
+      );
+      if (response.status === 200) {
+        this.clearData();
+        this.mode = "edit";
+        alert("資料表更新成功");
+      } else {
+        alert("資料表更新失敗");
+      }
     },
     getBase64(file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function () {
-        console.log(reader.result);
-      };
-      reader.onerror = function (error) {
-        console.log("Error: ", error);
-      };
+      return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+        reader.fileName = file.name;
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+          resolve(reader);
+        };
+        reader.onerror = function (error) {
+          reject("null");
+        };
+      });
     },
   },
 };
@@ -682,7 +844,9 @@ export default {
               .radio-set {
                 display: flex;
                 flex-direction: row;
-
+                .input-date {
+                  width: 130px;
+                }
                 .input-long {
                   width: 100px;
                 }
