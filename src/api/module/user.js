@@ -14,6 +14,7 @@ export const login = async (payload) => {
         Accept: '*/*',
         'Content-Type': 'application/x-www-form-urlencoded'
     }
+    console.log(util.encodeBase64(sha256(payload.password)))
     const bodyContent = `email=${payload.email}&password=${util.encodeBase64(sha256(payload.password))}`;
     const response = await fetch(url, {
         method: 'POST',

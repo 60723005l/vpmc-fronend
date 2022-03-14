@@ -8,8 +8,8 @@ const isLoggedin = () => {
 }
 
 const getUserCookies = () => {
-    let token = cookies.get('vpmc-token'),
-        username = cookies.get('vpmc-username') || 'user'
+    let token = cookies.get('token'),
+        username = cookies.get('username') || 'user'
     return { token, username }
 }
 
@@ -18,15 +18,23 @@ const loginGuard = async (to, from, next) => {
     else {
         const { token, username } = getUserCookies()
         try {
-            const userInfo = await api.User.validate(token)
-            let payload = {
-                username: userInfo.UserName,
+            const responsePayload = await (await api.User.validate(token)).json()
+            const payload = {
+                _userId: responsePayload._userId,
+                username: responsePayload.username,
+                email: responsePayload.email,
                 token: token,
-                role: userInfo.UserRole,
-                id: userInfo.UserID
-            }
+                role: responsePayload.roles[0].id,
+            };
+            // let payload = {
+            //     username: userInfo.UserName,
+            //     token: token,
+            //     role: userInfo.UserRole,
+            //     id: userInfo.UserID
+            // }
             await store.dispatch('user/login', payload)
-            cookies.set('vpmc-username', userInfo.UserName)
+            cookies.set('username', responsePayload.username)
+            // cookies.set('vpmc-username', userInfo.UserName)
             next()
         }
         catch (err) {

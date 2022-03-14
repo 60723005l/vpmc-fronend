@@ -7,6 +7,7 @@ import * as Utilities from './module/utilities'
 import * as Transaction from './module/transaction'
 import * as Estimate from './module/estimate'
 import * as LicenseAndPermit from './module/licenseAndPermit'
+import * as Survey from './module/survey'
 
 export default {
     User,
@@ -17,5 +18,6 @@ export default {
     Utilities,
     Transaction,
     Estimate,
-    LicenseAndPermit
+    LicenseAndPermit,
+    Survey
 }
