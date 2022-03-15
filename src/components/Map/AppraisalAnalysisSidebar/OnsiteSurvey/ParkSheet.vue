@@ -53,6 +53,7 @@
                 <p>2.土地標示：</p>
                 <div class="radio-set">
                   <select
+                    class="input-short"
                     v-model="parkSheetData.objectContent.landMark.county"
                     @change="
                       handleCountySelect(
@@ -72,6 +73,7 @@
                 </div>
                 <div class="radio-set">
                   <select
+                    class="input-short"
                     v-model="parkSheetData.objectContent.landMark.village"
                   >
                     <option
@@ -104,6 +106,7 @@
                 <p>3.建物標示：</p>
                 <div class="radio-set">
                   <select
+                    class="input-short"
                     v-model="parkSheetData.objectContent.buildMark.county"
                     @change="
                       handleCountySelect(
@@ -123,6 +126,7 @@
                 </div>
                 <div class="radio-set">
                   <select
+                    class="input-short"
                     v-model="parkSheetData.objectContent.buildMark.village"
                   >
                     <option
@@ -155,6 +159,7 @@
                 <p>4.建物門牌：</p>
                 <div class="radio-set">
                   <select
+                    class="input-short"
                     v-model="parkSheetData.objectContent.address.county"
                     @change="
                       handleCountySelect(
@@ -173,7 +178,10 @@
                   </select>
                 </div>
                 <div class="radio-set">
-                  <select v-model="parkSheetData.objectContent.address.village">
+                  <select
+                    class="input-short"
+                    v-model="parkSheetData.objectContent.address.village"
+                  >
                     <option
                       v-for="(village, index) in addressVillageData"
                       :key="index"
@@ -631,6 +639,7 @@
               <div class="label-set">
                 <div class="radio-set">
                   <select
+                    class="input-long"
                     v-model="parkSheetData.appraisalObject.appraisalObject"
                     @change="
                       handleArrpaisalObjectChange(
@@ -669,7 +678,10 @@
               <div class="label-set-aa">
                 <p>1.價格種類：</p>
                 <div class="radio-set">
-                  <select v-model="parkSheetData.estimateCondition.priceType">
+                  <select
+                    class="input-long"
+                    v-model="parkSheetData.estimateCondition.priceType"
+                  >
                     <option value="正常價格">正常價格</option>
                     <option value="限定價格">限定價格</option>
                     <option value="特定價格">特定價格</option>
@@ -684,6 +696,7 @@
                 <p>2.評估權利種類：</p>
                 <div class="radio-set">
                   <select
+                    class="input-long"
                     v-model="
                       parkSheetData.estimateCondition.evaluationRightsType
                     "
@@ -700,7 +713,7 @@
                 <p>3.評價條件：</p>
                 <div class="radio-set">
                   <input
-                    class="input-short"
+                    class="input-long"
                     type="text"
                     v-model="parkSheetData.estimateCondition.appraisalCondition"
                   />
@@ -727,7 +740,7 @@
                 <p>2.勘領說明事項：</p>
                 <div class="radio-set">
                   <input
-                    class="input-short"
+                    class="input-long"
                     type="text"
                     v-model="parkSheetData.surveyDescription.surveyDescription"
                   />
@@ -1151,51 +1164,123 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  .step-container {
-    width: 460px;
-    padding: 5px;
-    margin: 5px;
-    border-width: 1px;
-    border-style: solid;
-    .section-container {
+  .list-table {
+  }
+  .sheet-form {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    .step-container {
+      width: 460px;
       padding: 5px;
-      .section-content {
-        margin-bottom: 50px;
-        margin-left: 25px;
-        .content-row-aa {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          .label-set-aa {
+      margin: 5px;
+      border-width: 1px;
+      border-style: solid;
+      .section-container {
+        padding: 5px;
+        .section-content {
+          margin-bottom: 50px;
+          margin-left: 10px;
+          .content-row-aa {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
+            .label-set-aa {
+              display: flex;
+              align-items: center;
+              width: 400px;
+              justify-content: space-between;
+              .radio-set {
+                display: flex;
+                flex-direction: row;
+                input[type="radio"] {
+                  border: 0px;
+                  width: 15px;
+                  height: 15px;
+                }
+                .input-date {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 130px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+                .input-long {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 192px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+                .input-short {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 65px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+                .input-apprasail-object {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 150px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+              }
+            }
           }
-        }
-        .content-row {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          flex-wrap: wrap;
-
-          .label-set {
+          .content-row {
             display: flex;
+            flex-direction: row;
             align-items: center;
             flex-wrap: wrap;
-            .radio-set {
-              display: flex;
-              flex-direction: row;
 
-              .input-long {
-                width: 100px;
-              }
-              .input-short {
-                width: 70px;
-              }
-              .input-check-c {
+            .label-set {
+              display: flex;
+              align-items: center;
+              flex-wrap: wrap;
+              .radio-set {
                 display: flex;
-                align-items: center;
-                .input-check {
-                  width: 20px;
+                flex-direction: row;
+                // input {
+                //   width: 65px;
+                // }
+                .input-check-c {
+                  align-items: center;
+                }
+                input[type="radio"] {
+                  border: 0px;
+                  width: 15px;
+                  height: 15px;
+                }
+                .input-date {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 130px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+                .input-long {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 192px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+                .input-short {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 65px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+                .input-apprasail-object {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 150px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
                 }
               }
             }
