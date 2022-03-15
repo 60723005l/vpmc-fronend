@@ -767,7 +767,11 @@
     </div>
 
     <div class="list-table" v-if="mode === 'list'">
-      <table>
+      <div v-if="listData.length === 0" class="not-found">
+        <img :src="require('@/assets/emptyFolder.png')" />
+        <p>尚未有已儲存之資料表</p>
+      </div>
+      <table v-if="listData.length !== 0" class="data-table">
         <thead>
           <tr>
             <th>現勘表ID</th>
@@ -1165,6 +1169,30 @@ export default {
   flex-direction: column;
   align-items: stretch;
   .list-table {
+    display: flex;
+    justify-content: center;
+    .not-found {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: fit-content;
+      p {
+        font-size: 24px;
+        margin: 0px;
+      }
+      img {
+        width: 150px;
+      }
+    }
+    .data-table {
+      margin-top: 20px;
+      font-size: 16px;
+      button {
+        border-radius: 6px;
+        width: 72px;
+        height: 25px;
+      }
+    }
   }
   .sheet-form {
     height: fit-content;
