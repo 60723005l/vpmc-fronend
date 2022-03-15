@@ -52,6 +52,7 @@
                 <p>2.土地標示：</p>
                 <div class="radio-set">
                   <select
+                    class="input-short"
                     v-model="landSheetData.objectContent.landMark.county"
                     @change="
                       handleCountySelect(
@@ -71,6 +72,7 @@
                 </div>
                 <div class="radio-set">
                   <select
+                    class="input-short"
                     v-model="landSheetData.objectContent.landMark.village"
                   >
                     <option
@@ -103,6 +105,7 @@
                 <p>3.建物標示：</p>
                 <div class="radio-set">
                   <select
+                    class="input-short"
                     v-model="landSheetData.objectContent.buildMark.county"
                     @change="
                       handleCountySelect(
@@ -122,6 +125,7 @@
                 </div>
                 <div class="radio-set">
                   <select
+                    class="input-short"
                     v-model="landSheetData.objectContent.buildMark.village"
                   >
                     <option
@@ -154,6 +158,7 @@
                 <p>4.建物門牌：</p>
                 <div class="radio-set">
                   <select
+                    class="input-short"
                     v-model="landSheetData.objectContent.address.county"
                     @change="
                       handleCountySelect(
@@ -172,7 +177,10 @@
                   </select>
                 </div>
                 <div class="radio-set">
-                  <select v-model="landSheetData.objectContent.address.village">
+                  <select
+                    class="input-short"
+                    v-model="landSheetData.objectContent.address.village"
+                  >
                     <option
                       v-for="(village, index) in addressVillageData"
                       :key="index"
@@ -347,6 +355,7 @@
               <div class="label-set">
                 <div class="radio-set">
                   <select
+                    class="input-apprasail-object"
                     v-model="landSheetData.appraisalObject.appraisalObject"
                     @change="
                       handleArrpaisalObjectChange(
@@ -385,7 +394,10 @@
               <div class="label-set-aa">
                 <p>1.價格種類：</p>
                 <div class="radio-set">
-                  <select v-model="landSheetData.estimateCondition.priceType">
+                  <select
+                    class="input-long"
+                    v-model="landSheetData.estimateCondition.priceType"
+                  >
                     <option value="正常價格">正常價格</option>
                     <option value="限定價格">限定價格</option>
                     <option value="特定價格">特定價格</option>
@@ -400,6 +412,7 @@
                 <p>2.評估權利種類：</p>
                 <div class="radio-set">
                   <select
+                    class="input-long"
                     v-model="
                       landSheetData.estimateCondition.evaluationRightsType
                     "
@@ -416,7 +429,7 @@
                 <p>3.評價條件：</p>
                 <div class="radio-set">
                   <input
-                    class="input-short"
+                    class="input-long"
                     type="text"
                     v-model="landSheetData.estimateCondition.appraisalCondition"
                   />
@@ -443,7 +456,7 @@
                 <p>2.勘領說明事項：</p>
                 <div class="radio-set">
                   <input
-                    class="input-short"
+                    class="input-long"
                     type="text"
                     v-model="landSheetData.surveyDescription.surveyDescription"
                   />
@@ -822,7 +835,7 @@ export default {
         padding: 5px;
         .section-content {
           margin-bottom: 50px;
-          margin-left: 25px;
+          margin-left: 10px;
           .content-row-aa {
             display: flex;
             flex-direction: column;
@@ -830,6 +843,45 @@ export default {
             .label-set-aa {
               display: flex;
               align-items: center;
+              width: 400px;
+              justify-content: space-between;
+              .radio-set {
+                display: flex;
+                flex-direction: row;
+                input[type="radio"] {
+                  border: 0px;
+                  width: 15px;
+                  height: 15px;
+                }
+                .input-date {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 130px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+                .input-long {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 192px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+                .input-short {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 65px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+                .input-apprasail-object {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 150px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+              }
             }
           }
           .content-row {
@@ -844,14 +896,41 @@ export default {
               .radio-set {
                 display: flex;
                 flex-direction: row;
+                // input {
+                //   width: 65px;
+                // }
+                input[type="radio"] {
+                  border: 0px;
+                  width: 15px;
+                  height: 15px;
+                }
                 .input-date {
+                  margin-right: 5px;
+                  border-radius: 6px;
                   width: 130px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
                 }
                 .input-long {
-                  width: 100px;
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 192px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
                 }
                 .input-short {
-                  width: 70px;
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 65px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
+                }
+                .input-apprasail-object {
+                  margin-right: 5px;
+                  border-radius: 6px;
+                  width: 150px;
+                  height: 25px;
+                  background-color: rgb(255, 255, 255);
                 }
               }
             }
