@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100vw; height: 100vh; overflow: hidden">
-    <video autoplay muted restart class="myVideo">
-      <source :src="require('@/assets/domo-vdo.mp4')" type="video/mp4" />
+    <video autoplay muted restart class="myVideo" loop>
+      <source :src="require('@/assets/demo-vid-sm.mp4')" type="video/mp4" />
     </video>
     <div class="login-container col" autocomplete="off">
       <div class="logo row">
@@ -11,7 +11,7 @@
         <md-field class="field">
           <label for="email">E-mail</label>
           <md-input type="text" id="email" v-model="email"></md-input>
-          <span class="vpmc-helper-text">請輸入6-20碼英/數混合字元</span>
+          <!-- <span class="vpmc-helper-text">請輸入6-20碼英/數混合字元</span> -->
         </md-field>
         <md-field class="field" :md-toggle-password="false">
           <label for="password">密碼</label>
@@ -24,9 +24,9 @@
           <md-button class="md-icon-button" @click="togglePassword"
             ><md-icon>{{ psw_iconType }}</md-icon></md-button
           >
-          <span class="vpmc-helper-text">
+          <!-- <span class="vpmc-helper-text">
             至少8個字元，混合大小寫英文、數字及符號
-          </span>
+          </span> -->
         </md-field>
         <div class="errmsg">
           <span>{{ errmsg }}</span>
@@ -99,10 +99,15 @@ export default {
     },
     async handleFormSubmit() {
       //   try {
+      this.errmsg = "請求發送中...";
       const response = await API.User.login({
         email: this.email,
         password: this.password,
       });
+      if (response === undefined) {
+        this.errmsg = "伺服器錯誤，請聯繫Server team";
+        return;
+      }
       const responseContent = await response.json();
       if (response.status === 200) {
         const token = responseContent.token;
@@ -128,21 +133,6 @@ export default {
       } else {
         this.errmsg = `${responseContent.status}`;
       }
-      // let userInfo = await API.User.validate(token);
-      //   let payload /** @type {ILoginPayload} */ = {
-      //     username: this.username,
-      //     token: token,
-      //     role: userInfo.UserRole,
-      //     id: userInfo.UserID,
-      //   };
-      //   let { username } = await this.$store.dispatch("user/login", payload);
-      //   this.$cookies.set("vpmc-token", token);
-      //   this.$cookies.set("vpmc-username", username);
-      //   this.$router.push(`./${username}/map`);
-      //   this.addCountdownEvent();
-      //   } catch (err) {
-      //     this.errmsg = `${err.message}`;
-      //   }
     },
     async handleDevLogin(role) {
       let { username } = await this.$store.dispatch("user/login", {
@@ -173,6 +163,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .myVideo {
   object-fit: cover;
@@ -184,14 +175,19 @@ export default {
 }
 .login-container {
   padding: 30px;
-  border: 1px rgb(187 187 187) solid;
-  border-radius: 5px;
-  background: rgb(255 255 255 / 90%);
+  border-width: 1px;
+  border-style: solid;
+  border-color: #444;
+  background-color: rgb(255, 255, 255);
   width: fit-content;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 80%;
+  transform: translate(-80%, -50%);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .logo {
   height: 95px;
@@ -243,6 +239,7 @@ input:-webkit-autofill:active {
   color: red;
 }
 </style>
+
 <style lang="scss" scoped>
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
 
@@ -254,7 +251,7 @@ input:-webkit-autofill:active {
     accent: md-get-palette-color(red, A200),
     // The accent or secondary colo
     theme: light
-      // This can be dark or ligh,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+      // This can be dark or ligh,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   )
 );
 

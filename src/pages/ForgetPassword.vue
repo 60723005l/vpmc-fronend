@@ -1,7 +1,7 @@
 <template>
   <div class="register-container">
-    <video autoplay muted restart class="myVideo">
-      <source src="/static/domo-vdo.mp4" type="video/mp4" />
+    <video autoplay muted restart class="myVideo" loop>
+      <source :src="require('@/assets/demo-vid-sm.mp4')" type="video/mp4" />
     </video>
     <form autocomplete="nope">
       <!-- prevent browser autocomplete ignore this block------------------ -->
@@ -75,7 +75,7 @@ export default {
         this.psw.errmsg = "";
         return true;
       } else {
-        this.psw.errmsg = "invalid password";
+        this.psw.errmsg = "無效的密碼";
         return false;
       }
     },
@@ -84,7 +84,7 @@ export default {
         this.psw2.errmsg = "";
         return true;
       } else {
-        this.psw2.errmsg = "different password";
+        this.psw2.errmsg = "密碼不相同";
         return false;
       }
     },
@@ -93,7 +93,7 @@ export default {
         this.email.errmsg = "";
         return true;
       } else {
-        this.email.errmsg = "invalid email";
+        this.email.errmsg = "無效的電子信箱";
         return false;
       }
     },
@@ -104,7 +104,12 @@ export default {
       //   email: this.email.value,
       //   phoneNumber: this.phone,
       // });
+      this.errmsg = "請求發送中...";
       const response = await api.User.sendForgetPasswordEmail(this.email.value);
+      if (response === undefined) {
+        this.errmsg = "伺服器錯誤，請聯繫Server team";
+        return;
+      }
       const responseContent = await response.json();
       if (response.status === 200) {
         this.errmsg = `驗證信已寄至${this.email.value}，5秒後跳轉至登入頁面`;
@@ -139,7 +144,7 @@ export default {
     // The primary color of your applicatio
     accent: md-get-palette-color(red, A200),
     // The accent or secondary colo
-    theme: light // This can be dark or ligh,,,,,,,,,,,
+    theme: light // This can be dark or ligh,,,,,,,,,,,,,,,,,,,,,,
   )
 );
 
