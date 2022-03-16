@@ -14,14 +14,18 @@ export const login = async (payload) => {
         Accept: '*/*',
         'Content-Type': 'application/x-www-form-urlencoded'
     }
-    console.log(util.encodeBase64(sha256(payload.password)))
+    // console.log(util.encodeBase64(sha256(payload.password)))
     const bodyContent = `email=${payload.email}&password=${util.encodeBase64(sha256(payload.password))}`;
-    const response = await fetch(url, {
-        method: 'POST',
-        body: bodyContent,
-        headers: headersList
-    })
-    return response
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: bodyContent,
+            headers: headersList
+        })
+        return response
+    } catch (err) {
+        return undefined
+    }
     // try {
     //     let resp = await axios.post(url, payload, { withCredentials: true }) //cookies will be written when withCredentials true
     //     console.log(resp)
@@ -47,12 +51,16 @@ export const register = async (payload) => {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
     const bodyContent = `username=${payload.username}&password=${util.encodeBase64(sha256(payload.password))}&email=${payload.email}&phoneNumber=${payload.phoneNumber}&roleId=1`;
-    const response = await fetch(url, {
-        method: 'POST',
-        body: bodyContent,
-        headers: headersList
-    })
-    return response
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: bodyContent,
+            headers: headersList
+        })
+        return response
+    } catch (err) {
+        return undefined
+    }
     // try {
     //     let url = process.env.BASE_API_URL + 'JwtAuth/register'
     //     await axios.post(url, payload)
@@ -93,11 +101,15 @@ export const sendVerifyEmail = async (username) => {
     const headersList = {
         Accept: '*/*'
     }
-    const response = await fetch(url, {
-        method: "GET",
-        headers: headersList
-    })
-    return response
+    try {
+        const response = await fetch(url, {
+            method: "GET",
+            headers: headersList
+        })
+        return response
+    } catch (err) {
+        return undefined
+    }
 }
 
 export const sendForgetPasswordEmail = async (email) => {
@@ -105,11 +117,15 @@ export const sendForgetPasswordEmail = async (email) => {
     const headersList = {
         Accept: '*/*',
     }
-    const response = await fetch(url, {
-        method: 'GET',
-        headers: headersList
-    })
-    return response
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: headersList
+        })
+        return response
+    } catch (err) {
+        return undefined
+    }
 }
 
 export const resetPassword = async (options) => {
@@ -119,12 +135,17 @@ export const resetPassword = async (options) => {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
     const bodyContent = `email=${options.email}&originalPassword=${util.encodeBase64(sha256(options.originalPassword))}&newPassword=${util.encodeBase64(sha256(options.newPassword))}`;
-    const response = await fetch(url, {
-        method: 'POST',
-        body: bodyContent,
-        headers: headersList
-    })
-    return response
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: bodyContent,
+            headers: headersList
+        })
+        return response
+    } catch (err) {
+        return undefined
+    }
+
 }
 
 function fixCrapJson (crappyJSON) {

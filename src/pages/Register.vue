@@ -1,7 +1,7 @@
 <template>
   <div class="register-container">
-    <video autoplay muted restart class="myVideo">
-      <source src="/static/domo-vdo.mp4" type="video/mp4" />
+    <video autoplay muted restart class="myVideo" loop>
+      <source :src="require('@/assets/demo-vid-sm.mp4')" type="video/mp4" />
     </video>
     <form autocomplete="nope">
       <!-- prevent browser autocomplete ignore this block------------------ -->
@@ -34,7 +34,7 @@
           ><md-icon>{{ psw_iconType }}</md-icon></md-button
         >
         <span class="md-error">{{ psw.errmsg }}</span>
-        <span class="vpmc-helper-text">
+        <span class="vpmc-helper-text" v-if="password_hint_show === true">
           至少8個字元，混合大小寫英文、數字及符號
         </span>
       </md-field>
@@ -85,6 +85,7 @@ export default {
       value: "",
       errmsg: "",
     },
+    password_hint_show: true,
     phone: null,
     psw: { show: false, inputType: "text", errmsg: "" },
     psw2: { show: false, inputType: "text", errmsg: "" },
@@ -119,10 +120,11 @@ export default {
     },
     checkPassword() {
       if (validate.isPassword(this.password)) {
-        this.psw.errmsg = "";
+        this.psw.errmsg = "此密碼可用";
         return true;
       } else {
-        this.psw.errmsg = "invalid password";
+        this.password_hint_show = false;
+        this.psw.errmsg = "無效的密碼";
         return false;
       }
     },
@@ -131,7 +133,7 @@ export default {
         this.psw2.errmsg = "";
         return true;
       } else {
-        this.psw2.errmsg = "different password";
+        this.psw2.errmsg = "密碼不相同";
         return false;
       }
     },
@@ -140,20 +142,30 @@ export default {
         this.email.errmsg = "";
         return true;
       } else {
-        this.email.errmsg = "invalid email";
+        this.email.errmsg = "無效的電子信箱";
         return false;
       }
     },
     async handleRegister() {
       if (this.validateForm()) {
+        this.errmsg = `請求發送中...`;
         const response = await api.User.register({
           username: this.username,
           password: this.password,
           email: this.email.value,
           phoneNumber: this.phone,
         });
+        if (response === undefined) {
+          this.errmsg = "伺服器錯誤，請聯繫Server team";
+          return;
+        }
         if (response.status === 200) {
+          this.errmsg = `請求發送中...`;
           const response_2 = await api.User.sendVerifyEmail(this.username);
+          if (response === undefined) {
+            this.errmsg = "伺服器錯誤，請聯繫Server team";
+            return;
+          }
           const responseContent_2 = await response_2.json();
           if (response_2.status === 200) {
             this.errmsg = `驗證信已寄至${this.email.value}，5秒後跳轉至登入頁面`;
@@ -193,7 +205,7 @@ export default {
     // The primary color of your applicatio
     accent: md-get-palette-color(red, A200),
     // The accent or secondary colo
-    theme: light // This can be dark or ligh,,,,
+    theme: light // This can be dark or ligh,,,,,,,,,,,,,,,,,,
   )
 );
 
