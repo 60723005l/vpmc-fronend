@@ -49,7 +49,7 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>2.土地標示：</p>
+                <p>1.土地標示：</p>
                 <div class="radio-set">
                   <select
                     class="input-short"
@@ -90,11 +90,13 @@
                     class="input-short"
                     type="text"
                     v-model="landSheetData.objectContent.landMark.name"
+                    placeholder="段名"
                   />
                   <input
                     class="input-short"
                     type="text"
                     v-model="landSheetData.objectContent.landMark.code"
+                    placeholder="地號"
                   />
                 </div>
               </div>
@@ -102,7 +104,7 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>3.建物標示：</p>
+                <p>2.建物標示：</p>
                 <div class="radio-set">
                   <select
                     class="input-short"
@@ -143,11 +145,13 @@
                     class="input-short"
                     type="text"
                     v-model="landSheetData.objectContent.buildMark.name"
+                    placeholder="段名"
                   />
                   <input
                     class="input-short"
                     type="text"
                     v-model="landSheetData.objectContent.buildMark.code"
+                    placeholder="地號"
                   />
                 </div>
               </div>
@@ -155,7 +159,7 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>4.建物門牌：</p>
+                <p>3.建物門牌：</p>
                 <div class="radio-set">
                   <select
                     class="input-short"
@@ -195,6 +199,7 @@
                     class="input-long"
                     type="text"
                     v-model="landSheetData.objectContent.address.address"
+                    placeholder="輸入範例: 一段1巷1弄1號5樓"
                   />
                 </div>
               </div>
@@ -202,14 +207,25 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>5.土地面積：</p>
+                <p>4.土地面積：</p>
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     value=""
                     v-model="landSheetData.objectContent.landArea"
+                    placeholder=""
                   />
+                </div>
+                <div class="radio-set">
+                  <p>
+                    平方公尺, 核算為
+                    {{
+                      Math.round(
+                        (landSheetData.objectContent.landArea / 3.3) * 100
+                      ) / 100
+                    }}坪
+                  </p>
                 </div>
               </div>
             </div>
@@ -255,10 +271,11 @@
               <div class="label-set">
                 <p>2.他項權利：</p>
                 <div class="radio-set">
-                  <input
+                  <textarea
                     class="input-short"
                     type="text"
                     v-model="landSheetData.propertyAnalysis.otherRights"
+                    placeholder="限200字"
                   />
                 </div>
               </div>
@@ -301,21 +318,21 @@
             <div class="content-row">
               <div class="label-set"><p>2.使用強度：</p></div>
               <div class="label-set">
-                <p>法定建蔽率：</p>
+                <p>法定建蔽率(%)：</p>
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="landSheetData.currentUsage.coverageRatio"
                   />
                 </div>
               </div>
               <div class="label-set">
-                <p>法定容積率：</p>
+                <p>法定容積率(%)：</p>
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="landSheetData.currentUsage.floorAreaRatio"
                   />
                 </div>
@@ -428,10 +445,11 @@
               <div class="label-set-aa">
                 <p>3.評價條件：</p>
                 <div class="radio-set">
-                  <input
+                  <textarea
                     class="input-long"
                     type="text"
                     v-model="landSheetData.estimateCondition.appraisalCondition"
+                    placeholder="限200字"
                   />
                 </div>
               </div>
@@ -455,10 +473,11 @@
               <div class="label-set-aa">
                 <p>2.勘領說明事項：</p>
                 <div class="radio-set">
-                  <input
+                  <textarea
                     class="input-long"
                     type="text"
                     v-model="landSheetData.surveyDescription.surveyDescription"
+                    placeholder="限200字"
                   />
                 </div>
               </div>
@@ -482,12 +501,12 @@
       <button @click="handleUpdate" v-if="mode === 'update'">更新</button>
     </div>
 
-    <div class="list-table" v-if="mode === 'list'">
+    <div class="list-table" v-show="mode === 'list'">
       <div v-if="listData.length === 0" class="not-found">
         <img :src="require('@/assets/emptyFolder.png')" />
         <p>尚未有已儲存之資料表</p>
       </div>
-      <table v-if="listData.length !== 0" class="data-table">
+      <table v-show="listData.length !== 0" class="data-table">
         <thead>
           <tr>
             <th>現勘表ID</th>
@@ -961,6 +980,10 @@ export default {
                   width: 150px;
                   height: 25px;
                   background-color: rgb(255, 255, 255);
+                }
+                .input-otherRight {
+                  height: 100px;
+                  width: 260px;
                 }
               }
             }
