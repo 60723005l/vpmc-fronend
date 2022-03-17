@@ -1,6 +1,8 @@
 <template>
   <div class="sheet-container">
-    <button @click="handleRepositoryClick">{{ optionName }}</button>
+    <button class="submit-button" @click="handleRepositoryClick">
+      {{ optionName }}
+    </button>
 
     <div class="sheet-form" v-if="mode === 'edit' || mode === 'update'">
       <div class="step-container">
@@ -803,8 +805,12 @@
         </div>
       </div>
       <p class="status">{{ statusMsg }}</p>
-      <button @click="handleSubmit" v-if="mode === 'edit'">新增</button>
-      <button @click="handleUpdate" v-if="mode === 'update'">更新</button>
+      <div class="submit-button" @click="handleSubmit" v-if="mode === 'edit'">
+        新增
+      </div>
+      <div class="submit-button" @click="handleUpdate" v-if="mode === 'update'">
+        更新
+      </div>
     </div>
 
     <div class="list-table" v-if="mode === 'list'">
@@ -1256,7 +1262,25 @@ export default {
   height: fit-content;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
+  .submit-button {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 2px;
+    border-radius: 5px;
+    border-color: rgb(0, 0, 0);
+    border-width: 1px;
+    border-style: solid;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    width: 100%;
+    height: fit-content;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(0, 0, 0);
+      color: white;
+      transition: 0.3s;
+    }
+  }
   .list-table {
     display: flex;
     justify-content: center;
@@ -1284,6 +1308,7 @@ export default {
     }
   }
   .sheet-form {
+    height: 1650px;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -1292,9 +1317,10 @@ export default {
       color: red;
     }
     .step-container {
-      width: 460px;
+      border-radius: 5px;
+      width: 100%;
       padding: 5px;
-      margin: 5px;
+      margin-top: 5px;
       border-width: 1px;
       border-style: solid;
       .section-container {
