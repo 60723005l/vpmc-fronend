@@ -11,6 +11,17 @@
             v-model="landSheetData.transcriptFileName"
             @md-change="handleTranscriptFileSelect"
           />
+          <button
+            v-if="mode === 'update'"
+            @click="
+              downloadFile(
+                landSheetData.transcriptFile,
+                landSheetData.transcriptFileName
+              )
+            "
+          >
+            點此下載檔案
+          </button>
         </md-field>
       </div>
 
@@ -489,7 +500,19 @@
                   <md-file
                     v-model="landSheetData.photoFilesName"
                     @md-change="handlePhotoFiles"
+                    multiple
                   />
+                  <button
+                    v-if="mode === 'update'"
+                    @click="
+                      downloadFiles(
+                        landSheetData.photoFiles,
+                        landSheetData.photoFilesName
+                      )
+                    "
+                  >
+                    點此下載檔案
+                  </button>
                 </md-field>
               </div>
             </div>
@@ -548,8 +571,8 @@ export default {
       landSheetData: {
         transcriptFile: "",
         transcriptFileName: "",
-        photoFiles: "",
-        photoFilesName: "",
+        photoFiles: [],
+        photoFilesName: [],
         objectContent: {
           landMark: {
             county: "",
@@ -625,8 +648,8 @@ export default {
       this.landSheetData = {
         transcriptFile: "",
         transcriptFileName: "",
-        photoFiles: "",
-        photoFilesName: "",
+        photoFiles: [],
+        photoFilesName: [],
         objectContent: {
           landMark: {
             county: "",
@@ -792,10 +815,13 @@ export default {
       this.landSheetData.transcriptFile = reader.result;
       this.landSheetData.transcriptFileName = reader.fileName;
     },
-    async handlePhotoFiles(photofile) {
-      const reader = await this.getBase64(photofile[0]);
-      this.landSheetData.photoFiles = reader.result;
-      this.landSheetData.photoFilesName = reader.fileName;
+    async handlePhotoFiles(photofiles) {
+      for (let i = 0; i < photofiles.length; i++) {
+        const reader = await this.getBase64(photofiles[i]);
+        this.landSheetData.photoFiles.push(reader.result);
+      }
+      // console.log(this.landSheetData.photoFiles);
+      // console.log(this.landSheetData.photoFilesName);
     },
     async handleSubmit() {
       const response = await API.Survey.createLandSheet(this.landSheetData);
@@ -831,6 +857,40 @@ export default {
           reject("null");
         };
       });
+    },
+    downloadFile(fileBase64, fileName) {
+      let arr = fileBase64.split(","),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      const myFile = new File([u8arr], fileName, { type: mime });
+      console.log(myFile);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = URL.createObjectURL(myFile);
+      downloadLink.download = fileName;
+      downloadLink.click();
+    },
+    downloadFiles(fileBase64s, fileNames) {
+      for (let i = 0; i < fileBase64s.length; i++) {
+        let arr = fileBase64s[i].split(","),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]),
+          n = bstr.length,
+          u8arr = new Uint8Array(n);
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+        const myFile = new File([u8arr], fileNames[i], { type: mime });
+        console.log(myFile);
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(myFile);
+        downloadLink.download = fileNames[i];
+        downloadLink.click();
+      }
     },
   },
 };

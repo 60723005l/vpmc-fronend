@@ -12,6 +12,17 @@
             @md-change="handleTranscriptFileSelect"
           />
         </md-field>
+        <button
+          v-if="mode === 'update'"
+          @click="
+            downloadFile(
+              parkSheetData.transcriptFile,
+              parkSheetData.transcriptFileName
+            )
+          "
+        >
+          點此下載檔案
+        </button>
       </div>
 
       <div class="step-container">
@@ -1175,6 +1186,22 @@ export default {
     },
     handleAssignMethodChange(pmethod) {
       this.parkSheetData.propertyAnalysis.assignMethod = pmethod;
+    },
+    downloadFile(fileBase64, fileName) {
+      let arr = fileBase64.split(","),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      const myFile = new File([u8arr], fileName, { type: mime });
+      console.log(myFile);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = URL.createObjectURL(myFile);
+      downloadLink.download = fileName;
+      downloadLink.click();
     },
   },
 };

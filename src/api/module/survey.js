@@ -12,8 +12,8 @@ export const listAllByUser = async () => {
 }
 
 export const listCountys = async () => {
-    const url = process.env.BASE_API_URL + "Utility/getCounty"
-    // const url = 'http://localhost:5000/api/Utility/getCounty'
+    // const url = process.env.BASE_API_URL + "Utility/getCounty"OIUYIYUI
+    const url = 'http://localhost:5000/api/Utility/getCounty'
     const headersList = {
         Accept: '*/*'
     }
@@ -25,8 +25,8 @@ export const listCountys = async () => {
 }
 
 export const listVillageByCounty = async (county) => {
-    const url = process.env.BASE_API_URL + `Utility/getTown?county=${county}`
-    // const url = `http://localhost:5000/api/Utility/getTown?county=${county}`
+    // const url = process.env.BASE_API_URL + `Utility/getTown?county=${county}`
+    const url = `http://localhost:5000/api/Utility/getTown?county=${county}`
     let headersList = {
         Accept: '*/*'
     }
@@ -45,8 +45,13 @@ export const createLandSheet = async (landSheet) => {
         Accept: '*/*',
         'Content-Type': 'application/x-www-form-urlencoded'
     }
-    const bodyContent = `token=${localStorage.getItem("token")}&assetType=${'建物'}&landMarkCounty=${landSheet.objectContent.landMark.county}&landMarkVillage=${landSheet.objectContent.landMark.village}&landMarkName=${landSheet.objectContent.landMark.name}&landMarkCode=${landSheet.objectContent.landMark.code}&buildMarkCounty=${landSheet.objectContent.buildMark.county}&buildMarkVillage=${landSheet.objectContent.buildMark.village}&buildMarkName=${landSheet.objectContent.buildMark.name}&buildMarkCode=${landSheet.objectContent.buildMark.code}&buildAddressCounty=${landSheet.objectContent.address.county}&buildAddressVillage=${landSheet.objectContent.address.village}&buildAddress=${landSheet.objectContent.address.address}&landArea=${landSheet.objectContent.landArea}&landRightsOwner=${landSheet.propertyAnalysis.rightOwner}&landRightsStatus=${landSheet.propertyAnalysis.rightStatus}&landRightsHolding=${landSheet.propertyAnalysis.rightHolding}&otherRights=${landSheet.propertyAnalysis.otherRights}&landUses=${landSheet.currentUsage.landUse}&BuildingCoverageRatio=${landSheet.currentUsage.coverageRatio}&floorAreaRatio=${landSheet.currentUsage.floorAreaRatio}&inspectionDate=${landSheet.surveyDates.inspectionDate}&valueOpinionDate=${landSheet.surveyDates.valueOpinionDate}&appraisalObject=${landSheet.appraisalObject.appraisalObject}&appraisalDescription=${landSheet.appraisalObject.appraisalDescription}&priceType=${landSheet.estimateCondition.priceType}&evaluationRightsType=${landSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${landSheet.estimateCondition.appraisalCondition}&surveyorName=${landSheet.surveyDescription.surveyorName}&surveyDescription=${landSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(landSheet.transcriptFile)}&photoFilesBase64=${encodeURIComponent(landSheet.photoFiles)}&transcriptFileName=${landSheet.transcriptFileName}&photoFilesName=${landSheet.photoFilesName}`;
-    console.log(bodyContent)
+    const photoFilesEncoded = []
+    for (let i = 0; i < landSheet.photoFiles.length; i++) {
+
+        photoFilesEncoded.push(encodeURIComponent(landSheet.photoFiles[i]))
+    }
+    const bodyContent = `token=${localStorage.getItem("token")}&assetType=${'建物'}&landMarkCounty=${landSheet.objectContent.landMark.county}&landMarkVillage=${landSheet.objectContent.landMark.village}&landMarkName=${landSheet.objectContent.landMark.name}&landMarkCode=${landSheet.objectContent.landMark.code}&buildMarkCounty=${landSheet.objectContent.buildMark.county}&buildMarkVillage=${landSheet.objectContent.buildMark.village}&buildMarkName=${landSheet.objectContent.buildMark.name}&buildMarkCode=${landSheet.objectContent.buildMark.code}&buildAddressCounty=${landSheet.objectContent.address.county}&buildAddressVillage=${landSheet.objectContent.address.village}&buildAddress=${landSheet.objectContent.address.address}&landArea=${landSheet.objectContent.landArea}&landRightsOwner=${landSheet.propertyAnalysis.rightOwner}&landRightsStatus=${landSheet.propertyAnalysis.rightStatus}&landRightsHolding=${landSheet.propertyAnalysis.rightHolding}&otherRights=${landSheet.propertyAnalysis.otherRights}&landUses=${landSheet.currentUsage.landUse}&BuildingCoverageRatio=${landSheet.currentUsage.coverageRatio}&floorAreaRatio=${landSheet.currentUsage.floorAreaRatio}&inspectionDate=${landSheet.surveyDates.inspectionDate}&valueOpinionDate=${landSheet.surveyDates.valueOpinionDate}&appraisalObject=${landSheet.appraisalObject.appraisalObject}&appraisalDescription=${landSheet.appraisalObject.appraisalDescription}&priceType=${landSheet.estimateCondition.priceType}&evaluationRightsType=${landSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${landSheet.estimateCondition.appraisalCondition}&surveyorName=${landSheet.surveyDescription.surveyorName}&surveyDescription=${landSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(landSheet.transcriptFile)}&photoFilesBase64=${JSON.stringify(photoFilesEncoded)}&transcriptFileName=${landSheet.transcriptFileName}&photoFilesName=${landSheet.photoFilesName}`;
+    // console.log(encodeURIComponent(landSheet.photoFiles))
     const response = await fetch(url, {
         method: "POST",
         body: bodyContent,
@@ -61,7 +66,12 @@ export const editLandSheet = async (landSheet, _sheetId) => {
         Accept: '*/*',
         'Content-Type': 'application/x-www-form-urlencoded'
     }
-    const bodyContent = `token=${localStorage.getItem("token")}&assetType=${'土地'}&landMarkCounty=${landSheet.objectContent.landMark.county}&landMarkVillage=${landSheet.objectContent.landMark.village}&landMarkName=${landSheet.objectContent.landMark.name}&landMarkCode=${landSheet.objectContent.landMark.code}&buildMarkCounty=${landSheet.objectContent.buildMark.county}&buildMarkVillage=${landSheet.objectContent.buildMark.village}&buildMarkName=${landSheet.objectContent.buildMark.name}&buildMarkCode=${landSheet.objectContent.buildMark.code}&buildAddressCounty=${landSheet.objectContent.address.county}&buildAddressVillage=${landSheet.objectContent.address.village}&buildAddress=${landSheet.objectContent.address.address}&landArea=${landSheet.objectContent.landArea}&landRightsOwner=${landSheet.propertyAnalysis.rightOwner}&landRightsStatus=${landSheet.propertyAnalysis.rightStatus}&landRightsHolding=${landSheet.propertyAnalysis.rightHolding}&otherRights=${landSheet.propertyAnalysis.otherRights}&landUses=${landSheet.currentUsage.landUse}&BuildingCoverageRatio=${landSheet.currentUsage.coverageRatio}&floorAreaRatio=${landSheet.currentUsage.floorAreaRatio}&inspectionDate=${landSheet.surveyDates.inspectionDate}&valueOpinionDate=${landSheet.surveyDates.valueOpinionDate}&appraisalObject=${landSheet.appraisalObject.appraisalObject}&appraisalDescription=${landSheet.appraisalObject.appraisalDescription}&priceType=${landSheet.estimateCondition.priceType}&evaluationRightsType=${landSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${landSheet.estimateCondition.appraisalCondition}&surveyorName=${landSheet.surveyDescription.surveyorName}&surveyDescription=${landSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(landSheet.transcriptFile)}&photoFilesBase64=${encodeURIComponent(landSheet.photoFiles)}&transcriptFileName=${landSheet.transcriptFileName}&photoFilesName=${landSheet.photoFilesName}&_sheetId=${_sheetId}`;
+    const photoFilesEncoded = []
+    for (let i = 0; i < landSheet.photoFiles.length; i++) {
+
+        photoFilesEncoded.push(encodeURIComponent(landSheet.photoFiles[i]))
+    }
+    const bodyContent = `token=${localStorage.getItem("token")}&assetType=${'土地'}&landMarkCounty=${landSheet.objectContent.landMark.county}&landMarkVillage=${landSheet.objectContent.landMark.village}&landMarkName=${landSheet.objectContent.landMark.name}&landMarkCode=${landSheet.objectContent.landMark.code}&buildMarkCounty=${landSheet.objectContent.buildMark.county}&buildMarkVillage=${landSheet.objectContent.buildMark.village}&buildMarkName=${landSheet.objectContent.buildMark.name}&buildMarkCode=${landSheet.objectContent.buildMark.code}&buildAddressCounty=${landSheet.objectContent.address.county}&buildAddressVillage=${landSheet.objectContent.address.village}&buildAddress=${landSheet.objectContent.address.address}&landArea=${landSheet.objectContent.landArea}&landRightsOwner=${landSheet.propertyAnalysis.rightOwner}&landRightsStatus=${landSheet.propertyAnalysis.rightStatus}&landRightsHolding=${landSheet.propertyAnalysis.rightHolding}&otherRights=${landSheet.propertyAnalysis.otherRights}&landUses=${landSheet.currentUsage.landUse}&BuildingCoverageRatio=${landSheet.currentUsage.coverageRatio}&floorAreaRatio=${landSheet.currentUsage.floorAreaRatio}&inspectionDate=${landSheet.surveyDates.inspectionDate}&valueOpinionDate=${landSheet.surveyDates.valueOpinionDate}&appraisalObject=${landSheet.appraisalObject.appraisalObject}&appraisalDescription=${landSheet.appraisalObject.appraisalDescription}&priceType=${landSheet.estimateCondition.priceType}&evaluationRightsType=${landSheet.estimateCondition.evaluationRightsType}&appraisalCondition=${landSheet.estimateCondition.appraisalCondition}&surveyorName=${landSheet.surveyDescription.surveyorName}&surveyDescription=${landSheet.surveyDescription.surveyDescription}&transcriptFileBase64=${encodeURIComponent(landSheet.transcriptFile)}&photoFilesBase64=${JSON.stringify(photoFilesEncoded)}&transcriptFileName=${landSheet.transcriptFileName}&photoFilesName=${landSheet.photoFilesName}&_sheetId=${_sheetId}`;
     const response = await fetch(url, {
         method: "PUT",
         body: bodyContent,
