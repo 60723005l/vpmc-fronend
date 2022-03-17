@@ -50,7 +50,7 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>2.土地標示：</p>
+                <p>1.土地標示：</p>
                 <div class="radio-set">
                   <select
                     class="input-short"
@@ -91,11 +91,13 @@
                     class="input-short"
                     type="text"
                     v-model="parkSheetData.objectContent.landMark.name"
+                    placeholder="段號"
                   />
                   <input
                     class="input-short"
                     type="text"
                     v-model="parkSheetData.objectContent.landMark.code"
+                    placeholder="地號"
                   />
                 </div>
               </div>
@@ -103,7 +105,7 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>3.建物標示：</p>
+                <p>2.建物標示：</p>
                 <div class="radio-set">
                   <select
                     class="input-short"
@@ -144,11 +146,13 @@
                     class="input-short"
                     type="text"
                     v-model="parkSheetData.objectContent.buildMark.name"
+                    placeholder="段名"
                   />
                   <input
                     class="input-short"
                     type="text"
                     v-model="parkSheetData.objectContent.buildMark.code"
+                    placeholder="地號"
                   />
                 </div>
               </div>
@@ -156,7 +160,7 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>4.建物門牌：</p>
+                <p>3.建物門牌：</p>
                 <div class="radio-set">
                   <select
                     class="input-short"
@@ -196,6 +200,7 @@
                     class="input-long"
                     type="text"
                     v-model="parkSheetData.objectContent.address.address"
+                    placeholder="輸入範例: 一段1巷1弄1號5樓"
                   />
                 </div>
               </div>
@@ -203,14 +208,24 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>5.土地面積：</p>
+                <p>4.土地面積：</p>
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     value=""
                     v-model="parkSheetData.objectContent.parkArea"
                   />
+                </div>
+                <div class="radio-set">
+                  <p>
+                    平方公尺, 核算為
+                    {{
+                      Math.round(
+                        (parkSheetData.objectContent.parkArea / 3.3) * 100
+                      ) / 100
+                    }}坪
+                  </p>
                 </div>
               </div>
             </div>
@@ -411,10 +426,11 @@
               <div class="label-set">
                 <p>2.他項權利：</p>
                 <div class="radio-set">
-                  <input
+                  <textarea
                     class="input-short"
                     type="text"
                     v-model="parkSheetData.propertyAnalysis.otherRights"
+                    placeholder="限200字"
                   />
                 </div>
               </div>
@@ -489,21 +505,21 @@
             <div class="content-row">
               <div class="label-set"><p>2.使用強度：</p></div>
               <div class="label-set">
-                <p>法定建蔽率：</p>
+                <p>法定建蔽率(%)：</p>
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="parkSheetData.currentUsage.BuildingCoverageRatio"
                   />
                 </div>
               </div>
               <div class="label-set">
-                <p>法定容積率：</p>
+                <p>法定容積率(%)：</p>
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="parkSheetData.currentUsage.floorAreaRatio"
                   />
                 </div>
@@ -551,7 +567,7 @@
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="parkSheetData.currentUsage.buildingUpFloor"
                   />
                 </div>
@@ -559,7 +575,7 @@
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="parkSheetData.currentUsage.buildingDownFloor"
                   />
                 </div>
@@ -571,7 +587,7 @@
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="parkSheetData.currentUsage.surveyFloor"
                   />
                 </div>
@@ -583,7 +599,7 @@
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="parkSheetData.currentUsage.parkWidth"
                   />
                 </div>
@@ -591,7 +607,7 @@
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="parkSheetData.currentUsage.parkHeight"
                   />
                 </div>
@@ -712,10 +728,11 @@
               <div class="label-set-aa">
                 <p>3.評價條件：</p>
                 <div class="radio-set">
-                  <input
+                  <textarea
                     class="input-long"
                     type="text"
                     v-model="parkSheetData.estimateCondition.appraisalCondition"
+                    placeholder="限200字"
                   />
                 </div>
               </div>
@@ -739,10 +756,11 @@
               <div class="label-set-aa">
                 <p>2.勘領說明事項：</p>
                 <div class="radio-set">
-                  <input
+                  <textarea
                     class="input-long"
                     type="text"
                     v-model="parkSheetData.surveyDescription.surveyDescription"
+                    placeholder="限200字"
                   />
                 </div>
               </div>
