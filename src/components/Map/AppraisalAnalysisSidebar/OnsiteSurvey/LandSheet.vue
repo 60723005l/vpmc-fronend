@@ -519,7 +519,7 @@
           </div>
         </div>
       </div>
-
+      <p class="status">{{ statusMsg }}</p>
       <button @click="handleSubmit" v-if="mode === 'edit'">新增</button>
       <button @click="handleUpdate" v-if="mode === 'update'">更新</button>
     </div>
@@ -560,6 +560,7 @@ export default {
   name: "LandSheet",
   data() {
     return {
+      statusMsg: "",
       optionName: "儲存庫",
       mode: "edit", // mode = 'edit' | 'list' | 'update'
       listData: [],
@@ -631,6 +632,7 @@ export default {
   methods: {
     handleBtnClick: (src) => {},
     async handleRepositoryClick() {
+      this.statusMsg = "";
       if (this.mode === "edit") {
         this.mode = "list";
         this.optionName = "新增";
@@ -816,6 +818,7 @@ export default {
       this.landSheetData.transcriptFileName = reader.fileName;
     },
     async handlePhotoFiles(photofiles) {
+      this.landSheetData.photoFiles = [];
       for (let i = 0; i < photofiles.length; i++) {
         const reader = await this.getBase64(photofiles[i]);
         this.landSheetData.photoFiles.push(reader.result);
@@ -824,26 +827,34 @@ export default {
       // console.log(this.landSheetData.photoFilesName);
     },
     async handleSubmit() {
+      this.statusMsg = "請求發送中...";
       const response = await API.Survey.createLandSheet(this.landSheetData);
-      if (response.status === 200) {
-        this.clearData();
-        alert("資料表新增成功");
-      } else {
-        alert("資料表新增失敗");
+      if (response) {
+        if (response.status === 200) {
+          this.clearData();
+          alert("資料表新增成功");
+        }
+        this.statusMsg = "請求發送成功";
+        return;
       }
+      this.statusMsg = "請求發送失敗，請聯繫Server team";
     },
     async handleUpdate() {
+      this.statusMsg = "請求發送中...";
       const response = await API.Survey.editLandSheet(
         this.landSheetData,
         this.editSheetId
       );
-      if (response.status === 200) {
-        this.clearData();
-        this.mode = "edit";
-        alert("資料表更新成功");
-      } else {
-        alert("資料表更新失敗");
+      if (response) {
+        if (response.status === 200) {
+          this.clearData();
+          this.mode = "edit";
+          alert("資料表更新成功");
+        }
+        this.statusMsg = "請求發送成功";
+        return;
       }
+      this.statusMsg = "請求發送失敗，請聯繫Server team";
     },
     getBase64(file) {
       return new Promise((resolve, reject) => {
@@ -934,6 +945,9 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    .status {
+      color: red;
+    }
     .step-container {
       width: 460px;
       padding: 5px;

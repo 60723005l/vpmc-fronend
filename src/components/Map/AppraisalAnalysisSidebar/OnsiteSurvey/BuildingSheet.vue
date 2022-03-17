@@ -637,14 +637,26 @@
                   <md-file
                     v-model="buildSheetData.photoFilesName"
                     @md-change="handlePhotoFiles"
+                    multiple
                   />
                 </md-field>
+                <button
+                  v-if="mode === 'update'"
+                  @click="
+                    downloadFiles(
+                      buildSheetData.photoFiles,
+                      buildSheetData.photoFilesName
+                    )
+                  "
+                >
+                  點此下載檔案
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-
+      <p class="status">{{ statusMsg }}</p>
       <button @click="handleSubmit" v-if="mode === 'edit'">新增</button>
       <button @click="handleUpdate" v-if="mode === 'update'">更新</button>
     </div>
@@ -685,6 +697,7 @@ export default {
   name: "BuildingSheet",
   data() {
     return {
+      statusMsg: "",
       optionName: "儲存庫",
       mode: "edit", // mode = 'edit' | 'list' | 'update'
       listData: [],
@@ -696,8 +709,8 @@ export default {
       buildSheetData: {
         transcriptFile: "",
         transcriptFileName: "",
-        photoFiles: "",
-        photoFilesName: "",
+        photoFiles: [],
+        photoFilesName: [],
         objectContent: {
           landMark: {
             county: "",
@@ -766,6 +779,7 @@ export default {
   methods: {
     handleBtnClick: (src) => {},
     async handleRepositoryClick() {
+      this.statusMsg = "";
       if (this.mode === "edit") {
         this.mode = "list";
         this.optionName = "新增";
@@ -977,34 +991,46 @@ export default {
       this.buildSheetData.transcriptFile = reader.result;
       this.buildSheetData.transcriptFileName = reader.fileName;
     },
-    async handlePhotoFiles(photofile) {
-      const reader = await this.getBase64(photofile[0]);
-      this.buildSheetData.photoFiles = reader.result;
-      this.buildSheetData.photoFilesName = reader.fileName;
+    async handlePhotoFiles(photofiles) {
+      this.buildSheetData.photoFiles = [];
+      for (let i = 0; i < photofiles.length; i++) {
+        const reader = await this.getBase64(photofiles[i]);
+        this.buildSheetData.photoFiles.push(reader.result);
+      }
+      // console.log(this.landSheetData.photoFiles);
+      // console.log(this.landSheetData.photoFilesName);
     },
     async handleSubmit() {
+      this.statusMsg = "請求發送中...";
       const response = await API.Survey.createBuildingSheet(
         this.buildSheetData
       );
-      if (response.status === 200) {
-        this.clearData();
-        alert("資料表新增成功");
-      } else {
-        alert("資料表新增失敗");
+      if (response) {
+        if (response.status === 200) {
+          this.clearData();
+          alert("資料表新增成功");
+        }
+        this.statusMsg = "請求發送成功";
+        return;
       }
+      this.statusMsg = "請求發送失敗，請聯繫Server team";
     },
     async handleUpdate() {
+      this.statusMsg = "請求發送中...";
       const response = await API.Survey.editBuildingSheet(
         this.buildSheetData,
         this.editSheetId
       );
-      if (response.status === 200) {
-        this.clearData();
-        this.mode = "edit";
-        alert("資料表更新成功");
-      } else {
-        alert("資料表更新失敗");
+      if (response) {
+        if (response.status === 200) {
+          this.clearData();
+          this.mode = "edit";
+          alert("資料表更新成功");
+        }
+        this.statusMsg = "請求發送成功";
+        return;
       }
+      this.statusMsg = "請求發送失敗，請聯繫Server team";
     },
     getBase64(file) {
       return new Promise((resolve, reject) => {
@@ -1034,6 +1060,24 @@ export default {
       downloadLink.href = URL.createObjectURL(myFile);
       downloadLink.download = fileName;
       downloadLink.click();
+    },
+    downloadFiles(fileBase64s, fileNames) {
+      for (let i = 0; i < fileBase64s.length; i++) {
+        let arr = fileBase64s[i].split(","),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]),
+          n = bstr.length,
+          u8arr = new Uint8Array(n);
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+        const myFile = new File([u8arr], fileNames[i], { type: mime });
+        console.log(myFile);
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(myFile);
+        downloadLink.download = fileNames[i];
+        downloadLink.click();
+      }
     },
   },
 };
@@ -1076,6 +1120,9 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    .status {
+      color: red;
+    }
     .step-container {
       width: 460px;
       padding: 5px;
