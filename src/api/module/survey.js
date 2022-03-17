@@ -12,8 +12,8 @@ export const listAllByUser = async () => {
 }
 
 export const listCountys = async () => {
-    // const url = process.env.BASE_API_URL + "Utility/getCounty"OIUYIYUI
-    const url = 'http://localhost:5000/api/Utility/getCounty'
+    const url = process.env.BASE_API_URL + "Utility/getCounty"
+    // const url = 'http://localhost:5000/api/Utility/getCounty'
     const headersList = {
         Accept: '*/*'
     }
@@ -25,8 +25,8 @@ export const listCountys = async () => {
 }
 
 export const listVillageByCounty = async (county) => {
-    // const url = process.env.BASE_API_URL + `Utility/getTown?county=${county}`
-    const url = `http://localhost:5000/api/Utility/getTown?county=${county}`
+    const url = process.env.BASE_API_URL + `Utility/getTown?county=${county}`
+    // const url = `http://localhost:5000/api/Utility/getTown?county=${county}`
     let headersList = {
         Accept: '*/*'
     }
