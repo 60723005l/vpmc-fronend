@@ -1015,8 +1015,13 @@ export default {
         if (response.status === 200) {
           this.clearData();
           alert("資料表新增成功");
+          this.statusMsg = "請求發送成功";
+          return;
+        } else if (response.status === 401) {
+          alert("權限不足");
+          this.statusMsg = "權限不足";
+          return;
         }
-        this.statusMsg = "請求發送成功";
         return;
       }
       this.statusMsg = "請求發送失敗，請聯繫Server team";
