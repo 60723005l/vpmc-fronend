@@ -1,6 +1,8 @@
 <template>
   <div class="sheet-container">
-    <button @click="handleRepositoryClick">{{ optionName }}</button>
+    <div class="submit-button" @click="handleRepositoryClick">
+      {{ optionName }}
+    </div>
 
     <div class="sheet-form" v-if="mode === 'edit' || mode === 'update'">
       <div class="step-container">
@@ -11,6 +13,17 @@
             v-model="landSheetData.transcriptFileName"
             @md-change="handleTranscriptFileSelect"
           />
+          <button
+            v-if="mode === 'update'"
+            @click="
+              downloadFile(
+                landSheetData.transcriptFile,
+                landSheetData.transcriptFileName
+              )
+            "
+          >
+            點此下載檔案
+          </button>
         </md-field>
       </div>
 
@@ -49,7 +62,7 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>2.土地標示：</p>
+                <p>1.土地標示：</p>
                 <div class="radio-set">
                   <select
                     class="input-short"
@@ -90,11 +103,13 @@
                     class="input-short"
                     type="text"
                     v-model="landSheetData.objectContent.landMark.name"
+                    placeholder="段名"
                   />
                   <input
                     class="input-short"
                     type="text"
                     v-model="landSheetData.objectContent.landMark.code"
+                    placeholder="地號"
                   />
                 </div>
               </div>
@@ -102,7 +117,7 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>3.建物標示：</p>
+                <p>2.建物標示：</p>
                 <div class="radio-set">
                   <select
                     class="input-short"
@@ -143,11 +158,13 @@
                     class="input-short"
                     type="text"
                     v-model="landSheetData.objectContent.buildMark.name"
+                    placeholder="段名"
                   />
                   <input
                     class="input-short"
                     type="text"
                     v-model="landSheetData.objectContent.buildMark.code"
+                    placeholder="地號"
                   />
                 </div>
               </div>
@@ -155,7 +172,7 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>4.建物門牌：</p>
+                <p>3.建物門牌：</p>
                 <div class="radio-set">
                   <select
                     class="input-short"
@@ -195,6 +212,7 @@
                     class="input-long"
                     type="text"
                     v-model="landSheetData.objectContent.address.address"
+                    placeholder="輸入範例: 一段1巷1弄1號5樓"
                   />
                 </div>
               </div>
@@ -202,14 +220,25 @@
 
             <div class="content-row">
               <div class="label-set">
-                <p>5.土地面積：</p>
+                <p>4.土地面積：</p>
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     value=""
                     v-model="landSheetData.objectContent.landArea"
+                    placeholder=""
                   />
+                </div>
+                <div class="radio-set">
+                  <p>
+                    平方公尺, 核算為
+                    {{
+                      Math.round(
+                        (landSheetData.objectContent.landArea / 3.3) * 100
+                      ) / 100
+                    }}坪
+                  </p>
                 </div>
               </div>
             </div>
@@ -255,10 +284,11 @@
               <div class="label-set">
                 <p>2.他項權利：</p>
                 <div class="radio-set">
-                  <input
+                  <textarea
                     class="input-short"
                     type="text"
                     v-model="landSheetData.propertyAnalysis.otherRights"
+                    placeholder="限200字"
                   />
                 </div>
               </div>
@@ -301,21 +331,21 @@
             <div class="content-row">
               <div class="label-set"><p>2.使用強度：</p></div>
               <div class="label-set">
-                <p>法定建蔽率：</p>
+                <p>法定建蔽率(%)：</p>
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="landSheetData.currentUsage.coverageRatio"
                   />
                 </div>
               </div>
               <div class="label-set">
-                <p>法定容積率：</p>
+                <p>法定容積率(%)：</p>
                 <div class="radio-set">
                   <input
                     class="input-short"
-                    type="text"
+                    type="number"
                     v-model="landSheetData.currentUsage.floorAreaRatio"
                   />
                 </div>
@@ -428,10 +458,11 @@
               <div class="label-set-aa">
                 <p>3.評價條件：</p>
                 <div class="radio-set">
-                  <input
+                  <textarea
                     class="input-long"
                     type="text"
                     v-model="landSheetData.estimateCondition.appraisalCondition"
+                    placeholder="限200字"
                   />
                 </div>
               </div>
@@ -455,10 +486,11 @@
               <div class="label-set-aa">
                 <p>2.勘領說明事項：</p>
                 <div class="radio-set">
-                  <input
+                  <textarea
                     class="input-long"
                     type="text"
                     v-model="landSheetData.surveyDescription.surveyDescription"
+                    placeholder="限200字"
                   />
                 </div>
               </div>
@@ -470,24 +502,40 @@
                   <md-file
                     v-model="landSheetData.photoFilesName"
                     @md-change="handlePhotoFiles"
+                    multiple
                   />
+                  <button
+                    v-if="mode === 'update'"
+                    @click="
+                      downloadFiles(
+                        landSheetData.photoFiles,
+                        landSheetData.photoFilesName
+                      )
+                    "
+                  >
+                    點此下載檔案
+                  </button>
                 </md-field>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <button @click="handleSubmit" v-if="mode === 'edit'">新增</button>
-      <button @click="handleUpdate" v-if="mode === 'update'">更新</button>
+      <p class="status">{{ statusMsg }}</p>
+      <div class="submit-button" @click="handleSubmit" v-if="mode === 'edit'">
+        新增
+      </div>
+      <div class="submit-button" @click="handleUpdate" v-if="mode === 'update'">
+        更新
+      </div>
     </div>
 
-    <div class="list-table" v-if="mode === 'list'">
+    <div class="list-table" v-show="mode === 'list'">
       <div v-if="listData.length === 0" class="not-found">
         <img :src="require('@/assets/emptyFolder.png')" />
         <p>尚未有已儲存之資料表</p>
       </div>
-      <table v-if="listData.length !== 0" class="data-table">
+      <table v-show="listData.length !== 0" class="data-table">
         <thead>
           <tr>
             <th>現勘表ID</th>
@@ -518,6 +566,7 @@ export default {
   name: "LandSheet",
   data() {
     return {
+      statusMsg: "",
       optionName: "儲存庫",
       mode: "edit", // mode = 'edit' | 'list' | 'update'
       listData: [],
@@ -529,8 +578,8 @@ export default {
       landSheetData: {
         transcriptFile: "",
         transcriptFileName: "",
-        photoFiles: "",
-        photoFilesName: "",
+        photoFiles: [],
+        photoFilesName: [],
         objectContent: {
           landMark: {
             county: "",
@@ -589,6 +638,7 @@ export default {
   methods: {
     handleBtnClick: (src) => {},
     async handleRepositoryClick() {
+      this.statusMsg = "";
       if (this.mode === "edit") {
         this.mode = "list";
         this.optionName = "新增";
@@ -606,8 +656,8 @@ export default {
       this.landSheetData = {
         transcriptFile: "",
         transcriptFileName: "",
-        photoFiles: "",
-        photoFilesName: "",
+        photoFiles: [],
+        photoFilesName: [],
         objectContent: {
           landMark: {
             county: "",
@@ -773,32 +823,49 @@ export default {
       this.landSheetData.transcriptFile = reader.result;
       this.landSheetData.transcriptFileName = reader.fileName;
     },
-    async handlePhotoFiles(photofile) {
-      const reader = await this.getBase64(photofile[0]);
-      this.landSheetData.photoFiles = reader.result;
-      this.landSheetData.photoFilesName = reader.fileName;
+    async handlePhotoFiles(photofiles) {
+      this.landSheetData.photoFiles = [];
+      for (let i = 0; i < photofiles.length; i++) {
+        const reader = await this.getBase64(photofiles[i]);
+        this.landSheetData.photoFiles.push(reader.result);
+      }
+      // console.log(this.landSheetData.photoFiles);
+      // console.log(this.landSheetData.photoFilesName);
     },
     async handleSubmit() {
+      this.statusMsg = "請求發送中...";
       const response = await API.Survey.createLandSheet(this.landSheetData);
-      if (response.status === 200) {
-        this.clearData();
-        alert("資料表新增成功");
-      } else {
-        alert("資料表新增失敗");
+      if (response) {
+        if (response.status === 200) {
+          this.clearData();
+          alert("資料表新增成功");
+          this.statusMsg = "請求發送成功";
+          return;
+        } else if (response.status === 401) {
+          alert("權限不足");
+          this.statusMsg = "權限不足";
+          return;
+        }
+        return;
       }
+      this.statusMsg = "請求發送失敗，請聯繫Server team";
     },
     async handleUpdate() {
+      this.statusMsg = "請求發送中...";
       const response = await API.Survey.editLandSheet(
         this.landSheetData,
         this.editSheetId
       );
-      if (response.status === 200) {
-        this.clearData();
-        this.mode = "edit";
-        alert("資料表更新成功");
-      } else {
-        alert("資料表更新失敗");
+      if (response) {
+        if (response.status === 200) {
+          this.clearData();
+          this.mode = "edit";
+          alert("資料表更新成功");
+        }
+        this.statusMsg = "請求發送成功";
+        return;
       }
+      this.statusMsg = "請求發送失敗，請聯繫Server team";
     },
     getBase64(file) {
       return new Promise((resolve, reject) => {
@@ -813,6 +880,40 @@ export default {
         };
       });
     },
+    downloadFile(fileBase64, fileName) {
+      let arr = fileBase64.split(","),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      const myFile = new File([u8arr], fileName, { type: mime });
+      console.log(myFile);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = URL.createObjectURL(myFile);
+      downloadLink.download = fileName;
+      downloadLink.click();
+    },
+    downloadFiles(fileBase64s, fileNames) {
+      for (let i = 0; i < fileBase64s.length; i++) {
+        let arr = fileBase64s[i].split(","),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]),
+          n = bstr.length,
+          u8arr = new Uint8Array(n);
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+        const myFile = new File([u8arr], fileNames[i], { type: mime });
+        console.log(myFile);
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(myFile);
+        downloadLink.download = fileNames[i];
+        downloadLink.click();
+      }
+    },
   },
 };
 </script>
@@ -822,7 +923,25 @@ export default {
   height: fit-content;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
+  .submit-button {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 2px;
+    border-radius: 5px;
+    border-color: rgb(0, 0, 0);
+    border-width: 1px;
+    border-style: solid;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    width: 100%;
+    height: fit-content;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(0, 0, 0);
+      color: white;
+      transition: 0.3s;
+    }
+  }
   .list-table {
     display: flex;
     justify-content: center;
@@ -851,14 +970,18 @@ export default {
   }
 
   .sheet-form {
-    height: fit-content;
+    height: 1650px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    .status {
+      color: red;
+    }
     .step-container {
-      width: 460px;
+      border-radius: 5px;
+      width: 100%;
       padding: 5px;
-      margin: 5px;
+      margin-top: 5px;
       border-width: 1px;
       border-style: solid;
       .section-container {
@@ -961,6 +1084,10 @@ export default {
                   width: 150px;
                   height: 25px;
                   background-color: rgb(255, 255, 255);
+                }
+                .input-otherRight {
+                  height: 100px;
+                  width: 260px;
                 }
               }
             }
