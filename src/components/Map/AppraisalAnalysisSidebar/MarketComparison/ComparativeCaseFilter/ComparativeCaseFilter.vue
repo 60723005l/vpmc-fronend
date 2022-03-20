@@ -1,8 +1,13 @@
 <template>
   <div>
-    <StepOne @submit="handleLatlngQuery"></StepOne>
+    <StepOne @submit="handleLatlngQuery" @onClear="handleLocationClear"></StepOne>
     <StepTwo @submit="handleSerialsQuery"></StepTwo>
-    <div class="filterResults">
+    <div class="filterResults" ref='filter-result'>
+      <div class="count" v-if="filterResults.length">
+        <p class="title">篩選筆數</p>
+        <p class="number">{{filterResults.length}}</p>
+        <p class="title">筆</p>
+      </div>
       <FilterResultCard
         v-for="(item, index) in filterResults"
         :key="index"
@@ -12,6 +17,7 @@
         :year="item.completionDate"
         :totalPrice="item.totalPrice"
         :unitPrice="item.unitPrice"
+        @click="flyToCardLocation(item.coordinateY, item.coordinateX)"
       />
     </div>
   </div>
@@ -31,6 +37,7 @@ export default {
   data() {
     return {
       targetedLatlng: undefined,
+      pinMark: undefined,
       bufferGraphic: undefined,
       mappedLayers: [],
       serials: [],
@@ -51,10 +58,10 @@ export default {
       this.createBufferGraphic(this.targetedLatlng, params.distance);
       this.asyncSerials = api.Estimate.getComparativeCases(params);
       this.serials = await this.asyncSerials;
-      console.log(this.serials);
       const layers = this.hightlightMatchSerialsPoints(this.serials);
       this.filterResults = layers.map((layer) => layer.properties || {});
-      console.log(this.filterResults);
+      const elem = this.$refs['filter-result']
+      setTimeout(() => elem.scrollIntoView(), 500)
     },
     hightlightMatchSerialsPoints(serials = []) {
       const viewer = Global.VPMC.viewer;
@@ -72,10 +79,7 @@ export default {
         marker.on("mouseout", function (ev) {
           ev.target.closePopup();
         });
-        marker.properties = { ...serial };
-        // const content = Object.keys(serial).map(
-        //   (key) => `<div>${key}: ${serial[key]}</div>`
-        // );
+        marker.properties = { ...serial }
         marker.bindPopup(`
                 <div>
                     ${
@@ -85,18 +89,10 @@ export default {
                     }萬/坪
                 </div>
                 `);
-        this.mappedLayers.push(marker);
-        viewer.addLayer(marker);
+        this.mappedLayers.push(marker)
+        viewer.addLayer(marker)
       });
-      return this.mappedLayers;
-      // const points = Global.VPMC.transactionDataStreaming.pointCluster.getLayers()
-      // this.mappedLayers = serials.map(serial => points.find(e => e.properties.id === serial.id))
-      // .filter(layer => layer !== undefined && layer.getLatLng().distanceTo(this.targetedLatlng) <= this.params.distance)
-
-      // this.mappedLayers.forEach(layer => layer.setStyle({
-      //     color: 'red'
-      // }))
-      // return this.mappedLayers
+      return this.mappedLayers
     },
     async handleStramingUpdate(points) {
       const layers = this.hightlightMatchSerialsPoints(this.serials || []);
@@ -106,7 +102,28 @@ export default {
      * @param {LatLng} latlng
      */
     async handleLatlngQuery(latlng) {
-      this.targetedLatlng = latlng;
+      const viewer = await Global.VPMC.asyncViewer
+      const marker = new Marker(
+        latlng,
+        {
+          icon: new Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+          })
+        }
+      )
+      await this.handleLocationClear()
+      this.targetedLatlng = latlng
+      this.pinMark = marker
+      viewer.addLayer(marker)
+    },
+    async handleLocationClear() {
+      const viewer = await Global.VPMC.asyncViewer
+      this.pinMark && viewer.removeLayer(this.pinMark)
     },
     async createBufferGraphic(latlng, distance) {
       const viewer = await Global.VPMC.asyncViewer;
@@ -123,6 +140,27 @@ export default {
       this.bufferGraphic = buffer;
       viewer.addLayer(buffer);
     },
+    async flyToCardLocation (x, y) {
+      const viewer = await Global.VPMC.asyncViewer
+      const [lng, lat] = projector(EPSG[3826], EPSG[4326], {x, y})
+      viewer.flyTo(latLng(lat, lng), 19)
+    }
   },
 };
 </script>
+<style lang="scss" scoped>
+.count{
+  font-size: 20px;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  .title{
+    margin-right: 5px;
+  }
+  .number{
+    font-size: 25px;
+    color: red;
+    padding: 8px;
+  }
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="FilterResultCard">
+  <div class="FilterResultCard" @click="$emit('click')">
     <div class="title">{{name.replace('管理委員會', '')}}</div>
     <div class="subtitle">
       <span class="subitem">{{type}}</span>
@@ -31,7 +31,7 @@ export default {
       default: '無類別'
     },
     year: {
-      type: Number,
+      type: String,
       default: NaN
     },
     unitNumber: {
