@@ -612,8 +612,8 @@ export default {
           floorAreaRatio: 0,
         },
         surveyDates: {
-          inspectionDate: undefined,
-          valueOpinionDate: undefined,
+          inspectionDate: "2022-03-01",
+          valueOpinionDate: "2022-03-01",
         },
         appraisalObject: {
           appraisalObject: "",
@@ -690,8 +690,8 @@ export default {
           floorAreaRatio: 0,
         },
         surveyDates: {
-          inspectionDate: undefined,
-          valueOpinionDate: undefined,
+          inspectionDate: "2022-03-01",
+          valueOpinionDate: "2022-03-01",
         },
         appraisalObject: {
           appraisalObject: "",
@@ -833,6 +833,7 @@ export default {
       // console.log(this.landSheetData.photoFilesName);
     },
     async handleSubmit() {
+      console.log(this.landSheetData);
       this.statusMsg = "請求發送中...";
       const response = await API.Survey.createLandSheet(this.landSheetData);
       if (response) {

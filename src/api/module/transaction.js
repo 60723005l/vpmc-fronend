@@ -158,6 +158,47 @@ export const getCommittee = async (params) => {
     }
 }
 
+/**@interface */
+export const GetByExtenResp = [{
+    "id": "RPOOMLKKKHPFFCH87CA",
+    "nonMetroLandUseDistrict": "鄉村區",
+    "landTransactionAmount": 1,
+    "buildingTransactionAmount": 1,
+    "parkTransactionAmount": 1,
+    "totalFloorNumber": 7,
+    "buildingMaterial": "鋼筋混凝土造",
+    "transactionSign": "房地(土地+建物)+車位",
+    "nonMetroLandUse": "乙種建築用地",
+    "transactionDate": "1081207",
+    "completionDate": "951129",
+    "shiftingLevel": "三層",
+    "parsedShiftingLevel": 3,
+    "buildingState": "華廈(10層含以下有電梯)",
+    "parkCategory": "坡道平面",
+    "mainUse": "住家用",
+    "address": "桃園市大溪區齋明街８號三樓",
+    "landUse": "nan",
+    "town": "大溪區",
+    "note": "含增建或未登記建物。；",
+    "buildingShiftingArea": 145.7,
+    "landShiftingArea": 33.7,
+    "mainBuildingArea": 79.34,
+    "parkShiftingArea": 0,
+    "subBuildingArea": 3.86,
+    "parkTotalPrice": 0,
+    "belconyArea": 9.5,
+    "totalPrice": 5750000,
+    "unitPrice": 39464.652,
+    "bathNumber": 2,
+    "bedNumber": 3,
+    "hallNumber": 2,
+    "hasManageOrganization": "TRUE",
+    "hasCompartmented": "TRUE",
+    "hasElevator": "FALSE",
+    "coordinateX": 2753096,
+    "coordinateY": 277317
+}]
+
 /**
  * 
  * @param {{ xmin: Number, xmax: Number, ymin: Number, ymax: Number }} params 

@@ -901,7 +901,7 @@ export default {
           floorAreaRatio: 0,
           buildingUsage: "",
           buildingStructure: "",
-          buildingFinishDate: "",
+          buildingFinishDate: "2022-03-01",
           buildingUpFloor: 0,
           buildingDownFloor: 0,
           surveyFloor: 0,
@@ -910,8 +910,8 @@ export default {
           allowSuv: false,
         },
         surveyDates: {
-          inspectionDate: undefined,
-          valueOpinionDate: undefined,
+          inspectionDate: "2022-03-01",
+          valueOpinionDate: "2022-03-01",
         },
         appraisalObject: {
           appraisalObject: "",
@@ -994,7 +994,7 @@ export default {
           floorAreaRatio: 0,
           buildingUsage: "",
           buildingStructure: "",
-          buildingFinishDate: "",
+          buildingFinishDate: "2022-03-01",
           buildingUpFloor: 0,
           buildingDownFloor: 0,
           surveyFloor: 0,
@@ -1003,8 +1003,8 @@ export default {
           allowSuv: false,
         },
         surveyDates: {
-          inspectionDate: undefined,
-          valueOpinionDate: undefined,
+          inspectionDate: "2022-03-01",
+          valueOpinionDate: "2022-03-01",
         },
         appraisalObject: {
           appraisalObject: "",

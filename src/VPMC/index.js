@@ -2,6 +2,7 @@ import LayerControl from "./module/LayerControl";
 import ViewerPromise from "./module/ViewerPromise";
 import Leaflet, { Map } from 'leaflet'
 import TransactionDataStreaming from "./module/TransactionDataStreaming";
+import TransactionDataBufferQuery from "./module/TransactionDataBufferQuery";
 import { defaults } from "lodash";
 
 /**
@@ -19,6 +20,7 @@ class VPMC
         this.layerControl = undefined
         this.viewerPromise = new ViewerPromise()
         this.transactionDataStreaming = undefined
+        this.transactionDataBufferQuery = undefined
     }
     /**
      * @returns {Map}
@@ -37,6 +39,7 @@ class VPMC
         this.viewer = Leaflet.map( this.id, _option)
         this.layerControl = new LayerControl(this.viewer)
         this.transactionDataStreaming = new TransactionDataStreaming(this.viewer)
+        this.transactionDataBufferQuery = new TransactionDataBufferQuery(this.viewer, 500)
         this.viewerPromise.setViewer(this.viewer)
         return this.viewer
     }
