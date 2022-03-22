@@ -1,8 +1,9 @@
-import { Map, latLng, Marker, markerClusterGroup, featureGroup, CircleMarker } from "leaflet"
-// import markercluster from 'leaflet.markercluster'
+import { Map, latLng, featureGroup, CircleMarker } from "leaflet"
 import 'leaflet.markercluster/dist/MarkerCluster.css'
+import { debounce } from "lodash"
 import Event from "../../utilities/Event"
 import projector, { EPSG } from "./projector"
+// import TransactionDataBufferQuery from "./TransactionDataBufferQuery"
 
 class TransactionDataStreaming {
   /**
@@ -20,6 +21,8 @@ class TransactionDataStreaming {
     this.handleDragEnd = this.handleDragEnd.bind(this)
     this.handleDragStart = this.handleDragStart.bind(this)
     this.updateEvent = new Event()
+    this.beforeUpdateEvent = new Event()
+    // this.bufferQuery = new TransactionDataBufferQuery(viewer, 500)
 
     this.viewer.addLayer(this.pointCluster)
   }
@@ -31,18 +34,20 @@ class TransactionDataStreaming {
   }
   start () {
     window.TTT = this
-    this.viewer.addEventListener('dragend', this.handleDragEnd)
-    this.viewer.addEventListener('zoomend', this.handleDragEnd)
+    this.viewer.addEventListener('dragend', debounce(this.handleDragEnd, 500, { maxWait: 500, leading: true, trailing: false,}))
+    this.viewer.addEventListener('zoomend', debounce(this.handleDragEnd, 500, { maxWait: 500, leading: true, trailing: false,}))
   }
   
   async handleDragEnd (event) {
+    this.beforeUpdateEvent.raise()
     this.pointCluster.getLayers().forEach(layer => this.pointCluster.removeLayer(layer))
     if (this.viewer.getZoom() >= this.maxZoom) {
       this.rawdata = await this.fetchDataFromBound()
       const points = this.createPointsFromRawData()
       points.forEach(point => this.pointCluster.addLayer(point))
+      // this.bufferQuery.query(points)
     }
-    this.updateEvent.raise(this.pointCluster.getLayers())
+    this.updateEvent.raise(this.pointCluster.getLayers())    
   }
 
   handleDragStart (event) {
@@ -59,8 +64,6 @@ class TransactionDataStreaming {
     const [xmax, ymax] = projector(EPSG[4326], EPSG[3826], {
       x: bound.getEast(), y: bound.getNorth()
     })
-    // const visualBound = polygon([bound.getSouthWest(), bound.getNorthWest(), bound.getNorthEast(), bound.getSouthEast()])
-    // this.viewer.addLayer(visualBound)
     return await this.apiFactory({
       xmax: Math.floor(xmax),
       xmin: Math.floor(xmin),
@@ -74,12 +77,12 @@ class TransactionDataStreaming {
       const [x, y] = projector(EPSG[3826], EPSG[4326], { x: data.coordinateY, y: data.coordinateX })
       const marker =  new CircleMarker(latLng(y, x))
       marker.properties = {...data}
-      const content = Object.keys(data).map(key => (`<div>${key}: ${data[key]}</div>`))
-      marker.bindPopup(`
-      <div>
-        ${content.join("")}
-      </div>
-      `)
+      // const content = Object.keys(data).map(key => (`<div>${key}: ${data[key]}</div>`))
+      // marker.bindPopup(`
+      // <div>
+      //   ${content.join("")}
+      // </div>
+      // `)
       return marker
     })
     

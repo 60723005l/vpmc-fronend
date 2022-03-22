@@ -55,6 +55,7 @@
             </md-card-content>
 
             <md-card-actions>
+                <md-button type="button" class="vpmc-btn" @click="handleClear">清除</md-button>
                 <md-button type="submit" class="vpmc-btn" @click="handleSubmit">定位執行</md-button>
             </md-card-actions>
         </md-card>
@@ -77,17 +78,21 @@ class FormItem {
 
 const modeMap = { latlng: 'latlng', address: 'address', landcode: 'landcode', serialnum: 'serialnum' }
 
+const getDefaultData = () => ({
+    modeMap,
+    mode: new FormItem('mode', modeMap.latlng),
+    landcode: new FormItem('landcode', undefined),
+    address: new FormItem('address', undefined),
+    lng: new FormItem('經度', 121.2139),
+    lat: new FormItem('緯度', 25.01969),
+    serialnum: new FormItem('serialnum', undefined),
+})
+
 export default {
     name: 'StepOne',
     data() {
         return {
-            modeMap,
-            mode: new FormItem('mode', modeMap.latlng),
-            landcode: new FormItem('landcode', undefined),
-            address: new FormItem('address', undefined),
-            lng: new FormItem('經度', 121.2139),
-            lat: new FormItem('緯度', 25.01969),
-            serialnum: new FormItem('serialnum', undefined),
+            ...getDefaultData()
         }
     },
     methods: {
@@ -117,6 +122,16 @@ export default {
             if (!latlng) return
             viewer.flyTo(latlng, 17)
             this.$emit('submit', latlng)
+        },
+        handleClear() {
+            this.mode = new FormItem('mode', modeMap.latlng)
+            this.landcode = new FormItem('landcode', undefined)
+            this.address = new FormItem('address', undefined)
+            this.lng = new FormItem('經度', undefined)
+            this.lat = new FormItem('緯度', undefined)
+            this.serialnum = new FormItem('serialnum', undefined)
+
+            this.$emit('onClear')
         }
     }
 }

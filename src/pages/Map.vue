@@ -10,6 +10,7 @@
             <WidgetSidebar/>
             <AppraisalAnalysisSidebar/>
             <StatsAndQuoteSidebar/>
+            <CustomMapPopup />
             <!-- <Sidebar 
                 :basemaps="basemaps"
                 :side="'left'" 
@@ -23,33 +24,19 @@
 import LeafletViewer from "@/components/LeafletViewer"
 import Banner from "@/components/Map/Banner"
 import SubBanner from "@/components/Map/SubBanner"
-// import Sidebar from "@/components/basicUI/Sidebar"
 import projector, { EPSG } from '../VPMC/module/projector'
-import TransactionDataStreaming from '../VPMC/module/TransactionDataStreaming'
-import { Map } from "leaflet"
 
 import api from "../api"
 import Global from "../global"
 import Layer, { LayerInfo } from "../VPMC/module/Layer"
 import Type from '../VPMC/module/Layer/Type'
 import Event from '../utilities/Event'
+import CustomMapPopup from "../components/CustomMapPopup"
+
 
 window.EPSG = EPSG
 window.projector = projector
 window.E = Event
-
-const handleStreamingUpdate = (points) => {
-    // console.log(points)
-}
-
-const readTransData = async () => {
-    await Global.VPMC.asyncViewer
-    const streaming = Global.VPMC.transactionDataStreaming
-    streaming.apiFactory = api.Transaction.getByExtent
-    streaming.updateEvent.addEventListener(handleStreamingUpdate)
-    streaming.start()
-    return streaming
-}
 
 export default {
     name: "Map",
@@ -63,11 +50,12 @@ export default {
         },
     created()
         {
+            console.log(this)
             this.setDefaultLayers()
         },
     async mounted()
         {            
-            await readTransData()
+            await this.readTransData()
         },
     beforeDestroy () {
         if (Global.VPMC.transactionDataStreaming) {
@@ -85,6 +73,31 @@ export default {
         },
     methods:
         {
+            async readTransData () {
+                await Global.VPMC.asyncViewer
+                const streaming = Global.VPMC.transactionDataStreaming
+                streaming.apiFactory = api.Transaction.getByExtent
+                streaming.updateEvent.addEventListener(this.handleStreamingUpdate)
+                streaming.beforeUpdateEvent.addEventListener(this.handleStreamingBeforeUpdate)
+                streaming.start()
+                return streaming
+            },
+            handleStreamingBeforeUpdate: async () => {
+                await Global.VPMC.asyncViewer
+                Global.VPMC.transactionDataBufferQuery.createBufferGraphic(Global.VPMC.viewer.getCenter())
+            },
+            async handleStreamingUpdate (points) {
+                await Global.VPMC.asyncViewer
+                const bufferQuery = Global.VPMC.transactionDataBufferQuery
+                const targetLayers = bufferQuery.query(points)
+                const bus = this.$bus
+                targetLayers.forEach(layer => {
+                    layer.on('click', () => {
+                        bus.$emit('map-popup:msg', layer)
+                        layer.openPopup()
+                    })
+                })
+            },
             handleCollaps()
             {
                 this.$store.commit('widgetSidebar/open', false)
@@ -133,6 +146,7 @@ export default {
             LeafletViewer,
             Banner,
             SubBanner,
+            CustomMapPopup,
             WidgetSidebar: async () => import('../components/Map/WidgetSidebar/WidgetSidebar.vue'),
             AppraisalAnalysisSidebar: async () => import('../components/Map/AppraisalAnalysisSidebar/AppraisalAnalysisSidebar.vue'),
             StatsAndQuoteSidebar: async () => import('../components/Map/StatsAndQuoteSidebar/StatsAndQuoteSidebar.vue')
