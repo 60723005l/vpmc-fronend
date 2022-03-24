@@ -83,7 +83,10 @@
                                                 <div class="text-item">資產類型：</div>
                                             </div>
                                             <fieldset class="item-group-content dens-fieldset col-item" :disabled="!assert.enable">
-                                                <div class="row-item">
+                                                <select v-model="assert.vm" >
+                                                    <option v-for="(assertType, index) in assert.datas" :key="index" :value="assertType.value">{{assertType.name}}</option>
+                                                </select>
+                                                <!-- <div class="row-item">
                                                     <input type="radio" v-model="assert.mode" :value="MODE.NOLIMIT"/>
                                                     <div class="text-item">不限</div>
                                                 </div>
@@ -92,7 +95,7 @@
                                                     <select v-model="assert.vm" :disabled="assert.mode !== MODE.MANUAL">
                                                         <option v-for="(assertType, index) in assert.datas" :key="index" :value="assertType">{{assertType}}</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                             </fieldset>
                                         </div>
                                     </div>
@@ -189,7 +192,17 @@ export default {
             county: new FormItem('縣市', undefined, []),
             town: new FormItem('鄉鎮市', '大園區', []),
             distance: new FormItem('距離', 100),
-            assert: new FormItem('assert', '華廈', ['公寓', '住宅大樓', '華廈', '套房', '店面'], MODE.NOLIMIT),
+            assert: new FormItem('assert', '華廈', [
+                    {name: '不限', value: MODE.NOLIMIT},
+                    {name: '住宅（公寓）', value: '公寓'},
+                    {name: '住宅（華廈）', value: '華廈'},
+                    {name: '住宅（大樓）', value: '住宅大樓'},
+                    {name: '住宅（透天厝）', value: '透天厝'},
+                    {name: '土地', value: '土地'},
+                    {name: '店面', value: '店面'},
+                    {name: '辦公商業大樓', value: '辦公商業大樓'},
+                    {name: '車位', value: '車位'}
+                ], MODE.NOLIMIT),
             transTime: new FormItem(
                 'transTime',
                 {

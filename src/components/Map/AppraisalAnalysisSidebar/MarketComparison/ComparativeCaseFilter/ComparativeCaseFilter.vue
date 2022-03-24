@@ -57,7 +57,15 @@ export default {
       this.params = { ...params };
       this.createBufferGraphic(this.targetedLatlng, params.distance);
       this.asyncSerials = api.Estimate.getComparativeCases(params);
-      this.serials = await this.asyncSerials;
+      const compareCases = await this.asyncSerials;
+      this.serials = compareCases.filter(serial => {
+        const [x, y] = projector(EPSG[3826], EPSG[4326], {
+          x: serial.coordinateY,
+          y: serial.coordinateX,
+        })
+        return latLng(y, x).distanceTo(this.targetedLatlng) <= params.distance
+      })
+      console.log(this.serials.length)
       const layers = this.hightlightMatchSerialsPoints(this.serials);
       this.filterResults = layers.map((layer) => layer.properties || {});
       const elem = this.$refs['filter-result']
@@ -66,6 +74,7 @@ export default {
     hightlightMatchSerialsPoints(serials = []) {
       const viewer = Global.VPMC.viewer;
       this.mappedLayers.forEach((layer) => viewer.removeLayer(layer));
+      this.mappedLayers = []
       serials.forEach((serial) => {
         const [x, y] = projector(EPSG[3826], EPSG[4326], {
           x: serial.coordinateY,
