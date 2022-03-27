@@ -1,5 +1,5 @@
 <template>
-    <md-tabs class="custom-tabs">
+    <md-tabs class="custom-tabs" md-active-tab="比較案例篩選(人工/智慧)">
       <md-tab v-for="(tab, index) in tabs" :key="index" :id="tab.name" :md-label="tab.name">
           <component :is="tab.comp_name"></component>
       </md-tab>
