@@ -1,8 +1,8 @@
 <template>
-    <div>LandDevSmartAnalysis</div>
+  <div>此功能尚未開發</div>
 </template>
 <script>
 export default {
-    name: 'LandDevSmartAnalysis'
-}
+  name: "LandDevSmartAnalysis",
+};
 </script>

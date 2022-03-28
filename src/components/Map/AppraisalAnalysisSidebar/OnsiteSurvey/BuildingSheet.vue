@@ -999,6 +999,15 @@ export default {
     },
     async handlePhotoFiles(photofiles) {
       this.buildSheetData.photoFiles = [];
+      if (photofiles.length > 4) {
+        this.buildSheetData.photoFiles = [];
+        setTimeout(() => {
+          this.buildSheetData.photoFilesName = "";
+        }, 3000);
+        alert("照片限制4張為上限");
+        return;
+      }
+
       for (let i = 0; i < photofiles.length; i++) {
         const reader = await this.getBase64(photofiles[i]);
         this.buildSheetData.photoFiles.push(reader.result);
