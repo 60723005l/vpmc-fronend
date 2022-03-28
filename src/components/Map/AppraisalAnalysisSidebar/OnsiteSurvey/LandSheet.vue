@@ -827,7 +827,9 @@ export default {
       this.landSheetData.photoFiles = [];
       if (photofiles.length > 4) {
         this.landSheetData.photoFiles = [];
-        this.landSheetData.photoFilesName = [];
+        setTimeout(() => {
+          this.landSheetData.photoFilesName = "";
+        }, 3000);
         alert("照片限制4張為上限");
         return;
       }
