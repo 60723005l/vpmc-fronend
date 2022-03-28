@@ -80,7 +80,7 @@
                         class="item-group-content dens-fieldset col-item"
                         :disabled="!transTime.enable"
                       >
-                        <div class="row-item">
+                        <!-- <div class="row-item">
                           <input
                             type="radio"
                             v-model="transTime.mode"
@@ -93,18 +93,15 @@
                             "
                           />
                           <div class="text-item">不限</div>
-                        </div>
+                        </div> -->
                         <div class="row-item">
-                          <input
+                          <!-- <input
                             type="radio"
                             v-model="transTime.mode"
                             :value="MODE.MANUAL"
-                          />
-                          <fieldset
-                            class="dens-fieldset row-item"
-                            :disabled="transTime.mode !== MODE.MANUAL"
-                          >
-                            <!-- <input
+                          /> -->
+                          <fieldset class="dens-fieldset row-item">
+                            <!-- <input  :disabled="transTime.mode !== MODE.MANUAL"
                               class="form-item"
                               type="number"
                               min="1911"
@@ -329,6 +326,7 @@ export default {
         // startDate: new FormItem("startDate", 2010),
         // endDate: new FormItem("endDate", 2022),
         dateDelta: new FormItem("dateDelta", 2022, [
+          { name: "不限", value: 2017 },
           { name: "0", value: 2022 },
           { name: "1", value: 2021 },
           { name: "2", value: 2020 },
