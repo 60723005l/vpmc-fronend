@@ -130,6 +130,7 @@
                               </option>
                             </select>
                           </fieldset>
+                          年內
                         </div>
                       </fieldset>
                     </div>
@@ -175,6 +176,19 @@
                         <div class="text-item">面積坪數：</div>
                       </div>
                       <fieldset
+                        class="item-group-content dens-fieldset col-item"
+                      >
+                        <select v-model="unitArea.vm">
+                          <option
+                            v-for="(data, index) in unitArea.datas"
+                            :value="data.value"
+                            :key="index"
+                          >
+                            {{ data.name }}
+                          </option>
+                        </select>
+                      </fieldset>
+                      <!-- <fieldset
                         class="item-group-content dens-fieldset col-item"
                         :disabled="!unitArea.enable"
                       >
@@ -222,7 +236,7 @@
                             <div class="text-item">坪</div>
                           </fieldset>
                         </div>
-                      </fieldset>
+                      </fieldset> -->
                     </div>
                   </div>
                   <!-- ------------------ -->
@@ -258,6 +272,7 @@
                             v-model="age.vm"
                             :disabled="age.mode !== MODE.MANUAL"
                           />
+                          年
                         </div>
                       </fieldset>
                     </div>
@@ -337,13 +352,17 @@ export default {
       }),
       unitArea: new FormItem(
         "unitArea",
-        {
-          minArea: new FormItem("minArea", 0),
-          maxArea: new FormItem("maxArea", 1000),
-        },
+        "0-10000",
+        [
+          { name: "不限", value: "0-10000" },
+          { name: "小於25坪", value: "0-25" },
+          { name: "25-50坪", value: "25-50" },
+          { name: "50-80坪", value: "50-80" },
+          { name: "大於80坪", value: "80-10000" },
+        ],
         MODE.MANUAL
       ),
-      age: new FormItem("age", 50),
+      age: new FormItem("age", 5),
     };
   },
   async created() {
@@ -363,8 +382,7 @@ export default {
           //   String(this.transTime.vm.endDate.vm) +
           "2022/01/01",
         assertType: this.assert.vm,
-        totalUnitsInterval:
-          this.unitArea.vm.minArea.vm + "-" + this.unitArea.vm.maxArea.vm,
+        totalUnitsInterval: this.unitArea.vm,
         age: this.age.vm,
         distance: this.distance.vm,
       };

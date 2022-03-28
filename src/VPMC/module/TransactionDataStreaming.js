@@ -11,7 +11,7 @@ class TransactionDataStreaming {
    * @param {Map} viewer 
    * @param {(params: { xmin: Number, xmax: Number, ymin: Number, ymax: Number }) => Promise<{}>} apiFactory 
    */
-  constructor (viewer, apiFactory) {
+  constructor(viewer, apiFactory) {
     /**@type {Map} */
     this.viewer = viewer
     this.apiFactory = apiFactory
@@ -34,10 +34,10 @@ class TransactionDataStreaming {
   }
   start () {
     window.TTT = this
-    this.viewer.addEventListener('dragend', debounce(this.handleDragEnd, 500, { maxWait: 500, leading: true, trailing: false,}))
-    this.viewer.addEventListener('zoomend', debounce(this.handleDragEnd, 500, { maxWait: 500, leading: true, trailing: false,}))
+    this.viewer.addEventListener('dragend', debounce(this.handleDragEnd, 500, { maxWait: 500, leading: true, trailing: false, }))
+    this.viewer.addEventListener('zoomend', debounce(this.handleDragEnd, 500, { maxWait: 500, leading: true, trailing: false, }))
   }
-  
+
   async handleDragEnd (event) {
     this.beforeUpdateEvent.raise()
     this.pointCluster.getLayers().forEach(layer => this.pointCluster.removeLayer(layer))
@@ -47,7 +47,7 @@ class TransactionDataStreaming {
       points.forEach(point => this.pointCluster.addLayer(point))
       // this.bufferQuery.query(points)
     }
-    this.updateEvent.raise(this.pointCluster.getLayers())    
+    this.updateEvent.raise(this.pointCluster.getLayers())
   }
 
   handleDragStart (event) {
@@ -57,7 +57,7 @@ class TransactionDataStreaming {
 
   async fetchDataFromBound () {
     const bound = this.viewer.getBounds()
-    
+
     const [xmin, ymin] = projector(EPSG[4326], EPSG[3826], {
       x: bound.getWest(), y: bound.getSouth()
     })
@@ -72,11 +72,14 @@ class TransactionDataStreaming {
     })
   }
 
-  createPointsFromRawData() {
+  createPointsFromRawData () {
     return this.rawdata.map(data => {
       const [x, y] = projector(EPSG[3826], EPSG[4326], { x: data.coordinateY, y: data.coordinateX })
-      const marker =  new CircleMarker(latLng(y, x), {  radius: 3 })
-      marker.properties = {...data}
+      const marker = new CircleMarker(latLng(y, x), { radius: 3 })
+      marker.setStyle({
+        color: 'orange'
+      })
+      marker.properties = { ...data }
       // const content = Object.keys(data).map(key => (`<div>${key}: ${data[key]}</div>`))
       // marker.bindPopup(`
       // <div>
@@ -85,7 +88,7 @@ class TransactionDataStreaming {
       // `)
       return marker
     })
-    
+
   }
 }
 
