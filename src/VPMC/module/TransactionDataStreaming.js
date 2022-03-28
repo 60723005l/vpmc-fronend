@@ -75,7 +75,7 @@ class TransactionDataStreaming {
   createPointsFromRawData() {
     return this.rawdata.map(data => {
       const [x, y] = projector(EPSG[3826], EPSG[4326], { x: data.coordinateY, y: data.coordinateX })
-      const marker =  new CircleMarker(latLng(y, x))
+      const marker =  new CircleMarker(latLng(y, x), {  radius: 3 })
       marker.properties = {...data}
       // const content = Object.keys(data).map(key => (`<div>${key}: ${data[key]}</div>`))
       // marker.bindPopup(`

@@ -10,14 +10,12 @@
             <WidgetSidebar/>
             <AppraisalAnalysisSidebar/>
             <StatsAndQuoteSidebar/>
-            <CustomMapPopup />
             <!-- <Sidebar 
                 :basemaps="basemaps"
                 :side="'left'" 
                 :open="$store.state.widgetSidebar.open"></Sidebar> -->
         </div>
-        
-        
+        <div class="hidden"><CustomMapPopup /></div>
     </div>
 </template>
 <script>
@@ -181,5 +179,10 @@ export default {
     background: cadetblue;
     height: 100%;
     position: relative;
+}
+.hidden{
+    height: 0;
+    width: 0;
+    overflow: hidden;
 }
 </style>

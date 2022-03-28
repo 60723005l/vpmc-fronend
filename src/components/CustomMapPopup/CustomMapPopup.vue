@@ -6,16 +6,16 @@
                 <li>類型：{{payload.buildingState.buildingState}}</li>
                 <li>成交坪數：{{Math.floor(payload.buildingState.landShiftingArea / 3.3 * 100) / 100}}坪</li>
                 <li>成交價格：{{Math.floor(payload.buildingState.totalPrice / 10000 * 100) / 100}}萬元</li>
-                <li>成交單價：{{Math.floor((payload.buildingState.unitPrice / 3.3) / 10000 * 100) / 100}}萬元/坪</li>
+                <li>成交單價：{{Math.floor((payload.buildingState.unitPrice * 3.3) / 10000 * 100) / 100}}萬元/坪</li>
                 <li>成交時間：{{transactionDate}}</li>
             </div>
         </div>
         <div class="group-props">
             <div class="title">區域成交行情</div>
             <div class="content">
-                <li>近一年成交均價：{{Math.floor((payload.queryState.lastYearTransUnitPrice / 3.3) / 10000 * 100) / 100}}萬元/坪</li>
-                <li>歷史最高價：{{Math.floor((payload.queryState.maxTransUnitPrice / 3.3) / 10000 * 100) / 100}}萬元/坪</li>
-                <li>歷史最低價：{{Math.floor((payload.queryState.minTransUnitPrice / 3.3) / 10000 * 100) / 100}}萬元/坪</li>
+                <li>近一年成交均價：{{Math.floor((payload.queryState.lastYearTransUnitPrice * 3.3) / 10000 * 100) / 100}}萬元/坪</li>
+                <li>歷史最高價：{{Math.floor((payload.queryState.maxTransUnitPrice * 3.3) / 10000 * 100) / 100}}萬元/坪</li>
+                <li>歷史最低價：{{Math.floor((payload.queryState.minTransUnitPrice * 3.3) / 10000 * 100) / 100}}萬元/坪</li>
                 <li>平均成交坪數：{{Math.floor(payload.queryState.meanTransArea / 3.3 * 100) / 100}}坪</li>
             </div>
         </div>
