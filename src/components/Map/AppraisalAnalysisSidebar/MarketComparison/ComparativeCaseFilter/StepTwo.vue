@@ -249,6 +249,19 @@
 
                       <fieldset
                         class="item-group-content dens-fieldset col-item"
+                      >
+                        <select v-model="age.vm">
+                          <option
+                            v-for="(data, index) in age.datas"
+                            :value="data.value"
+                            :key="index"
+                          >
+                            {{ data.name }}
+                          </option>
+                        </select>
+                      </fieldset>
+                      <!-- <fieldset
+                        class="item-group-content dens-fieldset col-item"
                         :disabled="!age.enable"
                       >
                         <div class="row-item">
@@ -274,7 +287,7 @@
                           />
                           年
                         </div>
-                      </fieldset>
+                      </fieldset> -->
                     </div>
                   </div>
                 </fieldset>
@@ -362,7 +375,14 @@ export default {
         ],
         MODE.MANUAL
       ),
-      age: new FormItem("age", 5),
+      age: new FormItem("age", "0-100", [
+        { name: "不限", value: "0-100" },
+        { name: "小於5年", value: "0-5" },
+        { name: "5~10年", value: "5-10" },
+        { name: "10~20年", value: "10-20" },
+        { name: "20~30年", value: "20-30" },
+        { name: "大於30年", value: "30-100" },
+      ]),
     };
   },
   async created() {
