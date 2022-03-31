@@ -75,7 +75,7 @@ class TransactionDataStreaming {
   createPointsFromRawData () {
     return this.rawdata.map(data => {
       const [x, y] = projector(EPSG[3826], EPSG[4326], { x: data.coordinateY, y: data.coordinateX })
-      const marker = new CircleMarker(latLng(y, x), { radius: 3 })
+      const marker = new CircleMarker(latLng(y, x), { radius: 4, fillOpacity: 1 })
       marker.setStyle({
         color: 'orange'
       })
