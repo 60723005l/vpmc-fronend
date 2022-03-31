@@ -129,8 +129,17 @@
                                 {{ year.name }}
                               </option>
                             </select>
+                            年
+                            <button class="new-btn" @click="addTransactionDate">
+                              新增
+                            </button>
+                            <input
+                              v-model="newTransactionTime"
+                              class="short-input"
+                              type="number"
+                              min="0"
+                            />
                           </fieldset>
-                          年內
                         </div>
                       </fieldset>
                     </div>
@@ -176,7 +185,7 @@
                         <div class="text-item">面積坪數：</div>
                       </div>
                       <fieldset
-                        class="item-group-content dens-fieldset col-item"
+                        class="item-group-content dens-fieldset row-item"
                       >
                         <select v-model="unitArea.vm">
                           <option
@@ -187,6 +196,22 @@
                             {{ data.name }}
                           </option>
                         </select>
+                        <button class="new-btn" @click="addNewAreaSet">
+                          新增
+                        </button>
+                        <input
+                          v-model="newAreaStart"
+                          type="number"
+                          class="short-input"
+                          min="0"
+                        />
+                        至
+                        <input
+                          v-model="newAreaEnd"
+                          type="number"
+                          class="short-input"
+                          min="0"
+                        />
                       </fieldset>
                       <!-- <fieldset
                         class="item-group-content dens-fieldset col-item"
@@ -248,7 +273,7 @@
                       </div>
 
                       <fieldset
-                        class="item-group-content dens-fieldset col-item"
+                        class="item-group-content dens-fieldset row-item"
                       >
                         <select v-model="age.vm">
                           <option
@@ -259,6 +284,21 @@
                             {{ data.name }}
                           </option>
                         </select>
+
+                        <button class="new-btn" @click="addNewAge">新增</button>
+                        <input
+                          v-model="newAgeStart"
+                          type="number"
+                          class="short-input"
+                          min="0"
+                        />
+                        至
+                        <input
+                          v-model="newAgeEnd"
+                          type="number"
+                          class="short-input"
+                          min="0"
+                        />
                       </fieldset>
                       <!-- <fieldset
                         class="item-group-content dens-fieldset col-item"
@@ -329,6 +369,11 @@ export default {
   name: "StepTwo",
   data() {
     return {
+      newAgeStart: undefined,
+      newAgeEnd: undefined,
+      newAreaStart: undefined,
+      newAreaEnd: undefined,
+      newTransactionTime: undefined,
       MODE: MODE,
       mode: MODE.MANUAL,
       county: new FormItem("縣市", undefined, []),
@@ -415,6 +460,55 @@ export default {
         county: this.county.vm,
       });
     },
+    addTransactionDate() {
+      if (this.newTransactionTime === undefined) {
+        alert("請輸入內容");
+        return;
+      }
+      this.transTime.vm.dateDelta.datas.push({
+        name: this.newTransactionTime.toString(),
+        value: 2022 - this.newTransactionTime,
+      });
+      this.newTransactionTime = undefined;
+      // console.log(this.newTransactionTime.toString());
+      // console.log(2022 - this.newTransactionTime);
+      // this.transTime.vm.dateDelta.datas.push({
+      //   name: "e04",
+      //   value: 2022,
+      // });
+    },
+    addNewAreaSet() {
+      if (this.newAreaStart >= this.newAreaEnd) {
+        alert("開始不得大於結尾");
+        return;
+      }
+      if (this.newAreaEnd === undefined || this.newAreaStart === undefined) {
+        alert("請輸入內容");
+        return;
+      }
+      this.unitArea.datas.push({
+        name: `${this.newAreaStart}-${this.newAreaEnd}年`,
+        value: `${this.newAreaStart}-${this.newAreaEnd}`,
+      });
+      this.newAreaStart = undefined;
+      this.newAreaEnd = undefined;
+    },
+    addNewAge() {
+      if (this.newAgeStart >= this.newAgeEnd) {
+        alert("開始不得大於結尾");
+        return;
+      }
+      if (this.newAgeEnd === undefined || this.newAgeStart === undefined) {
+        alert("請輸入內容");
+        return;
+      }
+      this.age.datas.push({
+        name: `${this.newAgeStart}-${this.newAgeEnd}坪`,
+        value: `${this.newAgeStart}-${this.newAgeEnd}`,
+      });
+      this.newAgeStart = undefined;
+      this.newAgeEnd = undefined;
+    },
   },
 };
 </script>
@@ -424,5 +518,11 @@ export default {
   padding: 0;
   margin: 0;
   border: 0;
+}
+.short-input {
+  width: 50px;
+}
+.new-btn {
+  margin-left: 10px;
 }
 </style>
