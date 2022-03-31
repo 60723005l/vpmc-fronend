@@ -353,7 +353,7 @@ export default {
       transTime: new FormItem("transTime", {
         // startDate: new FormItem("startDate", 2010),
         // endDate: new FormItem("endDate", 2022),
-        dateDelta: new FormItem("dateDelta", 2022, [
+        dateDelta: new FormItem("dateDelta", 2021, [
           { name: "不限", value: 2017 },
           { name: "0", value: 2022 },
           { name: "1", value: 2021 },
