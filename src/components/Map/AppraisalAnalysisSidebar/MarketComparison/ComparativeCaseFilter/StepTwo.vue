@@ -129,9 +129,9 @@
                                 {{ year.name }}
                               </option>
                             </select>
-                            年
+                            年內
                             <button class="new-btn" @click="addTransactionDate">
-                              新增
+                              ✓
                             </button>
                             <input
                               v-model="newTransactionTime"
@@ -139,6 +139,7 @@
                               type="number"
                               min="0"
                             />
+                            年內
                           </fieldset>
                         </div>
                       </fieldset>
@@ -197,7 +198,7 @@
                           </option>
                         </select>
                         <button class="new-btn" @click="addNewAreaSet">
-                          新增
+                          ✓
                         </button>
                         <input
                           v-model="newAreaStart"
@@ -205,13 +206,14 @@
                           class="short-input"
                           min="0"
                         />
-                        至
+                        坪至
                         <input
                           v-model="newAreaEnd"
                           type="number"
                           class="short-input"
                           min="0"
                         />
+                        坪
                       </fieldset>
                       <!-- <fieldset
                         class="item-group-content dens-fieldset col-item"
@@ -285,20 +287,21 @@
                           </option>
                         </select>
 
-                        <button class="new-btn" @click="addNewAge">新增</button>
+                        <button class="new-btn" @click="addNewAge">✓</button>
                         <input
                           v-model="newAgeStart"
                           type="number"
                           class="short-input"
                           min="0"
                         />
-                        至
+                        年至
                         <input
                           v-model="newAgeEnd"
                           type="number"
                           class="short-input"
                           min="0"
                         />
+                        年
                       </fieldset>
                       <!-- <fieldset
                         class="item-group-content dens-fieldset col-item"
